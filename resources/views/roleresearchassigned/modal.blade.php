@@ -27,7 +27,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addnewModalLabel">Add Researcher</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="closeModal()" aria-label="Close">&times;</button>
+                <button type="button" class="close" data-bs-dismiss="modal" onclick="closeModal()" aria-label="Close">&times;</button>
             </div> 
             <div class="modal-body">
                 <form action="{{ route('roleresearchassigned.save') }}" method="POST">

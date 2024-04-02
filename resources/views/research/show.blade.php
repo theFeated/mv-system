@@ -198,9 +198,7 @@
                 <td class="align-middle">{{ $rs->monitoringPersonnel }}</td>
                 <td class="align-middle">{{ $rs->remarks }}</td>
                 <td class="align-middle">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="{{ route('research.edit', $rs->id) }}" type="button" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('research.destroy', $rs->id) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
+                    <div class="btn-group" role="group" aria-label="Basic example"                           <form action="{{ route('research.destroy', $rs->id) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger m-0">Archive</button>
