@@ -1,7 +1,15 @@
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top  position-fixed shadow w-100"style="z-index:1000;">
   
+  <!-- Sidebar - Brand -->
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-database"></i>
+        </div>
+      <div class="sidebar-brand-text mx-3">Research DB System <sup>1</sup></div>
+    </a>
+
   <!-- Sidebar Toggle (Topbar) -->
-  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+  <button id="sidebarToggleTop" class="btn btn-link">
     <i class="fa fa-bars"></i>
   </button>
   

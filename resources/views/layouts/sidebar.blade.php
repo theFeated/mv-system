@@ -1,12 +1,5 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-  
-  <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-database"></i>
-        </div>
-      <div class="sidebar-brand-text mx-3">Research DB System <sup>1</sup></div>
-    </a>
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion position-fixed mt-6 pre-scrollable " id="accordionSidebar" style="z-index: 100;">
+   
   <!-- Divider -->
   <hr class="sidebar-divider my-0">
   

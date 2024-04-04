@@ -6,15 +6,27 @@
 <form method="POST" action="{{ route('roles.destroyMultiple') }}" onsubmit="return confirm('Archive Multiple Roles?')">
         @csrf
         @method('DELETE')
-<div class="d-flex align-items-center justify-content-between">
-    <h1 class="mb-0">Roles</h1>
-    <div>
-        <a href="{{ route('roles.create') }}" class="btn btn-primary">Add Roles</a>
-        <a href="{{ route('roles.restore') }}" class="btn btn-info">Archived</a>
-        <button type="submit" class="btn btn-info">Archive Selected</button>
-    </div>
-</div>
-<hr />
+        <div class="row offset-sm-9 offset-3">
+            <div class="dropdown mr-2">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Add
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a href="{{ route('roles.create') }}" class="dropdown-item">Add Roles</a>
+                </div>
+            </div>
+            <div class="">
+                <div class="dropdown">
+                    <button class="btn btn-info dropdown-toggle" type="button" id="archiveDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Archive
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="archiveDropdownButton">
+                        <a href="{{ route('roles.restore') }}" class="dropdown-item">Archived</a>
+                        <button type="submit" class="dropdown-item">Archive Selected</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 @if(Session::has('success'))
 <div class="alert alert-success" role="alert">
@@ -28,8 +40,10 @@
 </div>
 @endif
 
-    <table class="table table-hover">
-        <thead class="table-primary">
+<div class="card-body">
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
             <tr>
                 <th>               
                      <input type="checkbox" id="select-all-checkbox">
@@ -73,6 +87,8 @@
             @endif
         </tbody>
     </table>
+    </div>
+    </div>
     <script>
         document.getElementById("select-all-checkbox").addEventListener("click", function() {
             let checkboxes = document.querySelectorAll("input[name='selected[]']");

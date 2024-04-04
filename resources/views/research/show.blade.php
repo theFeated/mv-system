@@ -11,7 +11,7 @@
 
 @include('roleresearchassigned.edit', ['researchID' => $research->id])
 
-    <div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center justify-content-between ">
         <h1 class="mb-0">Research Details</h1>
         <div class="dropdown">
             <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
