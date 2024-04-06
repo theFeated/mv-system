@@ -16,7 +16,7 @@ class CollegeController extends Controller
     public function index()
     {
   
-        $college = College::orderBy('created_at', 'DESC')->get();
+        $college = College::orderBy('created_at', 'DESC')->paginate(10);
         return view('college.index', compact('college'));
     }
     

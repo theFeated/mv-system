@@ -43,7 +43,7 @@
 <div class="card-body">
 <div class="table-responsive">
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-        <thead>
+        <thead class="table-primary">
             <tr>
                 <th>               
                      <input type="checkbox" id="select-all-checkbox">
@@ -87,6 +87,32 @@
             @endif
         </tbody>
     </table>
+    <div class='d-flex justify-content-center'>
+            <nav aria-label='Page navigation'>
+                <ul class='pagination'>
+                    <!-- Previous page link -->
+                    @if ($college->currentPage() > 1)
+                        <li class='page-item'>
+                            <a class='page-link' href='{{ $college->previousPageUrl() }}'>Previous</a>
+                        </li>
+                    @endif
+
+                    <!-- Page links -->
+                    @for ($i = 1; $i <= $college->lastPage(); $i++)
+                        <li class='page-item {{ ($college->currentPage() == $i) ? 'active' : '' }}'>
+                            <a class='page-link' href='{{ $college->url($i) }}'>{{ $i }}</a>
+                        </li>
+                    @endfor
+
+                    <!-- Next page link -->
+                    @if ($college->hasMorePages())
+                        <li class='page-item'>
+                            <a class='page-link' href='{{ $college->nextPageUrl() }}'>Next</a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
     </div>
     </div>
     <script>

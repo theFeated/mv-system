@@ -7,7 +7,7 @@
         @csrf
         @method('POST') 
     <div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">Archived Agency</h1>
+        <h3 class="mb-0">Archived Agency</h3>
         <div>
             <button type="submit" class="btn btn-success">Restore Selected</button>
             <a href="{{ route('agency') }}" class="btn btn-primary">Back</a>
@@ -30,9 +30,11 @@
             {{ Session::get('success') }}
         </div>
     @endif        
-        <table class="table table-hover">
+    <div class="card-body ">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead class="table-primary">
-            <tr>
+                <tr>
                 <th>               
                      <input type="checkbox" id="select-all-checkbox">
                 </th>
@@ -67,11 +69,13 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="text-center">No archived agency found</td>
+                        <td colspan="9" class="text-center">No archived agency found</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
+        </div>
+    </div>
     <script>
         document.getElementById("select-all-checkbox").addEventListener("click", function() {
             let checkboxes = document.querySelectorAll("input[name='selected[]']");

@@ -15,12 +15,12 @@
 
 @endphp
 
-<div class="modal fade" id="addMonitorings" tabindex="-1" aria-labelledby="addResearcherModal" aria-hidden="true">
+<div class="modal fade my-modal" id="addMonitorings" tabindex="-1" aria-labelledby="addResearcherModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addnewModalLabel">Add Monitorings</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="closeModal()" aria-label="Close">&times;</button>
+                <button type="button" class="close " data-dismiss="modal" aria-label="Close">&times;</button>
             </div> 
             <div class="modal-body">
                 <form action="{{ route('monitorings.save') }}" method="POST">
@@ -68,15 +68,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
                 </div>
-
-                <script>
-                    function closeModal() {
-                        $('#addMonitorings').modal('hide');
-                    }
-                </script>
             </form>
         </div>
     </div>

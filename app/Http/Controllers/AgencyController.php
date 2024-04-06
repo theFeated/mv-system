@@ -15,7 +15,7 @@ class AgencyController extends Controller
     public function index()
     {
   
-        $agency = Agency::orderBy('created_at', 'DESC')->get();
+        $agency = Agency::orderBy('created_at', 'DESC')->paginate(10);
         return view('agency.index', compact('agency'));
     }
     

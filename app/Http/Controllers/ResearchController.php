@@ -21,7 +21,7 @@ class ResearchController extends Controller
      */
     public function index()
     {
-        $research = Research::orderBy('created_at', 'DESC')->paginate(10);
+        $research = Research::orderBy('created_at', 'DESC')->get();
         return view('research.index', compact('research'));
     }    
     

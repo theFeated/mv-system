@@ -9,18 +9,22 @@
 <form method="POST" action="{{ route('research.destroyMultiple') }}" onsubmit="return confirm('Archive Multiple Research?')">
         @csrf
         @method('DELETE')
-        <div class="row offset-sm-9 offset-3">
-            <div class="dropdown mr-2">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Add
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a href="{{ route('research.create') }}" class="dropdown-item">Add Research</a>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addnew">Add Researchers</a>
-                </div>
+        <div class="container">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-md-4">
+                <h2 class="mt-3 mb-3">Research List</h2>
             </div>
-            <div class="">
+            <div class="row text-right">
                 <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a href="{{ route('research.create') }}" class="dropdown-item">Add Research</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addnew">Add Researchers</a>
+                    </div>
+                </div>
+                <div class="dropdown ml-2">
                     <button class="btn btn-info dropdown-toggle" type="button" id="archiveDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Archive
                     </button>
@@ -31,6 +35,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
 @if(Session::has('success'))
 <div class="alert alert-success" role="alert">
@@ -44,11 +49,10 @@
 </div>
 @endif
 
-<div class="card-body">
-<div class="table-responsive">
-    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-            <tr>
+<div class="card-body ">
+        <table id='recordTable' class='table table-striped table-bordered'>
+            <thead id="myTable">
+                <tr>
                 <th>               
                      <input type="checkbox" id="select-all-checkbox">
                 </th>
@@ -97,40 +101,5 @@
             @endif
         </tbody>
     </table>
-        <div class='d-flex justify-content-center'>
-        <nav aria-label='Page navigation'>
-            <ul class='pagination'>
-                <!-- Previous page link -->
-                @if ($research->currentPage() > 1)
-                    <li class='page-item'>
-                        <a class='page-link' href='{{ $research->previousPageUrl() }}'>Previous</a>
-                    </li>
-                @endif
-
-                <!-- Page links -->
-                @for ($i = 1; $i <= $research->lastPage(); $i++)
-                    <li class='page-item {{ ($research->currentPage() == $i) ? 'active' : '' }}'>
-                        <a class='page-link' href='{{ $research->url($i) }}'>{{ $i }}</a>
-                    </li>
-                @endfor
-
-                <!-- Next page link -->
-                @if ($research->hasMorePages())
-                    <li class='page-item'>
-                        <a class='page-link' href='{{ $research->nextPageUrl() }}'>Next</a>
-                    </li>
-                @endif
-            </ul>
-        </nav>
     </div>
-    </div>
-    </div>
-    <script>
-        document.getElementById("select-all-checkbox").addEventListener("click", function() {
-            let checkboxes = document.querySelectorAll("input[name='selected[]']");
-            checkboxes.forEach(function(checkbox) {
-                checkbox.checked = !checkbox.checked;
-            });
-        });
-    </script>
 @endsection

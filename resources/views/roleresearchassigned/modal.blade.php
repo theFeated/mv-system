@@ -22,12 +22,12 @@
     $assignedID = "A-" . str_pad($numericPart, 3, '0', STR_PAD_LEFT);
 @endphp
 
-<div class="modal fade" id="addnew" tabindex="-1" aria-labelledby="addResearcherModal" aria-hidden="true">
+<div class="modal fade my-modal" id="addnew" tabindex="-1" aria-labelledby="addResearcherModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addnewModalLabel">Add Researcher</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" onclick="closeModal()" aria-label="Close">&times;</button>
+                <button type="button" class="close " data-dismiss="modal" aria-label="Close">&times;</button>
             </div> 
             <div class="modal-body">
                 <form action="{{ route('roleresearchassigned.save') }}" method="POST">
@@ -74,16 +74,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-<script>
-    function closeModal() {
-        $('#addnew').modal('hide');
-    }
-</script>

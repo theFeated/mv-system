@@ -15,12 +15,12 @@
     $agencies = Agency::all();
 @endphp
 
-<div class="modal fade" id="addExFunds" tabindex="-1" aria-labelledby="addMonitoringsModal" aria-hidden="true">
+<div class="modal fade my-modal" id="addExFunds" tabindex="-1" aria-labelledby="addMonitoringsModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addnewModalLabel">Add External Funds</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
+                <button type="button" class="close " data-dismiss="modal" aria-label="Close">&times;</button>
             </div> 
             <div class="modal-body">
                 <form action="{{ route('externalfunds.save') }}" method="POST">
@@ -60,16 +60,10 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-<script>
-    function closeModal() {
-        $('#addExFunds').modal('hide');
-    }
-</script>

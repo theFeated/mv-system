@@ -13,6 +13,10 @@
   
   <!-- Custom styles for this template-->
   <link href="{{ asset('admin_assets/css/sb-admin-2.css') }}" rel="stylesheet">
+
+  <link href='https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css' rel='stylesheet'>
+  <link href='  https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css' rel='stylesheet'>
+
 </head>
 <body id="page-top">
   <!-- Page Wrapper -->
@@ -75,5 +79,62 @@
   <script src="{{ asset('admin_assets/js/sb-admin-2.min.js') }}"></script>
   <!-- Page level plugins -->
   <script src="{{ asset('admin_assets/vendor/chart.js/Chart.min.js') }}"></script>
+
+  <script src='https://code.jquery.com/jquery-3.7.1.js'></script>
+  <script src='https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js'></script>
+  <script src='https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js'></script>
+  <script src='https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js'></script>
+  <script src='https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap.min.js'></script>
+  <script>
+    $(document).ready(function() {
+        var table = $('#recordTable').DataTable( {
+            responsive: true
+        } );
+    
+        new $.fn.dataTable.FixedHeader( table );
+    } );
+  </script>
+      <script>
+        document.getElementById("select-all-checkbox").addEventListener("click", function() {
+            let checkboxes = document.querySelectorAll("input[name='selected[]']");
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+
+        document.getElementById("select-all-checkbox-two").addEventListener("click", function() {
+            let checkboxes = document.querySelectorAll("input[name='selectedTwo[]']");
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+
+        document.getElementById("select-all-checkbox-three").addEventListener("click", function() {
+            let checkboxes = document.querySelectorAll("input[name='selectedThree[]']");
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+
+        document.getElementById("select-all-checkbox-four").addEventListener("click", function() {
+            let checkboxes = document.querySelectorAll("input[name='selectedFour[]']");
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+    </script> 
+    <script>
+      $(document).ready(function(){
+          // Close modal on button click
+          $(".btn").click(function(){
+              $(".my-modal").modal('hide');
+          });
+          
+          // Close modal on close button click
+          $(".close-modal").click(function(){
+              $(".my-modal").modal('hide');
+          });
+      });
+    </script>
 </body>
 </html>

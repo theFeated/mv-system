@@ -40,11 +40,11 @@
 </div>
 @endif
 
-<div class="card-body">
-<div class="table-responsive">
-    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-            <tr>
+<div class="card-body ">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead class="table-primary">
+                <tr>
                 <th>               
                      <input type="checkbox" id="select-all-checkbox">
                 </th>
@@ -91,6 +91,32 @@
             @endif
         </tbody>
     </table>
+    <div class='d-flex justify-content-center'>
+            <nav aria-label='Page navigation'>
+                <ul class='pagination'>
+                    <!-- Previous page link -->
+                    @if ($agency->currentPage() > 1)
+                        <li class='page-item'>
+                            <a class='page-link' href='{{ $agency->previousPageUrl() }}'>Previous</a>
+                        </li>
+                    @endif
+
+                    <!-- Page links -->
+                    @for ($i = 1; $i <= $agency->lastPage(); $i++)
+                        <li class='page-item {{ ($agency->currentPage() == $i) ? 'active' : '' }}'>
+                            <a class='page-link' href='{{ $agency->url($i) }}'>{{ $i }}</a>
+                        </li>
+                    @endfor
+
+                    <!-- Next page link -->
+                    @if ($agency->hasMorePages())
+                        <li class='page-item'>
+                            <a class='page-link' href='{{ $agency->nextPageUrl() }}'>Next</a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+        </div>
     </div>
     </div>
     <script>

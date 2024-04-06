@@ -83,7 +83,9 @@ Route::middleware('auth')->group(function () {
         Route::post('save', 'save')->name('roleresearchassigned.save');
         Route::patch('roleresearchassigned/{assignedID}/{researchID}', [RoleResearchAssignedController::class, 'update'])->name('roleresearchassigned.update');
         Route::delete('destroy/{assignedID}', 'destroy')->name('roleresearchassigned.destroy');
+        Route::delete('destroyMultiple', 'destroyMultiple')->name('roleresearchassigned.destroyMultiple');
         Route::post('unarchive/{assignedID}', 'unarchive')->name('roleresearchassigned.unarchive');
+        Route::post('roleresearchassigned/unarchiveMultiple', 'unarchiveMultiple')->name('roleresearchassigned.unarchiveMultiple');
 
     });
 
@@ -122,12 +124,20 @@ Route::middleware('auth')->group(function () {
         Route::get('', 'index')->name('monitorings.modal');
         Route::post('save', 'save')->name('monitorings.save');
         Route::patch('monitorings/{monitoringID}', 'update')->name('monitorings.update');
+        Route::delete('destroy/{monitoringID}', 'destroy')->name('monitorings.destroy');
+        Route::delete('destroyMultiple', 'destroyMultiple')->name('monitorings.destroyMultiple');
+        Route::post('unarchive/{monitoringID}', 'unarchive')->name('monitorings.unarchive');
+        Route::post('monitorings/unarchiveMultiple', 'unarchiveMultiple')->name('monitorings.unarchiveMultiple');
     });
 
     Route::controller(ExternalFundsController::class)->prefix('externalfunds')->group(function () {
         Route::get('', 'index')->name('externalfunds.modal');
         Route::post('save', 'save')->name('externalfunds.save');
         Route::patch('externalfunds/{exFundID}', 'update')->name('externalfunds.update');
+        Route::delete('destroy/{exFundID}', 'destroy')->name('externalfunds.destroy');
+        Route::delete('destroyMultiple', 'destroyMultiple')->name('externalfunds.destroyMultiple');
+        Route::post('unarchive/{exFundID}', 'unarchive')->name('externalfunds.unarchive');
+        Route::post('externalfunds/unarchiveMultiple', 'unarchiveMultiple')->name('externalfunds.unarchiveMultiple');
     });
 
     

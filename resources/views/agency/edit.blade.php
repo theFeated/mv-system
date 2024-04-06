@@ -4,7 +4,7 @@
   
 @section('contents')
 <div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">Edit Agency</h1>
+        <h3 class="mb-0">Edit Agency</h3>
             <div>
                 <a href="{{ route('agency') }}" class="btn btn-primary">Back</a>
             </div>

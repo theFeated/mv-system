@@ -13,7 +13,7 @@
 @include('externalfunds.edit', ['researchId' => $research->id])
 
     <div class="d-flex align-items-center justify-content-between ">
-        <h1 class="mb-0">Research Details</h1>
+        <h3 class="mb-0">Research Details</h3>
         <div class="dropdown">
             <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Add
@@ -110,167 +110,187 @@
     </div>
     <hr />
 
-@section('title', '')
-<div class="d-flex align-items-center justify-content-between">
-    <h1 class="mb-0">Researcher</h1>
-</div>
-<hr />
+    <form action="{{ route('roleresearchassigned.destroyMultiple') }}" method="POST">
+        @csrf
+        <div class="d-flex align-items-center justify-content-between">
+            <h3 class="mb-0">Researcher</h3>
+            <button type="submit" class="btn btn-danger">Archive Selected</button>
+        </div>
+        <hr />
 
-<table class="table table-hover">
-        <thead class="table-primary">
-            <tr>
-                <th>               
-                     <input type="checkbox" id="select-all-checkbox">
-                </th>
-                <th>#</th>
-                <th>ID</th>
-                <th>Researcher</th>
-                <th>Role</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if($roleresearchassigned->count() > 0)
-                @foreach($roleresearchassigned as $rs)
+        <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
                     <tr>
-                        <td class="align-middle">
-                            <input type="checkbox" name="selected[]" value="{{ optional($rs->role)->roleName }}">
-                        </td>
-                        <td class="align-middle">{{ $loop->iteration }}</td>
-                        <td class="align-middle">{{ $rs->assignedID }}</td>
-                        <td class="align-middle">{{ $rs->researcher->researcherName }}</td>
-                        <td class="align-middle">{{ optional($rs->role)->roleName }}</td>
-                        <td class="align-middle">
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $rs->assignedID }}">Edit</a>
-                                <form action="{{ route('roleresearchassigned.destroy', $rs->assignedID) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger m-0">Archive</button>
-                                </form>
-                            </div>
-                        </td>
+                    <th>               
+                        <input type="checkbox" id="select-all-checkbox">
+                    </th>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Researcher</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if($roleresearchassigned->count() > 0)
+                    @foreach($roleresearchassigned as $rs)
+                        <tr>
+                            <td class="align-middle">
+                                <input type="checkbox" name="selected[]" value="{{ $rs->assignedID }}">
+                            </td>
+                            <td class="align-middle">{{ $loop->iteration }}</td>
+                            <td class="align-middle">{{ $rs->assignedID }}</td>
+                            <td class="align-middle">{{ $rs->researcher->researcherName }}</td>
+                            <td class="align-middle">{{ optional($rs->role)->roleName }}</td>
+                            <td class="align-middle">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $rs->assignedID }}">Edit</a>
+                                    <form action="{{ route('roleresearchassigned.destroy', $rs->assignedID) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger m-0">Archive</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td class="text-center" colspan="9">Research not found</td>
                     </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td class="text-center" colspan="9">Research not found</td>
+                @endif
+            </tbody>
+        </table>
+        </div>
+    </div>
+    </form>
+
+    <form action="{{ route('monitorings.destroyMultiple') }}" method="POST">
+        @csrf
+        <div class="d-flex align-items-center justify-content-between">
+            <h3 class="mb-0">Monitorings</h3>
+            <button type="submit" class="btn btn-danger">Archive Selected</button>
+        </div>
+        <hr />
+
+        <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                    <th>               
+                        <input type="checkbox" id="select-all-checkbox-two">
+                    </th>
+                    <th>#</th>
+                    <th>Monitoring ID</th>
+                    <th>Date</th>
+                    <th>Research Status</th>
+                    <th>Research Progress</th>
+                    <th>Monitoring Personnel</th>
+                    <th>Remarks</th>
+                    <th>Action</th>
                 </tr>
-            @endif
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @if($monitorings->count() > 0)
+                    @foreach($monitorings as $monitoring)
+                        <tr>
+                            <td class="align-middle">
+                                <input type="checkbox" name="selectedTwo[]" value="{{ $monitoring->monitoringID }}">
+                            </td>
+                            <td class="align-middle">{{ $loop->iteration }}</td>
+                            <td class="align-middle">{{ $monitoring->monitoringID }}</td>
+                            <td class="align-middle">{{ $monitoring->date }}</td>
+                            <td class="align-middle">{{ $monitoring->status }}</td>
+                            <td class="align-middle">{{ $monitoring->progress }}</td>
+                            <td class="align-middle">{{ $monitoring->monitoringPersonnel }}</td>
+                            <td class="align-middle">{{ $monitoring->remarks }}</td>
+                            <td class="align-middle">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $monitoring->monitoringID }}">Edit</a>
+                                    <form action="{{ route('monitorings.destroy', $monitoring->monitoringID) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger m-0">Archive</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td class="text-center" colspan="9">No monitorings found</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+        </div>
+    </div>
+    </form>
 
-<hr />
-@section('title', '')
-<div class="d-flex align-items-center justify-content-between">
-    <h1 class="mb-0">Monitorings</h1>
-</div>
-<hr />
+    <form action="{{ route('externalfunds.destroyMultiple') }}" method="POST">
+        @csrf
+        <div class="d-flex align-items-center justify-content-between">
+            <h3 class="mb-0">External Funds</h3>
+            <button type="submit" class="btn btn-danger">Archive Selected</button>
+        </div>
+        <hr />
 
-<table class="table table-hover">
-        <thead class="table-primary">
-            <tr>
-                <th>               
-                     <input type="checkbox" id="select-all-checkbox">
-                </th>
-                <th>#</th>
-                <th>Monitoring ID</th>
-                <th>Date</th>
-                <th>Research Status</th>
-                <th>Research Progress</th>
-                <th>Monitoring Personnel</th>
-                <th>Remarks</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if($monitorings->count() > 0)
-            @foreach($monitorings as $rs)
-            <tr>
-                <td class="align-middle">
-                    <input type="checkbox" name="selected[]" value="{{ $rs->researchID }}">
-                </td>
-                </form>
-                <td class="align-middle">{{ $loop->iteration }}</td>
-                <td class="align-middle">{{ $rs->id }}</td>
-                <td class="align-middle">{{ $rs->date }}</td>
-                <td class="align-middle">{{ $rs->status }}</td>
-                <td class="align-middle">{{ $rs->progress }}</td>
-                <td class="align-middle">{{ $rs->monitoringPersonnel }}</td>
-                <td class="align-middle">{{ $rs->remarks }}</td>
-                <td class="align-middle">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                    <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $rs->monitoringID }}">Edit</a>        
-                    <form action="{{ route('research.destroy', $rs->id) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger m-0">Archive</button>
-                        </form>
-                    </div>
-                </td>
+        <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                    <th>               
+                        <input type="checkbox" id="select-all-checkbox-three">
+                    </th>
+                    <th>#</th>
+                    <th>External Fund ID</th>
+                    <th>Research ID</th>
+                    <th>Agency</th>
+                    <th>Contribution</th>
+                    <th>Purpose</th>
+                    <th>Action</th>
                 </tr>
-            @endforeach
-            @else
-                <tr>
-                    <td colspan="9" class="text-center">Nothing is found</td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @if($externalfunds->count() > 0)
+                    @foreach($externalfunds as $externalFund)
+                        <tr>
+                            <td class="align-middle">
+                                <input type="checkbox" name="selectedThree[]" value="{{ $externalFund->exFundID }}">
+                            </td>
+                            <td class="align-middle">{{ $loop->iteration }}</td>
+                            <td class="align-middle">{{ $externalFund->exFundID }}</td>
+                            <td class="align-middle">{{ $externalFund->researchID }}</td>
+                            <td class="align-middle">{{ $externalFund->agency->name }}</td>
+                            <td class="align-middle">{{ $externalFund->contribution }}</td>
+                            <td class="align-middle">{{ $externalFund->purpose }}</td>
+                            <td class="align-middle">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $externalFund->exFundID }}">Edit</a>
+                                    <form action="{{ route('externalfunds.destroy', $externalFund->exFundID) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger m-0">Archive</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td class="text-center" colspan="8">No external funds found</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+        </div>
+    </div>
+    </form>
 
-    <hr />
-@section('title', '')
-<div class="d-flex align-items-center justify-content-between">
-    <h1 class="mb-0">External Funds</h1>
-</div>
-<hr />
-
-<table class="table table-hover">
-        <thead class="table-primary">
-            <tr>
-                <th>               
-                     <input type="checkbox" id="select-all-checkbox">
-                </th>
-                <th>#</th>
-                <th>External Fund ID</th>
-                <th>Funding Agency</th>
-                <th>Contribution</th>
-                <th>Purpose</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if($externalfunds->count() > 0)
-            @foreach($externalfunds as $rs)
-            <tr>
-                <td class="align-middle">
-                    <input type="checkbox" name="selected[]" value="{{ $rs->researchID }}">
-                </td>
-                </form>
-                <td class="align-middle">{{ $loop->iteration }}</td>
-                <td class="align-middle">{{ $rs->id }}</td>
-                <td class="align-middle">{{ $rs->agency->agencyName }}</td>
-                <td class="align-middle">{{ $rs->contribution }}</td>
-                <td class="align-middle">{{ $rs->purpose }}</td>
-                <td class="align-middle">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                    <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $rs->exFundID }}">Edit</a>
-                        <form action="{{ route('research.destroy', $rs->id) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger m-0">Archive</button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-            @endforeach
-            @else
-            <tr>
-                <td class="text-center" colspan="9">Nothing is found</td>
-            </tr>
-            @endif
-        </tbody>
-    </table>
     <script>
         document.getElementById("select-all-checkbox").addEventListener("click", function() {
             let checkboxes = document.querySelectorAll("input[name='selected[]']");
@@ -278,6 +298,21 @@
                 checkbox.checked = !checkbox.checked;
             });
         });
-    </script>
+
+        document.getElementById("select-all-checkbox-two").addEventListener("click", function() {
+            let checkboxes = document.querySelectorAll("input[name='selectedTwo[]']");
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+
+        document.getElementById("select-all-checkbox-three").addEventListener("click", function() {
+            let checkboxes = document.querySelectorAll("input[name='selectedThree[]']");
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+
+    </script> 
 
 @endsection

@@ -14,7 +14,7 @@
 @endphp
 
 @foreach ($roleresearchassigned as $item)
-<div class="modal fade" id="edit{{ $item->id }}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade my-modal" id="edit{{ $item->id }}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="{{ route('roleresearchassigned.update', ['assignedID' => $item->assignedID, 'researchID' => $item->researchID]) }}" method="POST">
@@ -22,7 +22,7 @@
                 @method('PATCH')
                 <div class="modal-header">						
                     <h4 class="modal-title">Edit Researcher</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="close " data-dismiss="modal" aria-label="Close">&times;</button>
                 </div>
                 <div class="modal-body">					
                     <div class="form-group">
@@ -51,7 +51,7 @@
                     </div>					
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary my-modal" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
@@ -59,11 +59,3 @@
     </div>
 </div>
 @endforeach
-
-<script>
-    function closeModal(modalId) {
-        var modal = document.getElementById(modalId);
-        var bsModal = bootstrap.Modal.getInstance(modal);
-        bsModal.hide();
-    }
-</script>
