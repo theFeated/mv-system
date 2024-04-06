@@ -21,10 +21,9 @@ class ResearchController extends Controller
      */
     public function index()
     {
-  
-        $research = Research::orderBy('created_at', 'DESC')->get();
+        $research = Research::orderBy('created_at', 'DESC')->paginate(10);
         return view('research.index', compact('research'));
-    }
+    }    
     
     /**
      * Show the form for creating a new resource.
@@ -124,8 +123,9 @@ class ResearchController extends Controller
     {
         $archived = Research::onlyTrashed()->get();
         $archivedAssigned = RoleResearchAssigned::onlyTrashed()->get();
-
-        return view('research.restore', compact('archived', 'archivedAssigned'));
+        $monitorings = Monitorings::onlyTrashed()->get();
+        $externalFunds = ExternalFunds::onlyTrashed()->get();
+        return view('research.restore', compact('archived', 'archivedAssigned', 'monitorings', 'externalFunds'));
     }
 
     /**

@@ -2,20 +2,17 @@
     use App\Models\ExternalFunds;
     use App\Models\Agency;
 
+    // Retrieve the count of existing items in the ExternalFunds table
+    $existingCount = ExternalFunds::count();
+
+    // Increment the count by 1 to get the next ID
+    $nextId = $existingCount + 1;
+
+    // Format the next ID with leading zeros if necessary
+    $exFundID = "ExF-" . str_pad($nextId, 3, '0', STR_PAD_LEFT);
+
+    // Retrieve all agencies to populate the dropdown
     $agencies = Agency::all();
-
-    // Retrieve the latest record (including archived data) from the ExternalFunds model
-    $latest = ExternalFunds::withTrashed()->orderBy('exFundID', 'desc')->first();
-
-    if ($latest) {
-        // Extract the numeric part of the identifier
-        $numericPart = intval(substr($latest->exFundID, 2)) + 1;
-    } else {
-        $numericPart = 1;
-    }
-
-    $exFundID = "ExF-" . str_pad($numericPart, 3, '0', STR_PAD_LEFT);
-
 @endphp
 
 <div class="modal fade" id="addExFunds" tabindex="-1" aria-labelledby="addMonitoringsModal" aria-hidden="true">

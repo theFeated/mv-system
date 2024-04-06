@@ -6,10 +6,11 @@
 
 @include('monitorings.modal', ['researchId' => $research->id])
 @include('externalfunds.modal', ['researchId' => $research->id])
-
 @include('roleresearchassigned.modal')
 
 @include('roleresearchassigned.edit', ['researchID' => $research->id])
+@include('monitorings.edit', ['researchID' => $research->id])
+@include('externalfunds.edit', ['researchId' => $research->id])
 
     <div class="d-flex align-items-center justify-content-between ">
         <h1 class="mb-0">Research Details</h1>
@@ -198,7 +199,9 @@
                 <td class="align-middle">{{ $rs->monitoringPersonnel }}</td>
                 <td class="align-middle">{{ $rs->remarks }}</td>
                 <td class="align-middle">
-                    <div class="btn-group" role="group" aria-label="Basic example"                           <form action="{{ route('research.destroy', $rs->id) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                    <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $rs->monitoringID }}">Edit</a>        
+                    <form action="{{ route('research.destroy', $rs->id) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger m-0">Archive</button>
@@ -251,7 +254,7 @@
                 <td class="align-middle">{{ $rs->purpose }}</td>
                 <td class="align-middle">
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="{{ route('research.edit', $rs->id) }}" type="button" class="btn btn-warning">Edit</a>
+                    <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $rs->exFundID }}">Edit</a>
                         <form action="{{ route('research.destroy', $rs->id) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
                             @csrf
                             @method('DELETE')

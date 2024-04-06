@@ -121,11 +121,13 @@ Route::middleware('auth')->group(function () {
     Route::controller(MonitoringsController::class)->prefix('monitorings')->group(function () {
         Route::get('', 'index')->name('monitorings.modal');
         Route::post('save', 'save')->name('monitorings.save');
+        Route::patch('monitorings/{monitoringID}', 'update')->name('monitorings.update');
     });
 
     Route::controller(ExternalFundsController::class)->prefix('externalfunds')->group(function () {
         Route::get('', 'index')->name('externalfunds.modal');
         Route::post('save', 'save')->name('externalfunds.save');
+        Route::patch('externalfunds/{exFundID}', 'update')->name('externalfunds.update');
     });
 
     

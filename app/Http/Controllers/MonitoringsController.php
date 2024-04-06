@@ -39,7 +39,46 @@ class MonitoringsController extends Controller
         $monitoring->save();
     
         // Flash a success message and redirect back
-        return redirect()->back()->with('success', 'Monitoring record saved successfully!');
+        return redirect()->back()->with('success', 'Monitorings record saved successfully!');
     }
-    
+
+    public function edit($monitoringID)
+    {
+        $monitoring = Monitorings::find($monitoringID);
+
+        // Check if the monitoring exists
+        if (!$monitoring) {
+            return redirect()->back()->with('error', 'Monitorings not found.');
+        }
+
+        // Pass the monitoring to the view
+        return view('monitorings.edit', compact('monitoring'));
+    }
+
+    public function update(Request $request, $monitoringID)
+    {
+        // Find the monitoring model by monitoringID
+        $monitoring = Monitorings::findOrFail($monitoringID);
+
+        // Check if the model exists
+        if (!$monitoring) {
+            return redirect()->back()->with('error', 'Monitorings not found.');
+        }
+
+        // Validate the incoming request data for the monitoring
+        $validatedData = $request->validate([
+            'progress' => 'required',
+            'status' => 'required',
+            'remarks' => 'required',
+            'monitoringPersonnel' => 'required',
+            'date' => 'required|date',
+        ]);
+
+        // Update the attributes of the model
+        $monitoring->update($validatedData);
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Monitorings Updated Successfully!');
+    }
+
 }
