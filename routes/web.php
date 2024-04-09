@@ -10,7 +10,7 @@ use App\Http\Controllers\ResearcherController;
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\MonitoringsController;
 use App\Http\Controllers\ExternalFundsController;
-
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -91,6 +91,7 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(ResearcherController::class)->prefix('researcher')->group(function () {
         Route::get('', 'index')->name('researcher');
+        Route::get('index', 'index')->name('researcher.index');
         Route::get('create', 'create')->name('researcher.create');
         Route::post('store', 'store')->name('researcher.store');
         Route::get('show/{researcherID}', 'show')->name('researcher.show');
@@ -140,6 +141,7 @@ Route::middleware('auth')->group(function () {
         Route::post('externalfunds/unarchiveMultiple', 'unarchiveMultiple')->name('externalfunds.unarchiveMultiple');
     });
 
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
     Route::post('/profile/save', [App\Http\Controllers\ProfileController::class, 'save'])->name('profile.save');

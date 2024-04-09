@@ -1846,6 +1846,11 @@ pre code {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.form-control:hover {
+  border-color: #80bdff; 
+  box-shadow: 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;
@@ -7599,7 +7604,7 @@ button.bg-dark:focus {
 }
 
 .w-8 {
-  width: 83% !important;
+  width: 92% !important;
 }
 
 .w-100 {
@@ -11293,4 +11298,9 @@ footer.sticky-footer .copyright {
 
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
+}
+
+#accordionSidebar {
+  display: none;
+  transition: all 0.3s ease-in-out; 
 }

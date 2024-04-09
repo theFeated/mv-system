@@ -13,10 +13,18 @@
   
   <!-- Custom styles for this template-->
   <link href="{{ asset('admin_assets/css/sb-admin-2.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
   <link href='https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css' rel='stylesheet'>
-  <link href='  https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css' rel='stylesheet'>
-
+  <link href='https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css' rel='stylesheet'>
+  
+  <style>
+    @media (max-width: 768px) {
+      #content-wrapper {
+        margin-left: 0 !important;
+      }
+    }
+  </style>
 </head>
 <body id="page-top">
   <!-- Page Wrapper -->
@@ -37,7 +45,7 @@
         <!-- End of Topbar -->
   
         <!-- Begin Page Content -->
-        <div class="container-fluid offset-2 w-8 mt-6">
+        <div class="container-fluid offset-1 w-8 mt-5">
   
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -76,7 +84,7 @@
   <!-- Core plugin JavaScript-->
   <script src="{{ asset('admin_assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
   <!-- Custom scripts for all pages-->
-  <script src="{{ asset('admin_assets/js/sb-admin-2.min.js') }}"></script>
+  <script src="{{ asset('admin_assets/js/sb-admin-2.js') }}"></script>
   <!-- Page level plugins -->
   <script src="{{ asset('admin_assets/vendor/chart.js/Chart.min.js') }}"></script>
 
@@ -122,8 +130,7 @@
                 checkbox.checked = !checkbox.checked;
             });
         });
-    </script> 
-    <script>
+
       $(document).ready(function(){
           // Close modal on button click
           $(".btn").click(function(){
@@ -135,6 +142,56 @@
               $(".my-modal").modal('hide');
           });
       });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @if(isset($researchPerYear))
+        <script>
+            var years = @json($researchPerYear->pluck('year'));
+            var counts = @json($researchPerYear->pluck('total'));
+
+            var ctx = document.getElementById('researchPerYearChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        label: 'Research Per Year',
+                        data: counts,
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+            @endif
+    </script>
+
+    <script>
+            $(document).ready(function() {
+            $('.list-group-item-action').click(function() {
+                $('.list-group-item-action').removeClass('active');
+                $(this).addClass('active');
+
+                // Check which item was clicked and show corresponding content
+                var id = $(this).attr('id');
+                if (id === 'researchLink') {
+                    $('#researchInfoBox').show();
+                    $('#researchChartCard').show();
+                    // Call a function to fetch and display research data here
+                } else if (id === 'researcherLink') {
+                    // Show researcher content
+                }
+            });
+        });
     </script>
 </body>
 </html>

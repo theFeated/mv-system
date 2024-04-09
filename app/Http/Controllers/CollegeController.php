@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
+
+use App\Http\Requests\College\StoreCollegeRequest;
+use App\Http\Requests\College\UpdateCollegeRequest;
+
 use App\Models\College;
 
 
@@ -16,7 +20,7 @@ class CollegeController extends Controller
     public function index()
     {
   
-        $college = College::orderBy('created_at', 'DESC')->paginate(10);
+        $college = College::orderBy('created_at', 'DESC')->get();
         return view('college.index', compact('college'));
     }
     
@@ -32,34 +36,11 @@ class CollegeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
-        // Validate the request data
-        $validatedData = $request->validate([
-            'collegeName' => 'required|string',
-            'codePrefix' => 'required|string',
-            'collegeDean' => 'required|string',
-        ]);
-    
-        try {
-            $totalColleges = College::count();
-            
-            // Increment the total number and format it as a three-digit string
-            $collegeNumber = str_pad($totalColleges + 1, 3, '0', STR_PAD_LEFT);
-            
-            // Generate the new collegeID
-            $newCollegeID = $validatedData['codePrefix'] . $collegeNumber;
-    
-            // Create the college
-            $college = College::create([
-                'collegeID' => $newCollegeID,
-                'collegeName' => $validatedData['collegeName'],
-                'collegeDean' => $validatedData['collegeDean'],
-            ]);
-    
-            return redirect()->route('college')->with('success', 'College added successfully');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to add college: ' . $e->getMessage());
-        }
+    public function store(StoreCollegeRequest $request)
+    {
+        return $request->storeCollege();
+
+        return redirect()->route('success.page')->with('success', 'College added successfully');
     }
     
     /**
@@ -85,15 +66,15 @@ class CollegeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $collegeID)
+    public function update(UpdateCollegeRequest $request, string $collegeID)
     {
         $college = College::findOrFail($collegeID);
-
-        $college->update($request->all());
-  
+    
+        $college->update($request->only(['collegeName', 'collegeDean']));
+    
         return redirect()->route('college')->with('success', 'College updated successfully');
     }
-
+    
      /**
      * Archived the specified resource in storage.
      */
@@ -132,12 +113,12 @@ class CollegeController extends Controller
      */
     public function destroyMultiple(Request $request)
     {
-        $selectedColleges = $request->input('selectedColleges', []);
+        $selected = $request->input('selected', []);
     
-        if (empty($selectedColleges)) {
+        if (empty($selected)) {
             return redirect()->back()->withErrors('Please select at least one college to archive.');
         }    
-        College::destroy($selectedColleges);
+        College::destroy($selected);
     
         return redirect()->back()->with('success', 'Multiple Colleges Archived successfully');
     }
@@ -147,13 +128,13 @@ class CollegeController extends Controller
      */
     public function unarchiveMultiple(Request $request)
     {
-        $selectedColleges = $request->input('selectedColleges', []);
+        $selected = $request->input('selected', []);
 
-        if (empty($selectedColleges)) {
+        if (empty($selected)) {
             return redirect()->back()->withErrors('Please select at least one college to restore.');
         }
 
-        College::whereIn('collegeID', $selectedColleges)->restore();
+        College::whereIn('collegeID', $selected)->restore();
 
         return redirect()->back()->with('success', 'Colleges restored successfully');
     }

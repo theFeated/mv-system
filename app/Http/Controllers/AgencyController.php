@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Agency;
 
+use App\Http\Requests\Agency\StoreAgencyRequest;
+use App\Http\Requests\Agency\UpdateAgencyRequest;
+
 class AgencyController extends Controller
 {
 
@@ -37,9 +40,9 @@ class AgencyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAgencyRequest $request)
     {
-        Agency::create($request->all());
+        Agency::create($request->validated());
         return redirect()->route('agency')->with('success', 'Agency added successfully');
     }
 
@@ -67,12 +70,12 @@ class AgencyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $agencyID)
+    public function update(UpdateAgencyRequest $request, string $agencyID)
     {
         $agency = Agency::findOrFail($agencyID);
-
-        $agency->update($request->all());
-  
+    
+        $agency->update($request->validated());
+    
         return redirect()->route('agency')->with('success', 'Agency updated successfully');
     }
 

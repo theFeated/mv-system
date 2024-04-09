@@ -3,47 +3,44 @@
 @section('title', '')
 
 @section('contents')
-<form method="POST" action="{{ route('researcher.destroyMultiple') }}" onsubmit="return confirm('Archive Multiple Researchers?')">
-    @csrf
-    @method('DELETE')
-    <div class="row offset-sm-9 offset-3">
-            <div class="dropdown mr-2">
+    <form method="POST" action="{{ route('researcher.destroyMultiple') }}" onsubmit="return confirm('Archive Multiple Researchers?')">
+        @csrf
+        @method('DELETE')
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
+            <h2 class="mt-3 mb-3">Researcher List</h2>
+            <div class="dropdown ml-md-auto mt-3 mt-md-0">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Add
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a href="{{ route('researcher.create') }}" class="dropdown-item">Add Researcher</a>
-                </div>  
+                </div>
             </div>
-            <div class="">
-                <div class="dropdown">
-                    <button class="btn btn-info dropdown-toggle" type="button" id="archiveDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Archive
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="archiveDropdownButton">
-                        <a href="{{ route('researcher.restore') }}" class="dropdown-item">Archived</a>
-                        <button type="submit" class="dropdown-item">Archive Selected</button>
-                    </div>
+            <div class="dropdown ml-2 mt-3 mt-md-0">
+                <button class="btn btn-info dropdown-toggle" type="button" id="archiveDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Archive
+                </button>
+                <div class="dropdown-menu" aria-labelledby="archiveDropdownButton">
+                    <a href="{{ route('researcher.restore') }}" class="dropdown-item">Archived</a>
+                    <button type="submit" class="dropdown-item">Archive Selected</button>
                 </div>
             </div>
         </div>
 
-    @if(Session::has('success'))
-    <div class="alert alert-success" role="alert">
-        {{ Session::get('success') }}
-    </div>
-    @endif
 
-    @if(Session::has('error'))
-    <div class="alert alert-danger" role="alert">
-        {{ Session::get('error') }}
-    </div>
-    @endif
+        @if(Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('success') }}
+        </div>
+        @endif
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
+        @if(Session::has('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ Session::get('error') }}
+        </div>
+        @endif
+            <table id='recordTable' class='table table-hover table-bordered'>
+                <thead class='table-primary'>
                     <tr>
                         <th>               
                             <input type="checkbox" id="select-all-checkbox">
@@ -91,15 +88,5 @@
                     @endif
                 </tbody>
             </table>
-        </div>
-    </div>
-</form>
-<script>
-    document.getElementById("select-all-checkbox").addEventListener("click", function() {
-        let checkboxes = document.querySelectorAll("input[name='selected[]']");
-        checkboxes.forEach(function(checkbox) {
-            checkbox.checked = !checkbox.checked;
-        });
-    });
-</script>
+    </form>
 @endsection

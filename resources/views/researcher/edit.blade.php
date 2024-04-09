@@ -21,7 +21,7 @@
         {{ Session::get('error') }}
     </div>
     @endif
-    <form action="{{ route('researcher.update', $researcher->collegeID) }}" method="POST">
+    <form action="{{ route('researcher.update', $researcher->researcherID) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="row">

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Roles;
 
+use App\Http\Requests\Roles\StoreRolesRequest;
+use App\Http\Requests\Roles\UpdateRolesRequest;
 
 class RolesController extends Controller
 {
@@ -40,9 +42,10 @@ class RolesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRolesRequest  $request)
     {
-        Roles::create($request->all());
+        $roles = Roles::create($request->validated());
+    
         return redirect()->route('roles')->with('success', 'Roles added successfully');
     }
 
@@ -69,11 +72,11 @@ class RolesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $roleID)
+    public function update(UpdateRolesRequest $request, string $roleID)
     {
         $roles = Roles::findOrFail($roleID);
 
-        $roles->update($request->all());
+        $roles->update($request->validated());
   
         return redirect()->route('roles')->with('success', 'Roles updated successfully');
     }

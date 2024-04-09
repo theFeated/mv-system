@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Researcher;
 use App\Models\College;
 
+use App\Http\Requests\Researcher\StoreResearcherRequest;
+use App\Http\Requests\Researcher\UpdateResearcherRequest;
+
 class ResearcherController extends Controller
 {
 
@@ -32,9 +35,10 @@ class ResearcherController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreResearcherRequest $request)
     {
-        Researcher::create($request->all());
+        $researcher = Researcher::create($request->validated());
+
         return redirect()->route('researcher')->with('success', 'Researcher added successfully');
     }
 
@@ -63,13 +67,13 @@ class ResearcherController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $researcherID)
+    public function update(UpdateResearcherRequest $request, string $researcherID)
     {
         $researcher = Researcher::findOrFail($researcherID);
-
-        $researcher->update($request->all());
-  
-        return redirect()->route('researcher')->with('success', 'Researcher updated successfully');
+    
+        $researcher->update($request->validated());
+    
+        return redirect()->route('researcher.index')->with('success', 'Researcher updated successfully');
     }
 
      /**

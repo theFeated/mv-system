@@ -90,6 +90,20 @@
         </div>
         <div class="row">
             <div class="col mb-3">
+                <label class="form-label">Link</label>
+                <input type="text" name="link_1" class="form-control" placeholder="Link 1" value="{{ $research->link_1 }}" readonly>
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Link</label>
+                <input type="text" name="link_2" class="form-control" placeholder="Link 2" value="{{ $research->link_2 }}" readonly>
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Link</label>
+                <input type="text" name="link_3" class="form-control" placeholder="Link 3" value="{{ $research->link_3 }}" readonly>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-3">
                 <label class="form-label">Extension</label>
                 <input type="text" name="extension" class="form-control" placeholder="Extension" value="{{ $research->extension }}" readonly>
             </div>

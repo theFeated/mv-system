@@ -27,9 +27,9 @@
             </div>
         </div>
         <hr />
-        <table class="table table-hover">
-            <thead class="table-primary">
-                <tr>
+        <table id='recordTable' class='table table-hover table-bordered'>
+                <thead class='table-primary'>
+                    <tr>
                     <th>               
                         <input type="checkbox" id="select-all-checkbox">
                     </th>
@@ -83,9 +83,9 @@
             </div>
         </div>
         <hr />
-        <table class="table table-hover">
-            <thead class="table-primary">
-                <tr>
+        <table id='recordTable' class='table table-hover table-bordered'>
+                <thead class='table-primary'>
+                    <tr>
                     <th>               
                         <input type="checkbox" id="select-all-checkbox-two">
                     </th>
@@ -135,9 +135,9 @@
             </div>
         </div>
         <hr />
-        <table class="table table-hover">
-            <thead class="table-primary">
-                <tr>
+            <table id='recordTable' class='table table-hover table-bordered'>
+                <thead class='table-primary'>
+                    <tr>
                     <th>               
                         <input type="checkbox" id="select-all-checkbox-three">
                     </th>
@@ -194,47 +194,47 @@
             </div>
         </div>
         <hr />
-        <table class="table table-hover">
-            <thead class="table-primary">
-                <tr>
-                    <th>               
-                        <input type="checkbox" id="select-all-checkbox-four">
-                    </th>
-                    <th>#</th>
-                    <th>External Fund ID</th>
-                    <th>Research ID</th>
-                    <th>Agency</th>
-                    <th>Contribution</th>
-                    <th>Purpose</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($externalFunds as $externalFund)
-                <tr>
-                    <td class="align-middle">
-                        <input type="checkbox" name="selectedFour[]" value="{{ $externalFund->exFundID }}">
-                    </td>
-                    <td class="align-middle">{{ $loop->iteration }}</td>
-                    <td class="align-middle">{{ $externalFund->exFundID }}</td>
-                    <td class="align-middle">{{ $externalFund->researchID }}</td>
-                    <td class="align-middle">{{ $externalFund->agency->name }}</td>
-                    <td class="align-middle">{{ $externalFund->contribution }}</td>
-                    <td class="align-middle">{{ $externalFund->purpose }}</td>
-                    <td>
-                        <form action="{{ route('externalfunds.unarchive', $externalFund->exFundID) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-secondary">Restore</button>
-                        </form>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="8" class="text-center">No archived external funds found</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+                <table id='recordTable' class='table table-hover table-bordered'>
+                    <thead class='table-primary'>
+                        <tr>
+                            <th>               
+                                <input type="checkbox" id="select-all-checkbox-four">
+                            </th>
+                            <th>#</th>
+                            <th>External Fund ID</th>
+                            <th>Research ID</th>
+                            <th>Agency</th>
+                            <th>Contribution</th>
+                            <th>Purpose</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($externalFunds as $externalFund)
+                        <tr>
+                            <td class="align-middle">
+                                <input type="checkbox" name="selectedFour[]" value="{{ $externalFund->exFundID }}">
+                            </td>
+                            <td class="align-middle">{{ $loop->iteration }}</td>
+                            <td class="align-middle">{{ $externalFund->exFundID }}</td>
+                            <td class="align-middle">{{ $externalFund->researchID }}</td>
+                            <td class="align-middle">{{ $externalFund->agency->name }}</td>
+                            <td class="align-middle">{{ $externalFund->contribution }}</td>
+                            <td class="align-middle">{{ $externalFund->purpose }}</td>
+                            <td>
+                                <form action="{{ route('externalfunds.unarchive', $externalFund->exFundID) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-secondary">Restore</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="8" class="text-center">No archived external funds found</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
     </form>
 
 @endsection

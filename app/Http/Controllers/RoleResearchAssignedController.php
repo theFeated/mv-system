@@ -10,6 +10,9 @@
  use App\Models\Roles;
  use App\Models\Researcher;
  use App\Models\Research;
+
+use App\Http\Requests\RoleResearchAssigned\StoreAssignedRequest;
+use App\Http\Requests\RoleResearchAssigned\UpdateAssignedRequest;
  
  class RoleResearchAssignedController extends Controller
  {
@@ -17,32 +20,14 @@
          return view('roleresearchassigned.modal', compact('roles', 'researchers', 'research'));
      }
      
-     public function save(Request $request){
-        $assignedID = $request->input('assignedID');
-        $roleID = $request->input('roleID');
-        $researcherID = $request->input('researcherID');
-        $researchID = $request->input('researchID');
-    
-        // Check if the role is already assigned to the research
-        $existingAssignment = RoleResearchAssigned::where('roleID', $roleID)
-                                                    ->where('researchID', $researchID)
-                                                    ->first();
-    
-        // If the assignment already exists, flash an error message and redirect back
-        if ($existingAssignment) {
-            return redirect()->back()->with('error', 'This role is already assigned to the research.');
-        }
-    
-        // If the assignment does not exist, create a new RoleResearchAssigned instance and save it
-        $roleresearchassigned = new RoleResearchAssigned;
-        $roleresearchassigned->assignedID = $assignedID;
-        $roleresearchassigned->roleID = $roleID;
-        $roleresearchassigned->researcherID = $researcherID;
-        $roleresearchassigned->researchID = $researchID;
-        $roleresearchassigned->save();
-    
-        return redirect()->back()->with('success', 'Saved Successfully!');
-    }
+     public function save(StoreAssignedRequest $request)
+     {
+        $validatedData = $request->validated();
+ 
+         RoleResearchAssigned::create($validatedData);
+ 
+         return redirect()->back()->with('success', 'Saved Successfully!');
+     }
     
     public function edit($roleID, $researcherID, $researchID)
     {
@@ -65,31 +50,16 @@
         return view('roleresearchassigned.edit', compact('roles', 'researchers', 'research', 'roleresearchassigned'));
     }    
     
-    public function update(Request $request, $assignedID, $researchID)
+    public function update(UpdateAssignedRequest $request)
     {
-        // Find the RoleResearchAssigned model by assignedID and researchID
-        $roleresearchassigned = RoleResearchAssigned::where('assignedID', $assignedID)
-                                                    ->where('researchID', $researchID)
-                                                    ->first();
-    
-        // Check if the model exists
-        if (!$roleresearchassigned) {
-            return redirect()->back()->with('error', 'Not found. assignedID: ' . $assignedID . ', researchID: ' . $researchID);
-        }
-    
-        // Validate the incoming request data for role and researcher
-        $validatedData = $request->validate([
-            'roleID' => 'required',
-            'researcherID' => 'required',
-        ]);
+        $roleresearchassigned = $request->roleresearchassigned;
     
         // Update role and researcher attributes of the model
         $roleresearchassigned->update([
-            'roleID' => $validatedData['roleID'],
-            'researcherID' => $validatedData['researcherID'],
+            'roleID' => $request->roleID,
+            'researcherID' => $request->researcherID,
         ]);
     
-        // Redirect back with a success message
         return redirect()->back()->with('success', 'Updated Successfully!');
     }
     

@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Monitorings;
 
+use App\Http\Requests\Monitorings\StoreMonitoringRequest;
+use App\Http\Requests\Monitorings\UpdateMonitoringRequest;
+
 class MonitoringsController extends Controller
 {
 
@@ -17,28 +20,12 @@ class MonitoringsController extends Controller
         return view('monitorings.modal', compact('monitoringID'));
     }
     
-    public function save(Request $request){
-        // Retrieve the input data
-        $monitoringID = $request->input('monitoringID');
-        $researchID = $request->input('researchID');
-        $progress = $request->input('progress');
-        $status = $request->input('status');
-        $remarks = $request->input('remarks');
-        $monitoringPersonnel = $request->input('monitoringPersonnel');
-        $date = $request->input('date');
+    public function save(StoreMonitoringRequest $request)
+    {
+        $validatedData = $request->validated();
     
-        // Create a new monitoring record
-        $monitoring = new Monitorings;
-        $monitoring->monitoringID = $monitoringID;
-        $monitoring->researchID = $researchID;
-        $monitoring->progress = $progress;
-        $monitoring->status = $status;
-        $monitoring->remarks = $remarks;
-        $monitoring->monitoringPersonnel = $monitoringPersonnel;
-        $monitoring->date = $date;
-        $monitoring->save();
+        Monitorings::create($validatedData);
     
-        // Flash a success message and redirect back
         return redirect()->back()->with('success', 'Monitorings record saved successfully!');
     }
 
@@ -55,29 +42,14 @@ class MonitoringsController extends Controller
         return view('monitorings.edit', compact('monitoring'));
     }
 
-    public function update(Request $request, $monitoringID)
+    public function update(UpdateMonitoringRequest $request, $monitoringID)
     {
-        // Find the monitoring model by monitoringID
         $monitoring = Monitorings::findOrFail($monitoringID);
-
-        // Check if the model exists
-        if (!$monitoring) {
-            return redirect()->back()->with('error', 'Monitorings not found.');
-        }
-
-        // Validate the incoming request data for the monitoring
-        $validatedData = $request->validate([
-            'progress' => 'required',
-            'status' => 'required',
-            'remarks' => 'required',
-            'monitoringPersonnel' => 'required',
-            'date' => 'required|date',
-        ]);
-
-        // Update the attributes of the model
+    
+        $validatedData = $request->validated();
+    
         $monitoring->update($validatedData);
-
-        // Redirect back with a success message
+    
         return redirect()->back()->with('success', 'Monitorings Updated Successfully!');
     }
 

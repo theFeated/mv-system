@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\ExternalFunds;
 
+use App\Http\Requests\ExternalFunds\StoreExternalFundRequest;
+use App\Http\Requests\ExternalFunds\UpdateExternalFundRequest;
+
 class ExternalFundsController extends Controller
 {
 
@@ -18,30 +21,15 @@ class ExternalFundsController extends Controller
         return view('externalfunds.modal', compact('exFundID'));
     }
     
-    public function save(Request $request)
+    public function save(StoreExternalFundRequest $request)
     {
-        // Retrieve the input data
-        $exFundID = $request->input('exFundID');
-        $researchID = $request->input('researchID');
-        $agencyID = $request->input('agencyID');
-        $contribution = $request->input('contribution');
-        $purpose = $request->input('purpose');
+        $validatedData = $request->validated();
+ 
+        ExternalFunds::create($validatedData);
     
-        // Create a new external funds record
-        $externalfunds = new ExternalFunds;
-        $externalfunds->exFundID = $exFundID;
-        $externalfunds->researchID = $researchID;
-        $externalfunds->agencyID = $agencyID;
-        $externalfunds->contribution = $contribution;
-        $externalfunds->purpose = $purpose;
-    
-        // Save the record to the database
-        $externalfunds->save();
-    
-        // Flash a success message and redirect back
         return redirect()->back()->with('success', 'External Funds record saved successfully!');
     }
-    
+
     public function edit($exFundID)
     {
         // Find the external fund by its ID
@@ -59,28 +47,15 @@ class ExternalFundsController extends Controller
         return view('externalfunds.edit', compact('externalFund', 'agencies'));
     }
     
-    public function update(Request $request, $exFundID)
+
+    public function update(UpdateExternalFundRequest $request, $exFundID)
     {
-        // Find the external fund model by exFundID
         $externalFund = ExternalFunds::findOrFail($exFundID);
-
-        // Check if the model exists
-        if (!$externalFund) {
-            return redirect()->back()->with('error', 'External fund not found.');
-        }
-
-        // Validate the incoming request data for the external fund
-        $validatedData = $request->validate([
-            'researchID' => 'required',
-            'agencyID' => 'required',
-            'contribution' => 'required',
-            'purpose' => 'required',
-        ]);
-
-        // Update the attributes of the model
+    
+        $validatedData = $request->validated();
+    
         $externalFund->update($validatedData);
-
-        // Redirect back with a success message
+    
         return redirect()->back()->with('success', 'External fund updated successfully!');
     }
 

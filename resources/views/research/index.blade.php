@@ -9,13 +9,9 @@
     <form method="POST" action="{{ route('research.destroyMultiple') }}" onsubmit="return confirm('Archive Multiple Research?')">
         @csrf
         @method('DELETE')
-        <div class="container">
-    <div class="text-center">
-        <h2>Research List</h2>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
+            <h2 class="mt-3 mb-3">Research List</h2>
+            <div class="dropdown ml-md-auto mt-3 mt-md-0">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Add
                 </button>
@@ -24,9 +20,7 @@
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addnew">Add Researchers</a>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="d-flex align-items-center justify-content-between">
+            <div class="dropdown ml-2 mt-3 mt-md-0">
                 <button class="btn btn-info dropdown-toggle" type="button" id="archiveDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Archive
                 </button>
@@ -36,9 +30,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
         @if(Session::has('success'))
         <div class="alert alert-success" role="alert">
             {{ Session::get('success') }}
@@ -52,7 +43,7 @@
         @endif
 
         <table id='recordTable' class='table table-hover table-bordered'>
-            <thead id="myTable" class='table-primary'>
+            <thead class='table-primary'>
                 <tr>
                     <th>               
                         <input type="checkbox" id="select-all-checkbox">

@@ -13,6 +13,9 @@ use App\Models\RoleResearchAssigned;
 use App\Models\Monitorings;
 use App\Models\ExternalFunds;
 
+use App\Http\Requests\Research\StoreResearchRequest;
+use App\Http\Requests\Research\UpdateResearchRequest;
+
 class ResearchController extends Controller
 {
 
@@ -46,12 +49,12 @@ class ResearchController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreResearchRequest  $request)
     {
         // Convert 'true' or 'false' string to boolean value
         $request->merge(['internalFund' => $request->has('internalFund')]);
     
-        $research = Research::create($request->all());
+        $research = Research::create($request->validated());
     
         return redirect()->route('research')->with('success', 'Research added successfully');
     }
@@ -94,12 +97,12 @@ class ResearchController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $researchID)
+    public function update(UpdateResearchRequest $request, string $researchID)
     {
         $research = Research::findOrFail($researchID);
     
         $request->merge(['internalFund' => (bool)$request->input('internalFund')]);
-        $research->update($request->all());          
+        $research->update($request->validated());
     
         return redirect()->route('research')->with('success', 'Research updated successfully');
     }
