@@ -3,10 +3,10 @@
 @section('title', '')
   
 @section('contents')
-<div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">Edit Researcher</h1>
+    <div class="d-flex align-items-center justify-content-between">
+        <h3 class="mb-0 mt-sm-3 mt-5">Edit Researcher</h3>
             <div>
-                <a href="{{ route('researcher') }}" class="btn btn-primary">Back</a>
+                <a href="{{ route('researcher') }}" class="btn btn-primary mt-sm-3 mt-5">Back</a>
             </div>
     </div>
     <hr />

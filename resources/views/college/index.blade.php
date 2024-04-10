@@ -7,25 +7,28 @@
         @csrf
         @method('DELETE')
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
-            <h2 class="mt-3 mb-3">College List</h2>
-            <div class="dropdown ml-md-auto mt-3 mt-md-0">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="collegeDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Add
-                </button>
-                <div class="dropdown-menu" aria-labelledby="collegeDropdownButton">
-                    <a href="{{ route('college.create') }}" class="dropdown-item">Add College</a>
+            <h2 class="mt-3 mb-3 mt-sm-3 mt-5">College List</h2>
+            <div class="mb-3 mt-sm-3 mt-3 row mr-0">
+                <div class="mr-1">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="collegeDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="collegeDropdownButton">
+                        <a href="{{ route('college.create') }}" class="dropdown-item">Add College</a>
+                    </div>
                 </div>
-            </div>
-            <div class="dropdown ml-2 mt-3 mt-md-0">
-                <button class="btn btn-info dropdown-toggle" type="button" id="archiveCollegeDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Archive
-                </button>
-                <div class="dropdown-menu" aria-labelledby="archiveCollegeDropdownButton">
-                    <a href="{{ route('college.restore') }}" class="dropdown-item">Archived</a>
-                    <button type="submit" class="dropdown-item">Archive Selected</button>
+                <div >
+                    <button class="btn btn-info dropdown-toggle" type="button" id="archiveCollegeDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Archive
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="archiveCollegeDropdownButton">
+                        <a href="{{ route('college.restore') }}" class="dropdown-item">Archived</a>
+                        <button type="submit" class="dropdown-item">Archive Selected</button>
+                    </div>
                 </div>
             </div>
         </div>
+        <hr />
         @if(Session::has('success'))
         <div class="alert alert-success" role="alert">
             {{ Session::get('success') }}
@@ -55,7 +58,7 @@
             @foreach($college as $rs)
             <tr>
                 <td class="align-middle">
-                    <input type="checkbox" name="selectedColleges[]" value="{{ $rs->collegeID }}">
+                    <input type="checkbox" name="selected[]" value="{{ $rs->collegeID }}">
                 </td>
                 </form>
                 <td class="align-middle">{{ $loop->iteration }}</td>
@@ -77,7 +80,7 @@
             @endforeach
             @else
             <tr>
-                <td class="text-center" colspan="5">College not found</td>
+                <td class="text-center" colspan="9">College not found</td>
             </tr>
             @endif
         </tbody>

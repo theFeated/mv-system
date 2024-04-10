@@ -5,9 +5,9 @@
 @section('contents')
 
     <div class="d-flex align-items-center justify-content-between">
-        <h3 class="mb-0">Add Research</h3>
+        <h3 class="mb-0  mt-sm-3 mt-5">Add Research</h3>
             <div>
-                <a href="{{ route('research') }}" class="btn btn-primary">Back</a>
+                <a href="{{ route('research') }}" class="btn btn-primary  mt-sm-3 mt-5">Back</a>
             </div>
     </div>
     <hr />

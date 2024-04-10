@@ -6,34 +6,21 @@
 <form action="{{ route('agency.unarchiveMultiple') }}" method="POST">
         @csrf
         @method('POST') 
-    <div class="d-flex align-items-center justify-content-between">
-        <h3 class="mb-0">Archived Agency</h3>
-        <div>
-            <button type="submit" class="btn btn-success">Restore Selected</button>
-            <a href="{{ route('agency') }}" class="btn btn-primary">Back</a>
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
+            <h3 class="mb-0 mt-sm-3 mt-5">Archived Agency</h3>
+            <div>
+                <button type="submit" class="btn btn-success mt-sm-3 mt-3">Restore Selected</button>
+                <a href="{{ route('agency') }}" class="btn btn-primary mt-sm-3 mt-3">Back</a>
+            </div>
         </div>
-    </div>
     <hr />
     @if(Session::has('success'))
     <div class="alert alert-success" role="alert">
         {{ Session::get('success') }}
     </div>
-    @endif
-
-    @if(Session::has('error'))
-    <div class="alert alert-danger" role="alert">
-        {{ Session::get('error') }}
-    </div>
-    @endif
-    @if(Session::has('success'))
-        <div class="alert alert-success" role="alert">
-            {{ Session::get('success') }}
-        </div>
-    @endif        
-    <div class="card-body ">
-    <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-            <thead class="table-primary">
+    @endif     
+        <table id='recordTable' class='table table-hover table-bordered'>
+            <thead class='table-primary'>
                 <tr>
                 <th>               
                      <input type="checkbox" id="select-all-checkbox">
@@ -74,14 +61,5 @@
                 @endforelse
             </tbody>
         </table>
-        </div>
-    </div>
-    <script>
-        document.getElementById("select-all-checkbox").addEventListener("click", function() {
-            let checkboxes = document.querySelectorAll("input[name='selected[]']");
-            checkboxes.forEach(function(checkbox) {
-                checkbox.checked = !checkbox.checked;
-            });
-        });
-    </script>    
+    </form>
 @endsection

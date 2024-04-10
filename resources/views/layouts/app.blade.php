@@ -101,6 +101,22 @@
     
         new $.fn.dataTable.FixedHeader( table );
     } );
+
+    $(document).ready(function() {
+        var table = $('#recordTableTwo').DataTable( {
+            responsive: true
+        } );
+    
+        new $.fn.dataTable.FixedHeader( table );
+    } );
+
+    $(document).ready(function() {
+        var table = $('#recordTableThree').DataTable( {
+            responsive: true
+        } );
+    
+        new $.fn.dataTable.FixedHeader( table );
+    } );
   </script>
       <script>
         document.getElementById("select-all-checkbox").addEventListener("click", function() {
@@ -155,7 +171,7 @@
                 data: {
                     labels: years,
                     datasets: [{
-                        label: 'Research Per Year',
+                        label: 'Research',
                         data: counts,
                         backgroundColor: 'rgba(54, 162, 235, 0.5)',
                         borderColor: 'rgba(54, 162, 235, 1)',
@@ -191,6 +207,14 @@
                     // Show researcher content
                 }
             });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Show Research Form by default
+            $('#researchForm').show();
+            // Hide other forms
+            $('#monitoringsForm, #externalFundsForm, #roleResearchAssignedForm').hide();
         });
     </script>
 </body>

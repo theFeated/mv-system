@@ -6,13 +6,13 @@
 <form action="{{ route('researcher.unarchiveMultiple') }}" method="POST">
         @csrf
         @method('POST') 
-    <div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">Archived Researcher</h1>
-        <div>
-            <button type="submit" class="btn btn-success">Restore Selected</button>
-            <a href="{{ route('researcher') }}" class="btn btn-primary">Back</a>
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
+            <h3 class="mb-0 mt-sm-3 mt-5">Archived Researcher</h3>
+            <div>
+                <button type="submit" class="btn btn-success mt-sm-3 mt-3">Restore Selected</button>
+                <a href="{{ route('researcher') }}" class="btn btn-primary mt-sm-3 mt-3">Back</a>
+            </div>
         </div>
-    </div>
     <hr />
     @if(Session::has('success'))
     <div class="alert alert-success" role="alert">

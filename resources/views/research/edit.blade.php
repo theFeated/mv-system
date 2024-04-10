@@ -3,10 +3,10 @@
 @section('title', '')
   
 @section('contents')
-<div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">Edit Research</h1>
+    <div class="d-flex align-items-center justify-content-between">
+        <h3 class="mb-0  mt-sm-3 mt-5">Edit Research</h3>
             <div>
-                <a href="{{ route('research') }}" class="btn btn-primary">Back</a>
+                <a href="{{ route('research') }}" class="btn btn-primary  mt-sm-3 mt-5">Back</a>
             </div>
     </div>
     <hr />
@@ -84,6 +84,20 @@
             <div class="col mb-3">
                 <label class="form-label">End Date</label>
                 <input type="date" name="endDate" class="form-control" placeholder="End Date" value="{{ $research->endDate }}" >
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-3">
+                <label class="form-label">Link</label>
+                <input type="text" name="link_1" class="form-control" placeholder="Link 1" value="{{ $research->link_1 }}" >
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Link</label>
+                <input type="text" name="link_2" class="form-control" placeholder="Link 2" value="{{ $research->link_2 }}" >
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Link</label>
+                <input type="text" name="link_3" class="form-control" placeholder="Link 3" value="{{ $research->link_3 }}" >
             </div>
         </div>
         <div class="row">

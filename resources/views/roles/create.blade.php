@@ -3,10 +3,10 @@
 @section('title', '')
   
 @section('contents')
-<div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">Add Roles</h1>
+    <div class="d-flex align-items-center justify-content-between">
+        <h3 class="mb-0 mt-sm-3 mt-5">Add Roles</h3>
             <div>
-                <a href="{{ route('roles') }}" class="btn btn-primary">Back</a>
+                <a href="{{ route('roles') }}" class="btn btn-primary mt-sm-3 mt-5">Back</a>
             </div>
     </div>
     <hr />

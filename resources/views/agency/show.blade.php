@@ -3,12 +3,12 @@
 @section('title', '')
   
 @section('contents')
-<div class="d-flex align-items-center justify-content-between">
-        <h3 class="mb-0">Agency Details</h3>
+    <div class="d-flex align-items-center justify-content-between">
+            <h3 class="mb-0 mt-sm-3 mt-5">Agency Details</h3>
             <div>
-                <a href="{{ route('agency') }}" class="btn btn-primary">Back</a>
+                <a href="{{ route('agency') }}" class="btn btn-primary mt-sm-3 mt-5">Back</a>
             </div>
-    </div>    
+        </div>
     <hr />
     @if(Session::has('success'))
     <div class="alert alert-success" role="alert">

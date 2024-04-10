@@ -6,13 +6,13 @@
 <form action="{{ route('roles.unarchiveMultiple') }}" method="POST">
         @csrf
         @method('POST') 
-    <div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">Archived Roles</h1>
-        <div>
-            <button type="submit" class="btn btn-success">Restore Selected</button>
-            <a href="{{ route('roles') }}" class="btn btn-primary">Back</a>
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
+            <h3 class="mb-0 mt-sm-3 mt-5">Archived Roles</h3>
+            <div>
+                <button type="submit" class="btn btn-success mt-sm-3 mt-5">Restore Selected</button>
+                <a href="{{ route('roles') }}" class="btn btn-primary mt-sm-3 mt-5">Back</a>
+            </div>
         </div>
-    </div>
     <hr />
     @if(Session::has('success'))
     <div class="alert alert-success" role="alert">
@@ -25,9 +25,9 @@
         {{ Session::get('error') }}
     </div>
     @endif     
-        <table class="table table-hover">
-            <thead class="table-primary">
-            <tr>
+        <table id='recordTable' class='table table-hover table-bordered'>
+            <thead class='table-primary'>
+                <tr>
                 <th>               
                      <input type="checkbox" id="select-all-checkbox">
                 </th>
@@ -58,17 +58,9 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="text-center">No archived Researches found</td>
+                        <td colspan="9" class="text-center">No archived Researches found</td>
                     </tr>
                 @endforelse
             </tbody>
-        </table>
-    <script>
-        document.getElementById("select-all-checkbox").addEventListener("click", function() {
-            let checkboxes = document.querySelectorAll("input[name='selected[]']");
-            checkboxes.forEach(function(checkbox) {
-                checkbox.checked = !checkbox.checked;
-            });
-        });
-    </script>    
+        </table>  
 @endsection

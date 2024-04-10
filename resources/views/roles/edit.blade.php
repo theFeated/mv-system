@@ -3,7 +3,12 @@
 @section('title', '')
   
 @section('contents')
-    <h1 class="mb-0">Edit Role</h1>
+    <div class="d-flex align-items-center justify-content-between">
+        <h3 class="mb-0 mt-sm-3 mt-5">Edit Role</h3>
+            <div>
+                <a href="{{ route('roles') }}" class="btn btn-primary mt-sm-3 mt-5">Back</a>
+            </div>
+    </div>  
     <hr />
     @if(Session::has('success'))
     <div class="alert alert-success" role="alert">
