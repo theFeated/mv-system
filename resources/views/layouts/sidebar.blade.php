@@ -2,12 +2,6 @@
    
   <!-- Divider -->
   <hr class="sidebar-divider my-0">
-  
-  <li class="nav-item d-flex justify-content-center">
-    <a class="nav-link" href="{{ route('welcome') }}">
-      <i class="fas fa-home"></i>
-      <span>Home</span></a>
-  </li>
 
   <!-- Nav Item - Dashboard -->
   <li class="nav-item d-flex justify-content-center">

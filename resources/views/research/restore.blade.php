@@ -17,10 +17,10 @@
         @endif
     <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
         <div class="menu btn-group flex-md-row flex-column mt-sm-3 mt-5" role="group" aria-label="Menu">
-            <button type="button" class="btn btn-primary mb-2 mb-md-0 mr-md-2" onclick="$('#researchForm').show(); $('#monitoringsForm, #externalFundsForm, #roleResearchAssignedForm').hide();">Research Details</button>
-            <button type="button" class="btn btn-primary mb-2 mb-md-0 mr-md-2" onclick="$('#roleResearchAssignedForm').show(); $('#monitoringsForm, #externalFundsForm, #researchForm').hide();">Researchers Assigned</button>
-            <button type="button" class="btn btn-primary mb-2 mb-md-0 mr-md-2" onclick="$('#monitoringsForm').show(); $('#roleResearchAssignedForm, #externalFundsForm, #researchForm').hide();">Monitorings</button>
-            <button type="button" class="btn btn-primary mb-2 mb-md-0" onclick="$('#externalFundsForm').show(); $('#roleResearchAssignedForm, #monitoringsForm, #researchForm').hide();">External Funds</button>
+            <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-2" onclick="$('#researchForm').show(); $('#monitoringsForm, #externalFundsForm, #roleResearchAssignedForm').hide();">Research Details</button>
+            <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-2" onclick="$('#roleResearchAssignedForm').show(); $('#monitoringsForm, #externalFundsForm, #researchForm').hide();">Researchers Assigned</button>
+            <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-2" onclick="$('#monitoringsForm').show(); $('#roleResearchAssignedForm, #externalFundsForm, #researchForm').hide();">Monitorings</button>
+            <button type="button" class="btn btn-outline-primary mb-2 mb-md-0" onclick="$('#externalFundsForm').show(); $('#roleResearchAssignedForm, #monitoringsForm, #researchForm').hide();">External Funds</button>
         </div>
         <div>
             <a href="{{ route('research') }}" class="btn btn-primary">Back</a>

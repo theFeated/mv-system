@@ -11,13 +11,17 @@ use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\MonitoringsController;
 use App\Http\Controllers\ExternalFundsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CookieController;
+
+Route::get('store-image', [ImageController::class, 'store_image'])->name('store_image');
+Route::post('save-image', [ImageController::class, 'save_image'])->name('save_image');
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
  
 Route::get('welcome', function () {
-    return view('welcome');
+    return redirect()->route('login'); 
 })->name('welcome');
 
 Route::controller(AuthController::class)->group(function () {

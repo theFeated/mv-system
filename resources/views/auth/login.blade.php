@@ -1,3 +1,5 @@
+@include('cookies.cookie')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
