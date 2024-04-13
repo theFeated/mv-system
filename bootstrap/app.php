@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'user-role' =>  \App\Http\Middleware\UserRoleMiddleware::class,
             'redirectIfAuthenticated' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+            'auto-logout' => \App\Http\Middleware\AutoLogoutInactiveUsers::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

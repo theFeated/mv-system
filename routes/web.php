@@ -54,7 +54,7 @@ Route::fallback(function () {
 });
 
 // Admin Routes
-Route::middleware(['auth', 'user-role:admin'])->group(function () {
+Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function () {
     Route::get('admin/dashboard', function () {
         return view('dashboard');
     })->name('admin.dashboard');
@@ -169,7 +169,7 @@ Route::middleware(['auth', 'user-role:admin'])->group(function () {
 
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'auto-logout'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('/profile/save', [ProfileController::class, 'save'])->name('profile.save');
