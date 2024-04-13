@@ -11304,3 +11304,11 @@ body.sidebar-toggled footer.sticky-footer {
   display: none;
   transition: all 0.3s ease-in-out; 
 }
+
+.dark-mode * {
+  background-color: #424242 !important; 
+  color: #dae6f8 !important;
+}
+
+
+

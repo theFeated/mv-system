@@ -12,33 +12,55 @@ use App\Http\Controllers\MonitoringsController;
 use App\Http\Controllers\ExternalFundsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CookieController;
-
-Route::get('store-image', [ImageController::class, 'store_image'])->name('store_image');
-Route::post('save-image', [ImageController::class, 'save_image'])->name('save_image');
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    } else {
+        return redirect()->route('login');
+    }
 });
  
 Route::get('welcome', function () {
     return redirect()->route('login'); 
 })->name('welcome');
 
+Auth::routes();
+
 Route::controller(AuthController::class)->group(function () {
-    Route::get('register', 'register')->name('register');
-    Route::post('register', 'registerSave')->name('register.save');
-  
-    Route::get('login', 'login')->name('login');
-    Route::post('login', 'loginAction')->name('login.action');
-  
-    Route::get('logout', 'logout')->middleware('auth')->name('logout');
+    Route::middleware(['redirectIfAuthenticated'])->group(function () {
+        Route::get('login', 'login')->name('login');
+        Route::post('login', 'loginAction')->name('login.action');
+    });
+
+    Route::post('logout', 'logout')->middleware('auth')->name('logout');
 });
+
+/*
+Route::group(['prefix' => 'auth'], function () {
+    Route::get('login', [AuthController::class, 'login'])->name('login');
+    Route::post('login', [AuthController::class, 'loginAction'])->name('login.action');
   
-Route::middleware('auth')->group(function () {
-    Route::get('dashboard', function () {
+    Route::middleware('auth')->group(function () {
+        Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+    });
+});
+*/
+
+Route::fallback(function () {
+    return redirect()->route('dashboard');
+});
+
+// Admin Routes
+Route::middleware(['auth', 'user-role:admin'])->group(function () {
+    Route::get('admin/dashboard', function () {
         return view('dashboard');
-    })->name('dashboard');
+    })->name('admin.dashboard');
  
+    Route::get("/admin/home", [HomeController::class, 'adminHome'])->name('home.admin');
+
     Route::controller(CollegeController::class)->prefix('college')->group(function () {
         Route::get('', 'index')->name('college');
         Route::get('create', 'create')->name('college.create');
@@ -145,9 +167,50 @@ Route::middleware('auth')->group(function () {
         Route::post('externalfunds/unarchiveMultiple', 'unarchiveMultiple')->name('externalfunds.unarchiveMultiple');
     });
 
+});
+
+Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    
-    Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
-    Route::post('/profile/save', [App\Http\Controllers\ProfileController::class, 'save'])->name('profile.save');
+    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+    Route::post('/profile/save', [ProfileController::class, 'save'])->name('profile.save');
+
+
+    Route::controller(CollegeController::class)->prefix('college')->group(function () {
+        Route::get('', 'index')->name('college');
+        Route::get('show/{collegeID}', 'show')->name('college.show');
+        Route::get('restore', 'restore')->name('college.restore');
+
+    });
+
+    Route::controller(ResearchController::class)->prefix('research')->group(function () {
+        Route::get('', 'index')->name('research');
+        Route::get('show/{researchID}', 'show')->name('research.show');
+        Route::get('restore', 'restore')->name('research.restore');
+
+    });
+
+    Route::controller(RolesController::class)->prefix('roles')->group(function () {
+        Route::get('', 'index')->name('roles');
+        Route::get('show/{roleID}', 'show')->name('roles.show');
+        Route::get('restore', 'restore')->name('roles.restore');
+
+    });
+
+    Route::controller(ResearcherController::class)->prefix('researcher')->group(function () {
+        Route::get('', 'index')->name('researcher');
+        Route::get('index', 'index')->name('researcher.index');
+        Route::get('show/{researcherID}', 'show')->name('researcher.show');
+        Route::get('restore', 'restore')->name('researcher.restore');
+
+    });
+
+
+    Route::controller(AgencyController::class)->prefix('agency')->group(function () {
+        Route::get('', 'index')->name('agency');
+        Route::get('show/{agencyID}', 'show')->name('agency.show');
+        Route::get('restore', 'restore')->name('agency.restore');
+
+    });
+
 
 });

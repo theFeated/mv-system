@@ -3,7 +3,7 @@
 @section('title', '')
 
 @section('contents')
-<form method="POST" action="{{ route('college.destroyMultiple') }}" onsubmit="return confirm('Archive Multiple Colleges?')">
+<form id="deleteMultipleForm" method="POST" action="{{ route('college.destroyMultiple') }}" onsubmit="return confirm('Archive Multiple Colleges?')">
         @csrf
         @method('DELETE')
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">

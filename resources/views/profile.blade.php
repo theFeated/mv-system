@@ -87,7 +87,7 @@
                                 <label class="labels">New Password</label>
                                 <input type="password" name="password" class="form-control" placeholder="Enter your new password">
                             </div>
-                            <div class="form-group mb-0"> <!-- Remove margin-bottom -->
+                            <div class="form-group mb-0">
                                 <label class="labels">Confirm New Password</label>
                                 <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm your new password">
                             </div>

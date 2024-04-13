@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col mb-3">
                 <label class="form-label">ID</label>
-                <input type="text" name="researchID" class="form-control" placeholder="ID"  value="{{ $research->researchID }}" readonly>
+                <input type="text" name="researchID" class="form-control" placeholder="ID" value="{{ htmlentities($research->researchID) }}" readonly>
             </div>
             <div class="col mb-3">
                 <label class="form-label">College</label>

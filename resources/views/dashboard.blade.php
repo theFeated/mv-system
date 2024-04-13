@@ -10,9 +10,6 @@
             <div class="col-md-3 mb-4">
                 <!-- Navigation Bar -->
                 <div class="list-group">
-                    <a href="{{ route('dashboard') }}" class="list-group-item list-group-item-action" aria-current="true">
-                        Dashboard
-                    </a>
                     <a href="#" id="researchLink" class="list-group-item list-group-item-action">Research</a>
                     <!-- Add more links for other entities as needed -->
                 </div>
