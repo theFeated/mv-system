@@ -30,4 +30,19 @@ class Research extends Model
         'internalFund' => 'boolean',
     ];    
     
+    public function college()
+    {
+        return $this->belongsTo(College::class, 'collegeID');
+    }
+
+    public function researcher()
+    {
+        return $this->belongsTo(Researcher::class, 'researcherID');
+    }
+
+    public function agency()
+    {
+        return $this->belongsTo(Agency::class, 'agencyID');
+    }
+
 }

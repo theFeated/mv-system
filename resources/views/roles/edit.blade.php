@@ -37,7 +37,7 @@
         <div class="row">
             <div class="col mb-3">
                 <label class="form-label">Roles Description</label>
-                <input type="text" name="roleDescription" class="form-control" placeholder="Roles Description" value="{{ $roles->roleDescription }}" >
+                <textarea type="text" name="roleDescription" class="form-control" placeholder="Roles Description" >{{ $roles->roleDescription }}</textarea>
             </div>
         </div>
         <div class="col">

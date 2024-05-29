@@ -15,22 +15,31 @@
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
             <h3 class="mt-sm-3 mt-5">Details</h3>
             <div class="menu btn-group flex-md-row flex-column mt-sm-3 mt-3" role="group" aria-label="Menu">
-                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-2" onclick="$('#researchForm').show(); $('#monitoringsForm, #externalFundsForm, #roleResearchAssignedForm').hide();">Research Details</button>
-                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-2" onclick="$('#roleResearchAssignedForm').show(); $('#monitoringsForm, #externalFundsForm, #researchForm').hide();">Researchers Assigned</button>
-                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-2" onclick="$('#monitoringsForm').show(); $('#roleResearchAssignedForm, #externalFundsForm, #researchForm').hide();">Monitorings</button>
+                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-0" onclick="$('#researchForm').show(); $('#monitoringsForm, #externalFundsForm, #roleResearchAssignedForm').hide();">Research Details</button>
+                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-0" onclick="$('#roleResearchAssignedForm').show(); $('#monitoringsForm, #externalFundsForm, #researchForm').hide();">Researchers Assigned</button>
+                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-0" onclick="$('#monitoringsForm').show(); $('#roleResearchAssignedForm, #externalFundsForm, #researchForm').hide();">Monitorings</button>
                 <button type="button" class="btn btn-outline-primary mb-2 mb-md-0" onclick="$('#externalFundsForm').show(); $('#roleResearchAssignedForm, #monitoringsForm, #researchForm').hide();">External Funds</button>
+                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0" onclick="showAllArchivedItems();">Show All</button>
             </div>
-        <div class="mt-3 mt-sm-3">
-            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Add
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#addnew">Add Researchers</a>
-                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#addMonitorings">Add Monitorings</a>
-                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#addExFunds">Add External Funds</a>
+            <div class="mt-3 mt-sm-3 d-flex justify-content-between">
+                <a href="{{ route('generate-pdf', ['id' => $research->id]) }}" target="_blank" rel="noopener noreferrer" class="btn btn-info">Generate PDF</a>
+
+                @if(Auth::user()->name == "Admin")
+                <div class="dropdown ml-2">
+                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a href="#" class="dropdown-item" data-toggle="modal" data-target="#addnew">Add Researchers</a>
+                        <a href="#" class="dropdown-item" data-toggle="modal" data-target="#addMonitorings">Add Monitorings</a>
+                        <a href="#" class="dropdown-item" data-toggle="modal" data-target="#addExFunds">Add External Funds</a>
+                    </div>
+                </div>
+                @endif
+
+                <a href="{{ route('research') }}" class="btn btn-primary ml-2">Back</a>
             </div>
-            <a href="{{ route('research') }}" class="btn btn-primary ml-2">Back</a>
-        </div>
+
     </div>
     <hr />
     @if(Session::has('success'))
@@ -131,14 +140,18 @@
                 <input type="text" name="updated_at" class="form-control" placeholder="Updated At" value="{{ $research->updated_at }}" readonly>
             </div>
         </div>
+        <hr>
     </div>
 
-    <div id="roleResearchAssignedForm" style="display: none;">
-        <form action="{{ route('roleresearchassigned.destroyMultiple') }}" method="POST">
+    <div id="roleResearchAssignedForm" style="display: none;" class="mt-3">
+        <form action="{{ route('roleresearchassigned.destroyMultiple') }}" method="POST" class="archive-form">
             @csrf
+            @method('DELETE')
             <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
                 <h3 class="mb-0">Researcher</h3>
-                <button type="submit" class="btn btn-danger mt-3 mt-md-0">Archive Selected</button>
+                @if(Auth::user()->name == "Admin")
+                <button type="button" class="btn btn-danger mt-3 mt-md-0 archive-button" data-message="You can undo this later on the restore page.">Archive Selected</button>
+                @endif
             </div>
             <hr />
             <div class="table-responsive-sm">
@@ -152,7 +165,9 @@
                             <th>ID</th>
                             <th>Researcher</th>
                             <th>Role</th>
+                            @if(Auth::user()->name == "Admin")
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -162,20 +177,23 @@
                                     <td class="align-middle">
                                         <input type="checkbox" name="selected[]" value="{{ $rs->assignedID }}">
                                     </td>
+                                    </form>
                                     <td class="align-middle">{{ $loop->iteration }}</td>
                                     <td class="align-middle">{{ $rs->assignedID }}</td>
                                     <td class="align-middle">{{ $rs->researcher->researcherName }}</td>
                                     <td class="align-middle">{{ optional($rs->role)->roleName }}</td>
+                                    @if(Auth::user()->name == "Admin")
                                     <td class="align-middle">
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $rs->assignedID }}">Edit</a>
-                                            <form action="{{ route('roleresearchassigned.destroy', $rs->assignedID) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
+                                            <form action="{{ route('roleresearchassigned.destroy', $rs->assignedID) }}" method="POST" class="d-inline archive-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger m-0">Archive</button>
+                                                <button type="button" class="btn btn-danger m-0 archive-button">Archive</button>
                                             </form>
                                         </div>
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         @else
@@ -187,14 +205,18 @@
                 </table>
             </div>
         </form>
+        <hr>
     </div>
 
     <div id="monitoringsForm" style="display: none;">
-        <form action="{{ route('monitorings.destroyMultiple') }}" method="POST">
+        <form action="{{ route('monitorings.destroyMultiple') }}" method="POST" class="archive-form">
             @csrf
+            @method('DELETE')
             <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
                 <h3 class="mb-0">Monitorings</h3>
-                <button type="submit" class="btn btn-danger mt-3 mt-md-0">Archive Selected</button>
+                @if(Auth::user()->name == "Admin")
+                <button type="button" class="btn btn-danger mt-3 mt-md-0 archive-button" data-message="You can undo this later on the restore page.">Archive Selected</button>
+                @endif
             </div>
             <hr />
             <div class="table-responsive-sm">
@@ -211,7 +233,9 @@
                             <th>Research Progress</th>
                             <th>Monitoring Personnel</th>
                             <th>Remarks</th>
+                            @if(Auth::user()->name == "Admin")
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -221,6 +245,7 @@
                                     <td class="align-middle">
                                         <input type="checkbox" name="selectedTwo[]" value="{{ $monitoring->monitoringID }}">
                                     </td>
+                                    </form>
                                     <td class="align-middle">{{ $loop->iteration }}</td>
                                     <td class="align-middle">{{ $monitoring->monitoringID }}</td>
                                     <td class="align-middle">{{ $monitoring->date }}</td>
@@ -228,16 +253,18 @@
                                     <td class="align-middle">{{ $monitoring->progress }}</td>
                                     <td class="align-middle">{{ $monitoring->monitoringPersonnel }}</td>
                                     <td class="align-middle">{{ $monitoring->remarks }}</td>
+                                    @if(Auth::user()->name == "Admin")
                                     <td class="align-middle">
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $monitoring->monitoringID }}">Edit</a>
-                                            <form action="{{ route('monitorings.destroy', $monitoring->monitoringID) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
+                                            <form action="{{ route('monitorings.destroy', $monitoring->monitoringID) }}" method="POST" class="d-inline archive-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger m-0">Archive</button>
+                                                <button type="button" class="btn btn-danger m-0 archive-button">Archive</button>
                                             </form>
                                         </div>
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         @else
@@ -249,14 +276,18 @@
                 </table>
             </div>
         </form>
+        <hr>
     </div>
 
     <div id="externalFundsForm" style="display: none;">
-        <form action="{{ route('externalfunds.destroyMultiple') }}" method="POST">
+        <form action="{{ route('externalfunds.destroyMultiple') }}" method="POST" class="archive-form">
             @csrf
+            @method('DELETE')
             <div class="d-flex align-items-center justify-content-between">
                 <h3 class="mb-0">External Funds</h3>
-                <button type="submit" class="btn btn-danger">Archive Selected</button>
+                @if(Auth::user()->name == "Admin")
+                <button type="button" class="btn btn-danger mt-3 mt-md-0 archive-button" data-message="You can undo this later on the restore page.">Archive Selected</button>
+                @endif
             </div>
             <hr />
             <div class="table-responsive-sm">
@@ -272,7 +303,9 @@
                             <th>Agency</th>
                             <th>Contribution</th>
                             <th>Purpose</th>
+                            @if(Auth::user()->name == "Admin")
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -282,22 +315,25 @@
                                     <td class="align-middle">
                                         <input type="checkbox" name="selectedThree[]" value="{{ $externalFund->exFundID }}">
                                     </td>
+                                    </form>
                                     <td class="align-middle">{{ $loop->iteration }}</td>
                                     <td class="align-middle">{{ $externalFund->exFundID }}</td>
                                     <td class="align-middle">{{ $externalFund->researchID }}</td>
                                     <td class="align-middle">{{ $externalFund->agency->name }}</td>
                                     <td class="align-middle">{{ $externalFund->contribution }}</td>
                                     <td class="align-middle">{{ $externalFund->purpose }}</td>
+                                    @if(Auth::user()->name == "Admin")
                                     <td class="align-middle">
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $externalFund->exFundID }}">Edit</a>
-                                            <form action="{{ route('externalfunds.destroy', $externalFund->exFundID) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
+                                            <form action="{{ route('externalfunds.destroy', $externalFund->exFundID) }}" method="POST" class="d-inline archive-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger m-0">Archive</button>
+                                                <button type="button" class="btn btn-danger m-0 archive-button">Archive</button>
                                             </form>
                                         </div>
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         @else
@@ -309,6 +345,6 @@
                 </table>
             </div>
         </form>
+        <hr>
     </div>
-
 @endsection

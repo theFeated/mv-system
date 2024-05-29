@@ -9,16 +9,25 @@
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
             <h3 class="mb-0 mt-sm-3 mt-5">Archived Agency</h3>
             <div>
+            @if(Auth::user()->name == "Admin")
                 <button type="submit" class="btn btn-success mt-sm-3 mt-3">Restore Selected</button>
+            @endif
                 <a href="{{ route('agency') }}" class="btn btn-primary mt-sm-3 mt-3">Back</a>
             </div>
         </div>
     <hr />
-    @if(Session::has('success'))
-    <div class="alert alert-success" role="alert">
-        {{ Session::get('success') }}
-    </div>
-    @endif     
+        @if(Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('success') }}
+        </div>
+        @endif
+
+        @if(Session::has('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ Session::get('error') }}
+        </div>
+        @endif
+
         <table id='recordTable' class='table table-hover table-bordered'>
             <thead class='table-primary'>
                 <tr>
@@ -48,10 +57,17 @@
                         <td class="align-middle">{{ $agency->address }}</td>
                         <td class="align-middle">{{ $agency->telNum }}</td>
                         <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
                             <form action="{{ route('agency.unarchive', $agency->agencyID) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-success">Restore</button>
                             </form>
+                            <form action="{{ route('agency.destroyForever', $agency->agencyID) }}" method="POST" class="archive-form">
+                                @csrf
+                                @method('DELETE') 
+                                <button type="button" class="btn btn-danger m-0 archive-button" data-message="This will be permanently deleted.">Delete</button>
+                            </form>
+                        </div>
                         </td>
                     </tr>
                 @empty

@@ -139,5 +139,20 @@ class CollegeController extends Controller
         return redirect()->back()->with('success', 'Colleges restored successfully');
     }
 
+    public function destroyForever(Request $request, string $collegeID)
+    {
+        try {
+            $college = College::withTrashed()->findOrFail($collegeID);
+            
+            // Perform force delete
+            $college->forceDelete();
+            
+            return redirect()->route('college')->with('success', 'Deleted successfully');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('college')->with('error', 'Not found');
+        } catch (\Exception $e) {
+            return redirect()->route('college')->with('error', 'Failed to delete');
+        }
+    }    
     
 }

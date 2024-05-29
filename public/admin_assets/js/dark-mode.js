@@ -25,7 +25,7 @@ document.getElementById('darkModeToggle').addEventListener('click', function() {
 var darkModeCookie = getCookie("dark_mode");
 if (darkModeCookie === 'true') {
     document.body.classList.add('dark-mode');
-    document.getElementById('darkModeIcon').classList.remove('fa-sun');
+    document.getElementById('darkModeIcon').classList.remove('fa-light fa-sun');
     document.getElementById('darkModeIcon').classList.add('fa-moon');
     // Disable bg-gradient-primary class
     document.getElementById('accordionSidebar').classList.remove('bg-gradient-primary');

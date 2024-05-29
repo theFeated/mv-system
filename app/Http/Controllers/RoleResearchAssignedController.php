@@ -147,6 +147,22 @@ use App\Http\Requests\RoleResearchAssigned\UpdateAssignedRequest;
             return redirect()->back()->with('error', 'Failed to restore selected items: ' . $e->getMessage());
         }
     }
+
+    public function destroyForever(Request $request, string $assignedID)
+    {
+        try {
+            $roleresearchassigned = RoleResearchAssigned::withTrashed()->findOrFail($assignedID);
+            
+            // Perform force delete
+            $researoleresearchassignedrcher->forceDelete();
+            
+            return redirect()->route('roleresearchassigned')->with('success', 'Deleted successfully');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('roleresearchassigned')->with('error', 'Not found');
+        } catch (\Exception $e) {
+            return redirect()->route('roleresearchassigned')->with('error', 'Failed to delete');
+        }
+    }
     
  }
  

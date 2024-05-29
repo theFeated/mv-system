@@ -14,6 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CookieController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PDFController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -49,6 +50,7 @@ Route::group(['prefix' => 'auth'], function () {
 });
 */
 
+
 Route::fallback(function () {
     return redirect()->route('dashboard');
 });
@@ -73,6 +75,7 @@ Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function ()
         Route::post('unarchive/{collegeID}', 'unarchive')->name('college.unarchive');
         Route::delete('destroyMultiple', 'destroyMultiple')->name('college.destroyMultiple');
         Route::post('college/unarchiveMultiple', 'unarchiveMultiple')->name('college.unarchiveMultiple');
+        Route::delete('college/{collegeID}', 'destroyForever')->name('college.destroyForever');
 
     });
 
@@ -88,6 +91,7 @@ Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function ()
         Route::post('unarchive/{researchID}', 'unarchive')->name('research.unarchive');
         Route::delete('destroyMultiple', 'destroyMultiple')->name('research.destroyMultiple');
         Route::post('research/unarchiveMultiple', 'unarchiveMultiple')->name('research.unarchiveMultiple');
+        Route::delete('research/{researchID}', 'destroyForever')->name('research.destroyForever');
     });
 
     Route::controller(RolesController::class)->prefix('roles')->group(function () {
@@ -102,6 +106,7 @@ Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function ()
         Route::post('unarchive/{roleID}', 'unarchive')->name('roles.unarchive');
         Route::delete('destroyMultiple', 'destroyMultiple')->name('roles.destroyMultiple');
         Route::post('roles/unarchiveMultiple', 'unarchiveMultiple')->name('roles.unarchiveMultiple');
+        Route::delete('roles/{roleID}', 'destroyForever')->name('roles.destroyForever');
     });
 
     Route::controller(RoleResearchAssignedController::class)->prefix('roleresearchassigned')->group(function () {
@@ -112,6 +117,7 @@ Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function ()
         Route::delete('destroyMultiple', 'destroyMultiple')->name('roleresearchassigned.destroyMultiple');
         Route::post('unarchive/{assignedID}', 'unarchive')->name('roleresearchassigned.unarchive');
         Route::post('roleresearchassigned/unarchiveMultiple', 'unarchiveMultiple')->name('roleresearchassigned.unarchiveMultiple');
+        Route::delete('roleresearchassigned/{assignedID}', 'destroyForever')->name('roleresearchassigned.destroyForever');
 
     });
 
@@ -128,6 +134,7 @@ Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function ()
         Route::post('unarchive/{researcherID}', 'unarchive')->name('researcher.unarchive');
         Route::delete('destroyMultiple', 'destroyMultiple')->name('researcher.destroyMultiple');
         Route::post('researcher/unarchiveMultiple', 'unarchiveMultiple')->name('researcher.unarchiveMultiple');
+        Route::delete('researcher/{researcherID}', 'destroyForever')->name('researcher.destroyForever');
 
     });
 
@@ -144,6 +151,7 @@ Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function ()
         Route::post('unarchive/{agencyID}', 'unarchive')->name('agency.unarchive');
         Route::delete('destroyMultiple', 'destroyMultiple')->name('agency.destroyMultiple');
         Route::post('agency/unarchiveMultiple', 'unarchiveMultiple')->name('agency.unarchiveMultiple');
+        Route::delete('agency/{agencyID}', 'destroyForever')->name('agency.destroyForever');
 
     });
 
@@ -155,6 +163,8 @@ Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function ()
         Route::delete('destroyMultiple', 'destroyMultiple')->name('monitorings.destroyMultiple');
         Route::post('unarchive/{monitoringID}', 'unarchive')->name('monitorings.unarchive');
         Route::post('monitorings/unarchiveMultiple', 'unarchiveMultiple')->name('monitorings.unarchiveMultiple');
+        Route::delete('monitorings/{monitoringID}', 'destroyForever')->name('monitorings.destroyForever');
+
     });
 
     Route::controller(ExternalFundsController::class)->prefix('externalfunds')->group(function () {
@@ -165,6 +175,8 @@ Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function ()
         Route::delete('destroyMultiple', 'destroyMultiple')->name('externalfunds.destroyMultiple');
         Route::post('unarchive/{exFundID}', 'unarchive')->name('externalfunds.unarchive');
         Route::post('externalfunds/unarchiveMultiple', 'unarchiveMultiple')->name('externalfunds.unarchiveMultiple');
+        Route::delete('externalfunds/{exFundID}', 'destroyForever')->name('externalfunds.destroyForever');
+
     });
 
 });
@@ -173,7 +185,7 @@ Route::middleware(['auth', 'auto-logout'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('/profile/save', [ProfileController::class, 'save'])->name('profile.save');
-
+    Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF'])->name('generate-pdf');
 
     Route::controller(CollegeController::class)->prefix('college')->group(function () {
         Route::get('', 'index')->name('college');

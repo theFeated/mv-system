@@ -52,7 +52,10 @@
             <h1 class="h3 mb-0 text-gray-800">@yield('title')</h1>
           </div>
   
-          @yield('contents')
+          <div class="mx-2">
+            @yield('contents')
+          </div>
+          
   
           <!-- Content Row -->
   
@@ -88,80 +91,22 @@
   <!-- Page level plugins -->
   <script src="{{ asset('admin_assets/vendor/chart.js/Chart.min.js') }}"></script>
 
+  <script src="{{ asset('admin_assets/js/sweetalert.js') }}"></script>
+  <script src="{{ asset('admin_assets/js/recordtable.js') }}"></script>
+  <script src="{{ asset('admin_assets/js/selectedcheckbox.js') }}"></script>
+  <script src="{{ asset('admin_assets/js/closemodal.js') }}"></script>
+  <script src="{{ asset('admin_assets/js/showitemonclick.js') }}"></script>
+
   <script src='https://code.jquery.com/jquery-3.7.1.js'></script>
   <script src='https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js'></script>
   <script src='https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js'></script>
   <script src='https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js'></script>
   <script src='https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap.min.js'></script>
-  <script>
-    $(document).ready(function() {
-        var table = $('#recordTable').DataTable( {
-            responsive: true
-        } );
-    
-        new $.fn.dataTable.FixedHeader( table );
-    } );
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    $(document).ready(function() {
-        var table = $('#recordTableTwo').DataTable( {
-            responsive: true
-        } );
-    
-        new $.fn.dataTable.FixedHeader( table );
-    } );
-
-    $(document).ready(function() {
-        var table = $('#recordTableThree').DataTable( {
-            responsive: true
-        } );
-    
-        new $.fn.dataTable.FixedHeader( table );
-    } );
-  </script>
-      <script>
-        document.getElementById("select-all-checkbox").addEventListener("click", function() {
-            let checkboxes = document.querySelectorAll("input[name='selected[]']");
-            checkboxes.forEach(function(checkbox) {
-                checkbox.checked = !checkbox.checked;
-            });
-        });
-
-        document.getElementById("select-all-checkbox-two").addEventListener("click", function() {
-            let checkboxes = document.querySelectorAll("input[name='selectedTwo[]']");
-            checkboxes.forEach(function(checkbox) {
-                checkbox.checked = !checkbox.checked;
-            });
-        });
-
-        document.getElementById("select-all-checkbox-three").addEventListener("click", function() {
-            let checkboxes = document.querySelectorAll("input[name='selectedThree[]']");
-            checkboxes.forEach(function(checkbox) {
-                checkbox.checked = !checkbox.checked;
-            });
-        });
-
-        document.getElementById("select-all-checkbox-four").addEventListener("click", function() {
-            let checkboxes = document.querySelectorAll("input[name='selectedFour[]']");
-            checkboxes.forEach(function(checkbox) {
-                checkbox.checked = !checkbox.checked;
-            });
-        });
-
-      $(document).ready(function(){
-          // Close modal on button click
-          $(".btn").click(function(){
-              $(".my-modal").modal('hide');
-          });
-          
-          // Close modal on close button click
-          $(".close-modal").click(function(){
-              $(".my-modal").modal('hide');
-          });
-      });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    @if(isset($researchPerYear))
-        <script>
+    <script>
+        @if(isset($researchPerYear))
             var years = @json($researchPerYear->pluck('year'));
             var counts = @json($researchPerYear->pluck('total'));
 
@@ -189,33 +134,6 @@
                 }
             });
             @endif
-    </script>
-
-    <script>
-            $(document).ready(function() {
-            $('.list-group-item-action').click(function() {
-                $('.list-group-item-action').removeClass('active');
-                $(this).addClass('active');
-
-                // Check which item was clicked and show corresponding content
-                var id = $(this).attr('id');
-                if (id === 'researchLink') {
-                    $('#researchInfoBox').show();
-                    $('#researchChartCard').show();
-                    // Call a function to fetch and display research data here
-                } else if (id === 'researcherLink') {
-                    // Show researcher content
-                }
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            // Show Research Form by default
-            $('#researchForm').show();
-            // Hide other forms
-            $('#monitoringsForm, #externalFundsForm, #roleResearchAssignedForm').hide();
-        });
     </script>
 </body>
 </html>

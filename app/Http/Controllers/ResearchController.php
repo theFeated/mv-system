@@ -172,5 +172,20 @@ class ResearchController extends Controller
 
         return redirect()->back()->with('success', 'Researches restored successfully');
     }
-
+    
+    public function destroyForever(Request $request, string $researchID)
+    {
+        try {
+            $research = Research::withTrashed()->findOrFail($researchID);
+            
+            // Perform force delete
+            $research->forceDelete();
+            
+            return redirect()->route('research')->with('success', 'Deleted successfully');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('research')->with('error', 'Not found');
+        } catch (\Exception $e) {
+            return redirect()->route('research')->with('error', 'Failed to delete');
+        }
+    }    
 }

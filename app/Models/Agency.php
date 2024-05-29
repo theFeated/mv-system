@@ -11,7 +11,7 @@ class Agency extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'agency'; 
-    protected $fillable = ['agencyID', 'agencyName', 'contactPerson', 'address', 'telNum'];
+    protected $fillable = ['id', 'agencyName', 'contactPerson', 'address', 'telNum'];
 
     // agencyID is a combination of acronym and number
     protected $primaryKey = 'agencyID';

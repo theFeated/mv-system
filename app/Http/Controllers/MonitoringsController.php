@@ -138,4 +138,20 @@ class MonitoringsController extends Controller
         }
     }
 
+    public function destroyForever(Request $request, string $monitoringID)
+    {
+        try {
+            $monitoring = Monitorings::withTrashed()->findOrFail($monitoringID);
+            
+            // Perform force delete
+            $monitoring->forceDelete();
+            
+            return redirect()->route('monitoring')->with('success', 'Deleted successfully');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('monitoring')->with('error', 'Not found');
+        } catch (\Exception $e) {
+            return redirect()->route('monitoring')->with('error', 'Failed to delete');
+        }
+    }    
+
 }

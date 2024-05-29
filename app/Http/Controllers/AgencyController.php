@@ -143,5 +143,20 @@ class AgencyController extends Controller
         return redirect()->back()->with('success', 'Agency restored successfully');
     }
 
+    public function destroyForever(Request $request, string $agencyID)
+    {
+        try {
+            $agency = Agency::withTrashed()->findOrFail($agencyID);
+            
+            // Perform force delete
+            $agency->forceDelete();
+            
+            return redirect()->route('agency')->with('success', 'Deleted successfully');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('agency')->with('error', 'Not found');
+        } catch (\Exception $e) {
+            return redirect()->route('agency')->with('error', 'Failed to delete');
+        }
+    }    
     
 }

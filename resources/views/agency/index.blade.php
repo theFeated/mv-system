@@ -3,12 +3,13 @@
 @section('title', '')
 
 @section('contents')
-<form method="POST" action="{{ route('agency.destroyMultiple') }}" onsubmit="return confirm('Archive Multiple Agencys?')">
+<form method="POST" action="{{ route('agency.destroyMultiple') }}" class="archive-form">
         @csrf
         @method('DELETE')
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
             <h2 class="mt-3 mb-3 mt-sm-3 mt-5">Agency List</h2>
             <div class="mb-3 mt-sm-3 mt-3 row mr-0">
+                @if(Auth::user()->name == "Admin")
                 <div class="mr-1">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Add
@@ -17,13 +18,16 @@
                         <a href="{{ route('agency.create') }}" class="dropdown-item">Add Agency</a>
                     </div>
                 </div>
+                @endif
                 <div>
                     <button class="btn btn-info dropdown-toggle" type="button" id="archiveDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Archive
                     </button>
                     <div class="dropdown-menu" aria-labelledby="archiveDropdownButton">
                         <a href="{{ route('agency.restore') }}" class="dropdown-item">Archived</a>
-                        <button type="submit" class="dropdown-item">Archive Selected</button>
+                        @if(Auth::user()->name == "Admin")
+                        <button type="button" class="dropdown-item archive-button" data-message="You can undo this later on the restore page.">Archive Selected</button>
+                        @endif
                     </div>
                 </div>
              </div>
@@ -73,12 +77,14 @@
                     <td class="align-middle">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <a href="{{ route('agency.show', $rs->agencyID) }}" type="button" class="btn btn-secondary">Detail</a>
+                            @if(Auth::user()->name == "Admin")
                             <a href="{{ route('agency.edit', $rs->agencyID) }}" type="button" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('agency.destroy', $rs->agencyID) }}" method="POST" onsubmit="return confirm('Archive?')" class="d-inline">
+                            <form action="{{ route('agency.destroy', $rs->agencyID) }}" method="POST" class="d-inline archive-form">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger m-0">Archive</button>
+                                <button type="button" class="btn btn-danger m-0 archive-button" data-message="You can undo this later on the restore page.">Archive</button>
                             </form>
+                            @endif
                         </div>
                     </td>
                 </tr>

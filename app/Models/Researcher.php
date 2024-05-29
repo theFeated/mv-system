@@ -22,4 +22,9 @@ class Researcher extends Model
     {
         return $this->attributes['researcherID'];
     }
+
+    public function research()
+    {
+        return $this->belongsTo(Research::class, 'researchID');
+    }
 }

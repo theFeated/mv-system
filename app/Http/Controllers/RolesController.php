@@ -145,5 +145,19 @@ class RolesController extends Controller
         return redirect()->back()->with('success', 'Roles restored successfully');
     }
 
-    
+    public function destroyForever(Request $request, string $roleID)
+    {
+        try {
+            $roles = Roles::withTrashed()->findOrFail($roleID);
+            
+            // Perform force delete
+            $roles->forceDelete();
+            
+            return redirect()->route('roles')->with('success', 'Deleted successfully');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('roles')->with('error', 'Not found');
+        } catch (\Exception $e) {
+            return redirect()->route('roles')->with('error', 'Failed to delete');
+        }
+    }
 }

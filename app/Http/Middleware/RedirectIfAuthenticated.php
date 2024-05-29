@@ -31,7 +31,7 @@ class RedirectIfAuthenticated
             if ($loginAttempts >= 3) {
                 Auth::logout();
                 Session::invalidate();
-                $blockDuration = 30; // Seconds
+                $blockDuration = 10; // Seconds
                 Cache::put('login_blocked_' . $request->ip(), true, now()->addSeconds($blockDuration));
                 return response()->view('errors.blocked', ['message' => $errorMessage, 'blockDuration' => $blockDuration], 403)->header('z-index', '9999')->header('position', 'fixed');
             }

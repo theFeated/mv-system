@@ -10881,7 +10881,7 @@ a:focus {
 }
 
 .bg-login-image {
-  background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
+  background: url("/admin_assets/img/cic.jpg");
   background-position: center;
   background-size: cover;
 }
@@ -11324,7 +11324,6 @@ body.sidebar-toggled footer.sticky-footer {
   background-color: #424242 !important; 
   color: #dae6f8 !important;
 }
-
 
 
 

@@ -4,6 +4,20 @@
 
 @section('contents')
 
+    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
+        <h3 class="mt-sm-3 mt-5">Archived</h3>
+        <div class="menu btn-group flex-md-row flex-column mt-sm-3 mt-3" role="group" aria-label="Menu">
+            <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-0" onclick="$('#researchForm').show(); $('#monitoringsForm, #externalFundsForm, #roleResearchAssignedForm').hide();">Research Details</button>
+            <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-0" onclick="$('#roleResearchAssignedForm').show(); $('#monitoringsForm, #externalFundsForm, #researchForm').hide();">Researchers Assigned</button>
+            <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-0" onclick="$('#monitoringsForm').show(); $('#roleResearchAssignedForm, #externalFundsForm, #researchForm').hide();">Monitorings</button>
+            <button type="button" class="btn btn-outline-primary mb-2 mb-md-0" onclick="$('#externalFundsForm').show(); $('#roleResearchAssignedForm, #monitoringsForm, #researchForm').hide();">External Funds</button>
+            <button type="button" class="btn btn-outline-primary mb-2 mb-md-0" onclick="showAllArchivedItems();">Show All</button>
+        </div>
+        <div>
+            <a href="{{ route('research') }}" class="btn btn-primary mt-sm-3 mt-5">Back</a>
+        </div>
+    </div>
+
         @if(Session::has('success'))
         <div class="alert alert-success" role="alert">
             {{ Session::get('success') }}
@@ -15,18 +29,6 @@
             {{ Session::get('error') }}
         </div>
         @endif
-        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
-            <h3 class="mt-sm-3 mt-5">Archived</h3>
-            <div class="menu btn-group flex-md-row flex-column mt-sm-3 mt-3" role="group" aria-label="Menu">
-                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-2" onclick="$('#researchForm').show(); $('#monitoringsForm, #externalFundsForm, #roleResearchAssignedForm').hide();">Research Details</button>
-                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-2" onclick="$('#roleResearchAssignedForm').show(); $('#monitoringsForm, #externalFundsForm, #researchForm').hide();">Researchers Assigned</button>
-                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-2" onclick="$('#monitoringsForm').show(); $('#roleResearchAssignedForm, #externalFundsForm, #researchForm').hide();">Monitorings</button>
-                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0" onclick="$('#externalFundsForm').show(); $('#roleResearchAssignedForm, #monitoringsForm, #researchForm').hide();">External Funds</button>
-            </div>
-        <div>
-            <a href="{{ route('research') }}" class="btn btn-primary mt-sm-3 mt-5">Back</a>
-        </div>
-    </div>
 
     <div id="researchForm" style="display: none;">
         <form action="{{ route('research.unarchiveMultiple') }}" method="POST">
@@ -36,7 +38,9 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <h3 class="mb-0">Researchers</h3>
                 <div>
+                @if(Auth::user()->name == "Admin")
                     <button type="submit" class="btn btn-success">Restore Selected</button>
+                @endif
                 </div>
             </div>
             <hr />
@@ -54,7 +58,9 @@
                             <th>Title</th>
                             <th>Type</th>
                             <th>Status</th>
+                            @if(Auth::user()->name == "Admin")
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -71,12 +77,14 @@
                             <td class="align-middle">{{ $research->researchTitle }}</td>
                             <td class="align-middle">{{ $research->researchType }}</td>
                             <td class="align-middle">{{ $research->status }}</td>
+                            @if(Auth::user()->name == "Admin")
                             <td>
                                 <form action="{{ route('research.unarchive', $research->researchID) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-success">Restore</button>
                                 </form>
                             </td>
+                            @endif
                         </tr>
                         @empty
                         <tr>
@@ -97,7 +105,9 @@
             <div class="d-flex align-items-center justify-content-between">
                 <h3 class="mb-0">Researchers</h3>
                 <div>
+                @if(Auth::user()->name == "Admin")
                     <button type="submit" class="btn btn-success">Restore Selected</button>
+                @endif                
                 </div>
             </div>
             <hr />
@@ -114,7 +124,9 @@
                             <th>Role</th>
                             <th>Researcher</th>
                             <th>Research</th>
+                            @if(Auth::user()->name == "Admin")
                             <th>Action</th>
+                            @endif                        
                         </tr>
                     </thead>
                     <tbody>
@@ -129,12 +141,14 @@
                             <td class="align-middle">{{ $roleresearchassigned->role->roleName }}</td>
                             <td class="align-middle">{{ $roleresearchassigned->researcher->researcherName }}</td>
                             <td class="align-middle">{{ $roleresearchassigned->research->researchTitle }}</td>
+                            @if(Auth::user()->name == "Admin")
                             <td>
                                 <form action="{{ route('roleresearchassigned.unarchive', $roleresearchassigned->id) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-success">Restore</button>
                                 </form>
                             </td>
+                            @endif
                         </tr>
                         @empty
                         <tr>
@@ -155,7 +169,9 @@
             <div class="d-flex align-items-center justify-content-between">
                 <h3 class="mb-0">Monitorings</h3>
                 <div>
+                @if(Auth::user()->name == "Admin")
                     <button type="submit" class="btn btn-success">Restore Selected</button>
+                @endif                
                 </div>
             </div>
             <hr />
@@ -174,7 +190,9 @@
                             <th>Remarks</th>
                             <th>Monitoring Personnel</th>
                             <th>Date</th>
+                            @if(Auth::user()->name == "Admin")
                             <th>Action</th>
+                            @endif                        
                         </tr>
                     </thead>
                     <tbody>
@@ -192,12 +210,14 @@
                             <td class="align-middle">{{ $monitoring->remarks }}</td>
                             <td class="align-middle">{{ $monitoring->monitoringPersonnel }}</td>
                             <td class="align-middle">{{ $monitoring->date }}</td>
+                            @if(Auth::user()->name == "Admin")
                             <td>
                                 <form action="{{ route('monitorings.unarchive', $monitoring->monitoringID) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-success">Restore</button>
                                 </form>
                             </td>
+                            @endif
                         </tr>
                         @empty
                         <tr>
@@ -218,7 +238,9 @@
             <div class="d-flex align-items-center justify-content-between">
                 <h3 class="mb-0">External Funds</h3>
                 <div>
+                @if(Auth::user()->name == "Admin")
                     <button type="submit" class="btn btn-success">Restore Selected</button>
+                @endif                
                 </div>
             </div>
                 <hr />
@@ -235,8 +257,10 @@
                                 <th>Agency</th>
                                 <th>Contribution</th>
                                 <th>Purpose</th>
+                                @if(Auth::user()->name == "Admin")
                                 <th>Action</th>
-                            </tr>
+                                @endif                            
+                        </tr>
                         </thead>
                         <tbody>
                             @forelse($externalFunds as $externalFund)
@@ -251,12 +275,14 @@
                                 <td class="align-middle">{{ $externalFund->agency->name }}</td>
                                 <td class="align-middle">{{ $externalFund->contribution }}</td>
                                 <td class="align-middle">{{ $externalFund->purpose }}</td>
+                                @if(Auth::user()->name == "Admin")
                                 <td>
                                     <form action="{{ route('externalfunds.unarchive', $externalFund->exFundID) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-success">Restore</button>
                                     </form>
                                 </td>
+                                @endif
                             </tr>
                             @empty
                             <tr>

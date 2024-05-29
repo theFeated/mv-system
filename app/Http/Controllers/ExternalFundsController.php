@@ -144,4 +144,20 @@ class ExternalFundsController extends Controller
         }
     }
 
+    public function destroyForever(Request $request, string $exFundID)
+    {
+        try {
+            $externalFunds = ExternalFunds::withTrashed()->findOrFail($exFundID);
+            
+            // Perform force delete
+            $externalFunds->forceDelete();
+            
+            return redirect()->route('externalFunds')->with('success', 'Deleted successfully');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('externalFunds')->with('error', 'Not found');
+        } catch (\Exception $e) {
+            return redirect()->route('externalFunds')->with('error', 'Failed to delete');
+        }
+    }    
+
 }
