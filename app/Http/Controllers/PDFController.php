@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Models\Research;
-use App\Models\RoleResearchAssigned;
+use App\Models\ResearchTeam;
 use App\Models\Monitorings;
 use App\Models\ExternalFunds;
+
+use App\Exports\MonitoringsDataExport;
+use App\Exports\AllResearchMonitoringsExport;
 
 class PDFController extends Controller
 {
@@ -19,7 +24,7 @@ class PDFController extends Controller
             abort(404);
         }
     
-        $assignedRole = RoleResearchAssigned::where('researchID', $id)->get();
+        $assignedRole = ResearchTeam::where('researchID', $id)->get();
         $monitorings = Monitorings::where('researchID', $id)->get();
         $exFunds = ExternalFunds::where('researchID', $id)->get();
 
@@ -32,10 +37,20 @@ class PDFController extends Controller
             'exFunds' => $exFunds,
         ];
     
-        $pdf = PDF::loadView('research.report', $data);
+        $pdf = PDF::loadView('research.generatereports.report', $data);
         return $pdf->stream('report.pdf');
     }
+
+    public function exportExcel($id)
+    {
+        return Excel::download(new MonitoringsDataExport($id), 'monitorings-report.xlsx');
+    }
     
+
+    public function exportAllResearchMoniorings($id)
+    {
+        return Excel::download(new AllResearchMonitoringsExport, 'all-monitorings-report.xlsx');
+    }
     
     
 }

@@ -37,6 +37,11 @@ class ResearcherController extends Controller
      */
     public function store(StoreResearcherRequest $request)
     {
+
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
+    
         $validatedData = $request->validated();
 
         $researcher = Researcher::create($validatedData);
@@ -61,6 +66,11 @@ class ResearcherController extends Controller
     public function edit(string $id)
     {
         $researcher = Researcher::findOrFail($id);
+
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
+    
         $colleges = College::all(); 
 
         return view('researcher.edit', compact('researcher','colleges'));

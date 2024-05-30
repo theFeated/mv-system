@@ -9,7 +9,7 @@ use App\Models\College;
 use App\Models\Researcher;
 use App\Models\Agency;
 use App\Models\Roles;
-use App\Models\RoleResearchAssigned;
+use App\Models\ResearchTeam;
 use App\Models\Monitorings;
 use App\Models\ExternalFunds;
 
@@ -45,6 +45,11 @@ class ResearchController extends Controller
      */
     public function store(StoreResearchRequest  $request)
     {
+
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
+    
         // Convert 'true' or 'false' string to boolean value
         $request->merge(['internalFund' => $request->has('internalFund')]);
     
@@ -56,29 +61,29 @@ class ResearchController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $researchID)
+    public function show(string $id)
     {
-        $research = Research::findOrFail($researchID);
+        $research = Research::findOrFail($id);
         $college = College::find($research->collegeID);
         $researcher = Researcher::find($research->researcherID);
         $agency = Agency::find($research->agencyID);        
         $roles = Roles::find($research->roleID);
-        $roleresearchassigned = RoleResearchAssigned::where('researchID', $researchID)->get();
-        $monitorings = Monitorings::where('researchID', $researchID)->get();
+        $researchteam = ResearchTeam::where('researchID', $id)->get();
+        $monitorings = Monitorings::where('researchID', $id)->get();
         $externalfunds = ExternalFunds::with('agency')
-        ->where('researchID', $researchID)
+        ->where('researchID', $id)
         ->get();
 
         return view('research.show', compact('research', 'college', 'researcher', 'agency', 'roles',
-         'roleresearchassigned', 'monitorings','externalfunds'));
+         'researchteam', 'monitorings','externalfunds'));
     }
 
     /**
      * Show form for editing the specified resource.
      */
-    public function edit(string $researchID)
+    public function edit(string $id)
     {
-        $research = Research::findOrFail($researchID);
+        $research = Research::findOrFail($id);
         $colleges = College::all(); 
         $researchers = Researcher::all(); 
         $agencies = Agency::all(); 
@@ -90,9 +95,14 @@ class ResearchController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateResearchRequest $request, string $researchID)
+    public function update(UpdateResearchRequest $request, string $id)
     {
-        $research = Research::findOrFail($researchID);
+        $research = Research::findOrFail($id);
+    
+
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
     
         $request->merge(['internalFund' => (bool)$request->input('internalFund')]);
         $research->update($request->validated());
@@ -103,9 +113,9 @@ class ResearchController extends Controller
      /**
      * Archived the specified resource in storage.
      */
-    public function destroy(Request $request, string $researchID)
+    public function destroy(Request $request, string $id)
     {
-        $research = Research::findOrFail($researchID);
+        $research = Research::findOrFail($id);
     
         $research->delete();
     
@@ -118,7 +128,7 @@ class ResearchController extends Controller
     public function restore()
     {
         $archived = Research::onlyTrashed()->get();
-        $archivedAssigned = RoleResearchAssigned::onlyTrashed()->get();
+        $archivedAssigned = ResearchTeam::onlyTrashed()->get();
         $monitorings = Monitorings::onlyTrashed()->get();
         $externalFunds = ExternalFunds::onlyTrashed()->get();
         return view('research.restore', compact('archived', 'archivedAssigned', 'monitorings', 'externalFunds'));
@@ -127,9 +137,9 @@ class ResearchController extends Controller
     /**
      * Unarchived or restore an item.
      */
-    public function unarchive(Request $request, $researchID)
+    public function unarchive(Request $request, $id)
     {
-        $research = Research::withTrashed()->findOrFail($researchID);
+        $research = Research::withTrashed()->findOrFail($id);
         $research->restore();
 
         return redirect()->back()->with('success', 'Research restored successfully');
@@ -147,8 +157,9 @@ class ResearchController extends Controller
         }    
         Research::destroy($selected);
     
-        return redirect()->back()->with('success', 'Multiple Researches Archived successfully');
+        return redirect()->back()->with('success', 'Multiple Research Archived successfully');
     }
+
 
     /**
      * Multiple un-archiving.
@@ -161,15 +172,15 @@ class ResearchController extends Controller
             return redirect()->back()->withErrors('Please select at least one research to restore.');
         }
 
-        Research::whereIn('researchID', $selected)->restore();
+        Research::whereIn('id', $selected)->restore();
 
         return redirect()->back()->with('success', 'Researches restored successfully');
     }
     
-    public function destroyForever(Request $request, string $researchID)
+    public function destroyForever(Request $request, string $id)
     {
         try {
-            $research = Research::withTrashed()->findOrFail($researchID);
+            $research = Research::withTrashed()->findOrFail($id);
             
             // Perform force delete
             $research->forceDelete();

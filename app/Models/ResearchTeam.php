@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class RoleResearchAssigned extends Model
+class ResearchTeam extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = 'role_researchassigned'; 
+    protected $table = 'researchteam'; 
     protected $fillable = ['id', 'roleID', 'researcherID', 'researchID'];
 
     public function researcher()

@@ -6,24 +6,38 @@
 
 @include('monitorings.modal', ['researchId' => $research->id])
 @include('externalfunds.modal', ['researchId' => $research->id])
-@include('roleresearchassigned.modal', ['researchId' => $research->id])
+@include('researchteam.modal', ['researchId' => $research->id])
 
-@include('roleresearchassigned.edit', ['researchID' => $research->id])
+@include('researchteam.edit', ['researchID' => $research->id])
 @include('monitorings.edit', ['researchID' => $research->id])
 @include('externalfunds.edit', ['researchId' => $research->id])
 
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
             <h3 class="mt-sm-3 mt-5">Details</h3>
             <div class="menu btn-group flex-md-row flex-column mt-sm-3 mt-3" role="group" aria-label="Menu">
-                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-0" onclick="$('#researchForm').show(); $('#monitoringsForm, #externalFundsForm, #roleResearchAssignedForm').hide();">Research Details</button>
-                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-0" onclick="$('#roleResearchAssignedForm').show(); $('#monitoringsForm, #externalFundsForm, #researchForm').hide();">Researchers Assigned</button>
-                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-0" onclick="$('#monitoringsForm').show(); $('#roleResearchAssignedForm, #externalFundsForm, #researchForm').hide();">Monitorings</button>
-                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0" onclick="$('#externalFundsForm').show(); $('#roleResearchAssignedForm, #monitoringsForm, #researchForm').hide();">External Funds</button>
+                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-0" onclick="$('#researchForm').show(); $('#monitoringsForm, #externalFundsForm, #researchTeamForm').hide();">Research Details</button>
+                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-0" onclick="$('#researchTeamForm').show(); $('#monitoringsForm, #externalFundsForm, #researchForm').hide();">Research Team</button>
+                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 mr-md-0" onclick="$('#monitoringsForm').show(); $('#researchTeamForm, #externalFundsForm, #researchForm').hide();">Monitorings</button>
+                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0" onclick="$('#externalFundsForm').show(); $('#researchTeamForm, #monitoringsForm, #researchForm').hide();">External Funds</button>
                 <button type="button" class="btn btn-outline-primary mb-2 mb-md-0" onclick="showAllArchivedItems();">Show All</button>
             </div>
             <div class="mt-3 mt-sm-3 d-flex justify-content-between">
-                <a href="{{ route('generate-pdf', ['id' => $research->id]) }}" target="_blank" rel="noopener noreferrer" class="btn btn-info">Generate PDF</a>
-
+            <div class="dropdown ml-2">
+                 <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Generate
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a href="{{ route('generate-pdf', ['id' => $research->id]) }}" target="_blank" rel="noopener noreferrer" class="dropdown-item">Generate PDF</a>
+                    <form action="{{ route('generate-excel', ['id' => $research->id]) }}" method="POST" target="_blank" class="post">
+                        @csrf
+                        <button type="submit" class="dropdown-item">Generate Single Research Monitorings</button>
+                    </form>
+                    <form action="{{ route('generate-all-monitorings', ['id' => $research->id]) }}" method="POST" target="_blank" class="post">
+                        @csrf
+                        <button type="submit" class="dropdown-item">Generate All Research Monitorings</button>
+                    </form>
+                </div>
+            </div>
                 @if(Auth::user()->name == "Admin")
                 <div class="dropdown ml-2">
                     <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,7 +54,7 @@
                 <a href="{{ route('research') }}" class="btn btn-primary ml-2">Back</a>
             </div>
 
-    </div>
+        </div>
     <hr />
     @if(Session::has('success'))
     <div class="alert alert-success" role="alert">
@@ -59,7 +73,7 @@
         <div class="row">
             <div class="col mb-3">
                 <label class="form-label">ID</label>
-                <input type="text" name="researchID" class="form-control" placeholder="ID"  value="{{ $research->researchID }}" readonly>
+                <input type="text" name="id" class="form-control" placeholder="ID"  value="{{ $research->id }}" readonly>
             </div>
             <div class="col mb-3">
                 <label class="form-label">College</label>
@@ -143,8 +157,8 @@
         <hr>
     </div>
 
-    <div id="roleResearchAssignedForm" style="display: none;" class="mt-3">
-        <form action="{{ route('roleresearchassigned.removeMultiple') }}" method="POST" class="archive-form">
+    <div id="researchTeamForm" style="display: none;" class="mt-3">
+        <form action="{{ route('researchteam.removeMultiple') }}" method="POST" class="archive-form">
             @csrf
             @method('DELETE')
             <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
@@ -171,8 +185,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if($roleresearchassigned->count() > 0)
-                            @foreach($roleresearchassigned as $rs)
+                        @if($researchteam->count() > 0)
+                            @foreach($researchteam as $rs)
                                 <tr>
                                     <td class="align-middle">
                                         <input type="checkbox" name="selected[]" value="{{ $rs->id }}">
@@ -186,7 +200,7 @@
                                     <td class="align-middle">
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $rs->id }}">Edit</a>
-                                            <form action="{{ route('roleresearchassigned.remove', $rs->id) }}" method="POST" class="d-inline archive-form">
+                                            <form action="{{ route('researchteam.remove', $rs->id) }}" method="POST" class="d-inline archive-form">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" class="btn btn-danger m-0 archive-button">Remove</button>

@@ -14,6 +14,10 @@ class ExternalFundsController extends Controller
     
     public function save(StoreExternalFundRequest $request)
     {
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
+    
         $validatedData = $request->validated();
  
         ExternalFunds::create($validatedData);
@@ -24,6 +28,10 @@ class ExternalFundsController extends Controller
     public function update(UpdateExternalFundRequest $request, $id)
     {
         $externalFund = ExternalFunds::findOrFail($id);
+    
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
     
         $validatedData = $request->validated();
     

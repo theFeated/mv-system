@@ -37,6 +37,11 @@ class RolesController extends Controller
      */
     public function store(StoreRolesRequest  $request)
     {
+
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
+    
         $roles = Roles::create($request->validated());
     
         return redirect()->route('roles')->with('success', 'Roles added successfully');
@@ -69,6 +74,10 @@ class RolesController extends Controller
     {
         $roles = Roles::findOrFail($id);
 
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
+    
         $roles->update($request->validated());
   
         return redirect()->route('roles')->with('success', 'Roles updated successfully');

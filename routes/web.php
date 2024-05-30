@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\ResearchController;
 use App\Http\Controllers\RolesController;
-use App\Http\Controllers\RoleResearchAssignedController;
+use App\Http\Controllers\ResearchTeamController;
 use App\Http\Controllers\ResearcherController;
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\MonitoringsController;
@@ -109,12 +109,12 @@ Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function ()
         Route::delete('roles/{roleID}', 'destroyForever')->name('roles.destroyForever');
     });
 
-    Route::controller(RoleResearchAssignedController::class)->prefix('roleresearchassigned')->group(function () {
-        Route::get('', 'index')->name('roleresearchassigned.modal');
-        Route::post('save', 'save')->name('roleresearchassigned.save');
-        Route::put('edit/{assignedID}', 'update')->name('roleresearchassigned.update');
-        Route::delete('destroyMultiple', 'destroyMultiple')->name('roleresearchassigned.removeMultiple');
-        Route::delete('roleresearchassigned/{assignedID}', 'destroyForever')->name('roleresearchassigned.remove');
+    Route::controller(ResearchTeamController::class)->prefix('researchteam')->group(function () {
+        Route::get('', 'index')->name('researchteam.modal');
+        Route::post('save', 'save')->name('researchteam.save');
+        Route::put('edit/{assignedID}', 'update')->name('researchteam.update');
+        Route::delete('destroyMultiple', 'destroyMultiple')->name('researchteam.removeMultiple');
+        Route::delete('researchteam/{assignedID}', 'destroyForever')->name('researchteam.remove');
 
     });
 
@@ -177,6 +177,8 @@ Route::middleware(['auth', 'auto-logout'])->group(function () {
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('/profile/save', [ProfileController::class, 'save'])->name('profile.save');
     Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF'])->name('generate-pdf');
+    Route::post('generate-monitorings-report/{id}', [PDFController::class, 'exportExcel'])->name('generate-excel');
+    Route::post('generate-all-monitorings-report/{id}', [PDFController::class, 'exportAllResearchMoniorings'])->name('generate-all-monitorings');
 
     Route::controller(CollegeController::class)->prefix('college')->group(function () {
         Route::get('', 'index')->name('college');

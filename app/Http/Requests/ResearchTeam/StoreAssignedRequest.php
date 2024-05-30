@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\RoleResearchAssigned;
+namespace App\Http\Requests\ResearchTeam;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;

@@ -63,7 +63,7 @@
                 @foreach($roles as $rs)
                 <tr>
                     <td class="align-middle">
-                        <input type="checkbox" name="selected[]" value="{{ $rs->roleID }}">
+                        <input type="checkbox" name="selected[]" value="{{ $rs->id }}">
                     </td>
                     </form>
                     <td class="align-middle">{{ $loop->iteration }}</td>

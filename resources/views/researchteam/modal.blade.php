@@ -11,7 +11,7 @@
                 <button type="button" class="close " data-dismiss="modal" aria-label="Close">&times;</button>
             </div> 
             <div class="modal-body">
-                <form action="{{ route('roleresearchassigned.save') }}" method="POST">
+                <form action="{{ route('researchteam.save') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <label for="researchID" class="col-sm-2 col-form-label">Research<span class="text-danger">*</span></label>

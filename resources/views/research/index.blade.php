@@ -31,6 +31,19 @@
                         @endif
                     </div>
                 </div>
+                <!-- <div class="dropdown ml-2">
+                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Generate
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @foreach($research as $rs)
+                        <form action="{{ route('generate-all-monitorings', $rs->id) }}" method="POST" target="_blank" class="post">
+                            @csrf
+                            <button type="submit" class="dropdown-item">Generate  Research Monitorings</button>
+                        </form>
+                    @endforeach
+                    </div>
+                </div> -->
             </div>
         </div>
         <hr/>
@@ -67,7 +80,7 @@
                     @foreach($research as $rs)
                         <tr>
                             <td class="align-middle">
-                                <input type="checkbox" name="selected[]" value="{{ $rs->researchID }}">
+                                <input type="checkbox" name="selected[]" value="{{ $rs->id }}">
                             </td>
                             </form>
                             <td class="align-middle">{{ $loop->iteration }}</td>

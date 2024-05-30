@@ -2,20 +2,20 @@
     use App\Models\Roles;
     use App\Models\Researcher;
     use App\Models\Research;
-    use App\Models\RoleResearchAssigned;
+    use App\Models\ResearchTeam;
 
     $roles = Roles::all();
     $researchers = Researcher::all();
     $research = Research::all();
 
-    $roleresearchassigned = RoleResearchAssigned::all();
+    $researchteam = ResearchTeam::all();
 @endphp
 
-@foreach ($roleresearchassigned as $item)
+@foreach ($researchteam as $item)
 <div class="modal fade my-modal" id="edit{{ $item->id }}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('roleresearchassigned.update', $item->id) }}" method="POST">
+            <form action="{{ route('researchteam.update', $item->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-header">

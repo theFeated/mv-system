@@ -23,11 +23,17 @@ class StoreExternalFundRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'exFundID' => 'required',
             'researchID' => 'required',
             'agencyID' => 'required',
             'total_budget' => 'required',
-            'budget_utilized' => 'required',
+            'budget_utilized' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if ($value > request()->input('total_budget')) {
+                        $fail('The budget utilized cannot be greater than the total budget.');
+                    }
+                },
+            ],
             'purpose' => 'required',
         ];
     }

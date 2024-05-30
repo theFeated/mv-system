@@ -6,28 +6,37 @@
  use Illuminate\Http\Response;
  use Illuminate\Support\Facades\Session;
 
- use App\Models\RoleResearchAssigned; 
+ use App\Models\ResearchTeam; 
  use App\Models\Roles;
  use App\Models\Researcher;
  use App\Models\Research;
 
-use App\Http\Requests\RoleResearchAssigned\StoreAssignedRequest;
-use App\Http\Requests\RoleResearchAssigned\UpdateAssignedRequest;
+use App\Http\Requests\ResearchTeam\StoreAssignedRequest;
+use App\Http\Requests\ResearchTeam\UpdateAssignedRequest;
  
- class RoleResearchAssignedController extends Controller
+ class ResearchTeamController extends Controller
  {
      public function save(StoreAssignedRequest $request)
      {
+
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
+    
         $validatedData = $request->validated();
  
-         RoleResearchAssigned::create($validatedData);
+         ResearchTeam::create($validatedData);
  
          return redirect()->back()->with('success', 'Saved Successfully!');
      }
     
     public function update(UpdateAssignedRequest $request, string $id)
     {
-        $assigned = RoleResearchAssigned::findOrFail($id);
+        $assigned = ResearchTeam::findOrFail($id);
+    
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
     
         $assigned->update($request->validated());
     
@@ -46,7 +55,7 @@ use App\Http\Requests\RoleResearchAssigned\UpdateAssignedRequest;
             }
 
             // Delete each selected item
-            RoleResearchAssigned::whereIn('id', $selectedItems)->delete();
+            ResearchTeam::whereIn('id', $selectedItems)->delete();
 
             // Redirect back with success message
             return redirect()->back()->with('success', 'Selected items removed successfully');
@@ -59,10 +68,10 @@ use App\Http\Requests\RoleResearchAssigned\UpdateAssignedRequest;
     public function destroyForever(Request $request, string $id)
     {
         try {
-            $roleresearchassigned = RoleResearchAssigned::withTrashed()->findOrFail($id);
+            $researchteam = ResearchTeam::withTrashed()->findOrFail($id);
             
             // Perform force delete
-            $roleresearchassigned->forceDelete();
+            $researchteam->forceDelete();
             
             return redirect()->back()->with('success', 'Remove successfully');
         } catch (ModelNotFoundException $e) {

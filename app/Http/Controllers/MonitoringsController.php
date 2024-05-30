@@ -14,6 +14,11 @@ class MonitoringsController extends Controller
 
     public function save(StoreMonitoringRequest $request)
     {
+
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
+    
         $validatedData = $request->validated();
     
         Monitorings::create($validatedData);
@@ -24,6 +29,10 @@ class MonitoringsController extends Controller
     public function update(UpdateMonitoringRequest $request, string $id)
     {
         $monitoring = Monitorings::findOrFail($id);
+    
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
     
         $monitoring->update($request->validated());
     

@@ -18,7 +18,7 @@ class AgencyController extends Controller
     public function index()
     {
   
-        $agency = Agency::orderBy('created_at', 'DESC')->paginate(10);
+        $agency = Agency::orderBy('created_at', 'DESC')->get();
         return view('agency.index', compact('agency'));
     }
     
@@ -36,6 +36,10 @@ class AgencyController extends Controller
      */
     public function store(StoreAgencyRequest $request)
     {
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
+    
         Agency::create($request->validated());
         return redirect()->route('agency')->with('success', 'Agency added successfully');
     }
@@ -43,9 +47,9 @@ class AgencyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $agencyID)
+    public function show(string $id)
     {
-        $agency = Agency::findOrFail($agencyID);
+        $agency = Agency::findOrFail($id);
   
         return view('agency.show', compact('agency'));
     }
@@ -53,9 +57,9 @@ class AgencyController extends Controller
     /**
      * Show form for editing the specified resource.
      */
-    public function edit(string $agencyID)
+    public function edit(string $id)
     {
-        $agency = Agency::findOrFail($agencyID);
+        $agency = Agency::findOrFail($id);
     
         return view('agency.edit', compact('agency'));
     }
@@ -64,9 +68,13 @@ class AgencyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAgencyRequest $request, string $agencyID)
+    public function update(UpdateAgencyRequest $request, string $id)
     {
-        $agency = Agency::findOrFail($agencyID);
+        $agency = Agency::findOrFail($id);
+    
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
     
         $agency->update($request->validated());
     
@@ -76,9 +84,9 @@ class AgencyController extends Controller
      /**
      * Archived the specified resource in storage.
      */
-    public function destroy(Request $request, string $agencyID)
+    public function destroy(Request $request, string $id)
     {
-        $agency = Agency::findOrFail($agencyID);
+        $agency = Agency::findOrFail($id);
     
         $agency->delete();
     
@@ -98,9 +106,9 @@ class AgencyController extends Controller
     /**
      * Unarchived or restore an item.
      */
-    public function unarchive(Request $request, $agencyID)
+    public function unarchive(Request $request, $id)
     {
-        $agency = Agency::withTrashed()->findOrFail($agencyID);
+        $agency = Agency::withTrashed()->findOrFail($id);
         $agency->restore();
     
         return redirect()->back()->with('success', 'Agency restored successfully');
@@ -132,15 +140,15 @@ class AgencyController extends Controller
             return redirect()->back()->withErrors('Please select at least one agency to restore.');
         }
 
-        Agency::whereIn('agencyID', $selected)->restore();
+        Agency::whereIn('id', $selected)->restore();
 
         return redirect()->back()->with('success', 'Agency restored successfully');
     }
 
-    public function destroyForever(Request $request, string $agencyID)
+    public function destroyForever(Request $request, string $id)
     {
         try {
-            $agency = Agency::withTrashed()->findOrFail($agencyID);
+            $agency = Agency::withTrashed()->findOrFail($id);
             
             // Perform force delete
             $agency->forceDelete();

@@ -38,6 +38,10 @@ class CollegeController extends Controller
      */
     public function store(StoreCollegeRequest $request)
     {
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }
+    
         $validatedData = $request->validated();
 
         $college = College::create($validatedData);
@@ -71,6 +75,10 @@ class CollegeController extends Controller
     public function update(UpdateCollegeRequest $request, string $id)
     {
         $college = College::findOrFail($id);
+
+        if (!$request->validated()) {
+            return response()->json(['error' => $request->errors()], 422);
+        }    
     
         $college->update($request->validated());
     
