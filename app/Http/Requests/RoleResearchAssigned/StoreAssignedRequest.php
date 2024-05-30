@@ -23,7 +23,6 @@ class StoreAssignedRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'assignedID' => 'required',
             'roleID' => 'required',
             'researcherID' => 'required',
             'researchID' => 'required',

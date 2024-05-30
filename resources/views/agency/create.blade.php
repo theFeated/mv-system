@@ -25,10 +25,6 @@
         @csrf
         <div class="row mb-3">
             <div class="col">
-                <label for="agencyID" class="form-label">Agency ID<span class="text-danger">*</span></label>
-                <input type="text" name="agencyID" class="form-control" value="{{ $agencyID }}" placeholder="Agency ID" required readonly>
-            </div>
-            <div class="col">
                 <label for="agencyName" class="form-label">Agency Name<span class="text-danger">*</span></label>
                 <input type="text" name="agencyName" class="form-control" placeholder="Name" required>
             </div>

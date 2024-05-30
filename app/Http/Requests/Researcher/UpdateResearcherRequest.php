@@ -21,14 +21,13 @@ class UpdateResearcherRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-     public function rules(): array
-     {
-         return [
-             'researcherID' => 'required|unique:researcher,researcherID,' . $this->route('researcherID') . ',researcherID',
-             'collegeID' => 'required|exists:college,collegeID',
-             'researcherName' => 'required|string',
-             'email' => 'required|email|string',
-             'contactNum' => 'required|string',
-         ];
-     }
+    public function rules(): array
+    {
+        return [
+            'collegeID' => 'required|exists:college,id',
+            'researcherName' => 'required|string',
+            'email' => 'required|email|string',
+            'contactNum' => 'required|string',
+        ];  
+    }
 }

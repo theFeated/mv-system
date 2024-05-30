@@ -1,18 +1,5 @@
 @php
-    use App\Models\Monitorings;
-
-    // Retrieve the latest record (including archived data) from the Monitorings model
-    $latest = Monitorings::withTrashed()->orderBy('monitoringID', 'desc')->first();
-
-    if ($latest) {
-        // Extract the numeric part of the identifier
-        $numericPart = intval(substr($latest->monitoringID, 2)) + 1;
-    } else {
-        $numericPart = 1;
-    }
-
-    $monitoringID = "M-" . str_pad($numericPart, 3, '0', STR_PAD_LEFT);
-
+use App\Models\Research;
 @endphp
 
 <div class="modal fade my-modal" id="addMonitorings" tabindex="-1" aria-labelledby="addResearcherModal" aria-hidden="true">
@@ -26,17 +13,6 @@
                 <form action="{{ route('monitorings.save') }}" method="POST">
                     @csrf
                     <div class="row mb-3">
-                    <div class="col">
-                        <label for="monitoringID" class="form-label">Monitorings<span class="text-danger">*</span></label>
-                        <input type="text" id="monitoringID" name="monitoringID" class="form-control" value="{{ $monitoringID }}" required readonly>
-                    </div>
-                        <div class="col">
-                            <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
-                            <input type="date" name="date" class="form-control" placeholder="Enter Date" required>
-                        </div>
-                    </div>
-                    
-                    <div class="row mb-3">
                         <div class="col">
                                 <label for="researchID" class="form-label">Research ID<span class="text-danger">*</span></label>
                                 <input type="text" id="researchID" name="researchID" class="form-control" value="{{ $researchId }}" readonly>
@@ -46,8 +22,15 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label for="status" class="form-label">Status<span class="text-danger">*</span></label>
-                            <input type="text" name="status" class="form-control" placeholder="Status" required>
+                            <input type="text" name="status" class="form-control" placeholder="Status" value="{{ Research::find($researchId)->status }}" readonly>
                         </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
+                                <input type="date" name="date" class="form-control" placeholder="Enter Date" required>
+                            </div>
+                        </div>
+                        
                         <div class="col">
                             <label for="progress" class="form-label">Progress<span class="text-danger">*</span></label>
                             <input type="text" name="progress" class="form-control" placeholder="Enter Progress" required>

@@ -37,13 +37,7 @@ class ResearchController extends Controller
         $researchers = Researcher::all();
         $agencies = Agency::all();
 
-        // Get the highest ID
-        $highestResearch = DB::table('research')->select('researchID')->orderBy('researchID', 'desc')->first();
-        $nextID = $highestResearch ? intval(substr($highestResearch->researchID, 1)) + 1 : 1;
-        $researchID = str_pad($nextID, 3, '0', STR_PAD_LEFT);
-        $researchID = "r" . $researchID;
-
-        return view('research.create', compact('colleges', 'researchers', 'agencies', 'researchID'));
+        return view('research.create', compact('colleges', 'researchers', 'agencies'));
     }
 
     /**
@@ -67,7 +61,7 @@ class ResearchController extends Controller
         $research = Research::findOrFail($researchID);
         $college = College::find($research->collegeID);
         $researcher = Researcher::find($research->researcherID);
-        $agency = Agency::find($research->agencyID);
+        $agency = Agency::find($research->agencyID);        
         $roles = Roles::find($research->roleID);
         $roleresearchassigned = RoleResearchAssigned::where('researchID', $researchID)->get();
         $monitorings = Monitorings::where('researchID', $researchID)->get();
@@ -78,7 +72,6 @@ class ResearchController extends Controller
         return view('research.show', compact('research', 'college', 'researcher', 'agency', 'roles',
          'roleresearchassigned', 'monitorings','externalfunds'));
     }
-
 
     /**
      * Show form for editing the specified resource.

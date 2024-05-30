@@ -23,11 +23,12 @@ class UpdateMonitoringRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'researchID' => 'required',
             'progress' => 'required',
             'status' => 'required',
             'remarks' => 'required',
             'monitoringPersonnel' => 'required',
-            'date' => 'required|date',
+            'date' => 'required',
         ];
     }
 }

@@ -4,8 +4,6 @@
 
 @section('contents')
 
-@include('roleresearchassigned.modal')
-
     <form method="POST" action="{{ route('research.destroyMultiple') }}"class="archive-form">
         @csrf
         @method('DELETE')
@@ -19,7 +17,6 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a href="{{ route('research.create') }}" class="dropdown-item">Add Research</a>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addnew">Add Researchers</a>
                     </div>
                 </div>
                 @endif

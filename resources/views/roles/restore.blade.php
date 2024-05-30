@@ -44,11 +44,11 @@
                 @forelse($archived as $roles)
                     <tr>
                         <td class="align-middle">
-                            <input type="checkbox" name="selected[]" value="{{ $roles->roleID }}">
+                            <input type="checkbox" name="selected[]" value="{{ $roles->id }}">
                         </td>
                         </form>
                         <td class="align-middle">{{ $loop->iteration }}</td>
-                        <td class="align-middle">{{ $roles->roleID }}</td>
+                        <td class="align-middle">{{ $roles->id }}</td>
                         <td class="align-middle">{{ $roles->roleName }}</td>
                         <td class="align-middle">{{ $roles->roleDescription }}</td>
                         <td>
@@ -57,7 +57,7 @@
                                 @csrf
                                 <button type="submit" class="btn btn-success">Restore</button>
                             </form>
-                            <form action="{{ route('roles.destroyForever', $roles->roleID) }}" method="POST" class="archive-form">
+                            <form action="{{ route('roles.destroyForever', $roles->id) }}" method="POST" class="archive-form">
                                 @csrf
                                 @method('DELETE') 
                                 <button type="button" class="btn btn-danger m-0 archive-button" data-message="This will be permanently deleted.">Delete</button>
@@ -72,4 +72,6 @@
                 @endforelse
             </tbody>
         </table>  
+</form>
+
 @endsection

@@ -1,11 +1,16 @@
+@php
+    use App\Models\Monitorings;
+
+    $monitorings = Monitorings::all();
+@endphp
 
 @foreach ($monitorings as $item)
-<div class="modal fade my-modal" id="edit{{ $item->monitoringID }}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade my-modal" id="edit{{ $item->id }}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('monitorings.update', ['monitoringID' => $item->monitoringID]) }}" method="POST">
+            <form action="{{ route('monitorings.update', $item->id) }}" method="POST">                
                 @csrf
-                @method('PATCH')
+                @method('PUT')
                 <div class="modal-header">						
                     <h4 class="modal-title">Edit Monitoring</h4>
                     <button type="button" class="close " data-dismiss="modal" aria-label="Close">&times;</button>
@@ -13,19 +18,19 @@
                 <div class="modal-body">					
                     <div class="form-group">
                         <label>Monitoring ID</label>
-                        <input type="text" class="form-control" name="monitoringID" value="{{ $item->monitoringID }}" readonly>
+                        <input type="text" class="form-control" name="id" value="{{ $item->id }}" readonly>
                     </div>
                     <div class="form-group">
                         <label>Research ID</label>
                         <input type="text" class="form-control" name="researchID" value="{{ $item->researchID }}" readonly>
                     </div>
                     <div class="form-group">
-                        <label>Progress</label>
-                        <input type="text" class="form-control" name="progress" value="{{ $item->progress }}" required>
+                        <label>Status</label>
+                        <input type="text" class="form-control" name="status" value="{{ $item->status }}" readonly>
                     </div>
                     <div class="form-group">
-                        <label>Status</label>
-                        <input type="text" class="form-control" name="status" value="{{ $item->status }}" required>
+                        <label>Progress</label>
+                        <input type="text" class="form-control" name="progress" value="{{ $item->progress }}" required>
                     </div>
                     <div class="form-group">
                         <label>Remarks</label>

@@ -23,7 +23,6 @@ class StoreMonitoringRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'monitoringID' => 'required',
             'researchID' => 'required',
             'progress' => 'required',
             'status' => 'required',

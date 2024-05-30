@@ -21,13 +21,13 @@
         {{ Session::get('error') }}
     </div>
     @endif
-    <form action="{{ route('research.update', $research->researchID) }}" method="POST">
+    <form action="{{ route('research.update', $research->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="row">
             <div class="col mb-3">
                 <label class="form-label">ID</label>
-                <input type="text" name="researchID" class="form-control" placeholder="ID" value="{{ htmlentities($research->researchID) }}" readonly>
+                <input type="text" name="id" class="form-control" placeholder="ID" value="{{ htmlentities($research->id) }}" readonly>
             </div>
             <div class="col mb-3">
                 <label class="form-label">College</label>
@@ -73,10 +73,6 @@
             </div>
         </div>
         <div class="row">
-            <div class="col mb-3">
-                <label class="form-label">Year</label>
-                <input type="year" name="year" class="form-control" placeholder="Year" value="{{ $research->year }}" >
-            </div>
             <div class="col mb-3">
                 <label class="form-label">Start Date</label>
                 <input type="date" name="startDate" class="form-control" placeholder="Start Date" value="{{ $research->startDate }}" >

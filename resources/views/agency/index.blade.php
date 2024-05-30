@@ -65,21 +65,21 @@
                 @foreach($agency as $rs)
                 <tr>
                     <td class="align-middle">
-                        <input type="checkbox" name="selected[]" value="{{ $rs->agencyID }}">
+                        <input type="checkbox" name="selected[]" value="{{ $rs->id }}">
                     </td>
                     </form>
                     <td class="align-middle">{{ $loop->iteration }}</td>
-                    <td class="align-middle">{{ $rs->agencyID }}</td>
+                    <td class="align-middle">{{ $rs->id }}</td>
                     <td class="align-middle">{{ $rs->agencyName }}</td>
                     <td class="align-middle">{{ $rs->contactPerson }}</td>
                     <td class="align-middle">{{ $rs->address }}</td>
                     <td class="align-middle">{{ $rs->telNum }}</td>
                     <td class="align-middle">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <a href="{{ route('agency.show', $rs->agencyID) }}" type="button" class="btn btn-secondary">Detail</a>
+                            <a href="{{ route('agency.show', $rs->id) }}" type="button" class="btn btn-secondary">Detail</a>
                             @if(Auth::user()->name == "Admin")
-                            <a href="{{ route('agency.edit', $rs->agencyID) }}" type="button" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('agency.destroy', $rs->agencyID) }}" method="POST" class="d-inline archive-form">
+                            <a href="{{ route('agency.edit', $rs->id) }}" type="button" class="btn btn-warning">Edit</a>
+                            <form action="{{ route('agency.destroy', $rs->id) }}" method="POST" class="d-inline archive-form">
                                 @csrf
                                 @method('DELETE')
                                 <button type="button" class="btn btn-danger m-0 archive-button" data-message="You can undo this later on the restore page.">Archive</button>
@@ -91,7 +91,7 @@
                 @endforeach
                 @else
                 <tr>
-                    <td class="text-center" colspan="5">Agency not found</td>
+                    <td class="text-center" colspan="8">Agency not found</td>
                 </tr>
                 @endif
             </tbody>

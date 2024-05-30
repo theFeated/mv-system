@@ -23,7 +23,6 @@ class UpdateAgencyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'agencyID' => 'required|unique:agency,agencyID,' . $this->route('agencyID') . ',agencyID',
             'agencyName' => 'required|string', 
             'contactPerson' => 'required|string',
             'address' => 'required|string', 

@@ -29,15 +29,4 @@ class UpdateAssignedRequest extends FormRequest
         ];
     }
 
-    protected function prepareForValidation()
-    {
-        $assignedID = $this->route('assignedID');
-        $researchID = $this->route('researchID');
-
-        $this->merge([
-            'roleresearchassigned' => RoleResearchAssigned::where('assignedID', $assignedID)
-                ->where('researchID', $researchID)
-                ->firstOrFail(),
-        ]);
-    }
 }

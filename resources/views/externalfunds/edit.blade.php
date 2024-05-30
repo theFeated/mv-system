@@ -7,10 +7,10 @@
 @endphp
 
 @foreach ($externalfunds as $item)
-<div class="modal fade my-modal" id="edit{{ $item->exFundID }}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade my-modal" id="editFund{{ $item->id }}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('externalfunds.update', ['exFundID' => $item->exFundID]) }}" method="POST">
+            <form action="{{ route('externalfunds.update', $item->id) }}" method="POST">
                 @csrf
                 @method('PATCH')
                 <div class="modal-header">						
@@ -20,7 +20,7 @@
                 <div class="modal-body">					
                     <div class="form-group">
                         <label>External Fund ID</label>
-                        <input type="text" class="form-control" name="exFundID" value="{{ $item->exFundID }}" readonly>
+                        <input type="text" class="form-control" name="id" value="{{ $item->id }}" readonly>
                     </div>
                     <div class="form-group">
                         <label>Research ID</label>
@@ -30,13 +30,17 @@
                         <label>Agency</label>
                         <select name="agencyID" class="form-control" required>
                             @foreach ($agencies as $agency)
-                                <option value="{{ $agency->agencyID }}" {{ $agency->agencyID == $item->agencyID ? 'selected' : '' }}>{{ $agency->name }}</option>
+                                <option value="{{ $agency->id }}" {{ $agency->id == $item->agencyID? 'elected' : '' }}>{{ $agency->agencyName }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Contribution</label>
-                        <input type="text" class="form-control" name="contribution" value="{{ $item->contribution }}">
+                        <label>Total Budget</label>
+                        <input type="text" class="form-control" name="total_budget" value="{{ $item->total_budget }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Budget Utlized</label>
+                        <input type="text" class="form-control" name="budget_utilized" value="{{ $item->budget_utilized }}">
                     </div>
                     <div class="form-group">
                         <label>Purpose</label>

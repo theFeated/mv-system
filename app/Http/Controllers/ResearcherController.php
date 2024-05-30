@@ -37,7 +37,9 @@ class ResearcherController extends Controller
      */
     public function store(StoreResearcherRequest $request)
     {
-        $researcher = Researcher::create($request->validated());
+        $validatedData = $request->validated();
+
+        $researcher = Researcher::create($validatedData);
 
         return redirect()->route('researcher')->with('success', 'Researcher added successfully');
     }
@@ -45,9 +47,9 @@ class ResearcherController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $researcherID)
+    public function show(string $id)
     {
-        $researcher = Researcher::findOrFail($researcherID);
+        $researcher = Researcher::findOrFail($id);
         $college = College::find($researcher->collegeID);
 
         return view('researcher.show', compact('researcher', 'college'));
@@ -56,9 +58,9 @@ class ResearcherController extends Controller
     /**
      * Show form for editing the specified resource.
      */
-    public function edit(string $researcherID)
+    public function edit(string $id)
     {
-        $researcher = Researcher::findOrFail($researcherID);
+        $researcher = Researcher::findOrFail($id);
         $colleges = College::all(); 
 
         return view('researcher.edit', compact('researcher','colleges'));
@@ -67,9 +69,9 @@ class ResearcherController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateResearcherRequest $request, string $researcherID)
+    public function update(UpdateResearcherRequest $request, string $id)
     {
-        $researcher = Researcher::findOrFail($researcherID);
+        $researcher = Researcher::findOrFail($id);
     
         $researcher->update($request->validated());
     
@@ -79,9 +81,9 @@ class ResearcherController extends Controller
      /**
      * Archived the specified resource in storage.
      */
-    public function destroy(Request $request, string $researcherID)
+    public function destroy(Request $request, string $id)
     {
-        $researcher = Researcher::findOrFail($researcherID);
+        $researcher = Researcher::findOrFail($id);
     
         $researcher->delete();
     
@@ -101,9 +103,9 @@ class ResearcherController extends Controller
     /**
      * Unarchived or restore an item.
      */
-    public function unarchive(Request $request, $researcherID)
+    public function unarchive(Request $request, $id)
     {
-        $researcher = Researcher::withTrashed()->findOrFail($researcherID);
+        $researcher = Researcher::withTrashed()->findOrFail($id);
         $researcher->restore();
     
         return redirect()->back()->with('success', 'Researcher restored successfully');
@@ -135,15 +137,15 @@ class ResearcherController extends Controller
             return redirect()->back()->withErrors('Please select at least one researcher to restore.');
         }
 
-        Researcher::whereIn('researcherID', $selected)->restore();
+        Researcher::whereIn('id', $selected)->restore();
 
         return redirect()->back()->with('success', 'Colleges restored successfully');
     }
 
-    public function destroyForever(Request $request, string $researcherID)
+    public function destroyForever(Request $request, string $id)
     {
         try {
-            $researcher = Researcher::withTrashed()->findOrFail($researcherID);
+            $researcher = Researcher::withTrashed()->findOrFail($id);
             
             // Perform force delete
             $researcher->forceDelete();

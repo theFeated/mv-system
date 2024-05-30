@@ -13,11 +13,9 @@
   
   <!-- Custom styles for this template-->
   <link href="{{ asset('admin_assets/css/sb-admin-2.css') }}" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  <link href="{{ asset('admin_assets/css/sweetalert2.css') }}" rel="stylesheet">
+  <link href="{{ asset('admin_assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
-  <link href='https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css' rel='stylesheet'>
-  <link href='https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css' rel='stylesheet'>
-  
   <style>
     @media (max-width: 768px) {
       #content-wrapper {
@@ -91,49 +89,15 @@
   <!-- Page level plugins -->
   <script src="{{ asset('admin_assets/vendor/chart.js/Chart.min.js') }}"></script>
 
+  <script src="{{ asset('admin_assets/js/sweetalert2.js') }}"></script>
   <script src="{{ asset('admin_assets/js/sweetalert.js') }}"></script>
   <script src="{{ asset('admin_assets/js/recordtable.js') }}"></script>
   <script src="{{ asset('admin_assets/js/selectedcheckbox.js') }}"></script>
   <script src="{{ asset('admin_assets/js/closemodal.js') }}"></script>
   <script src="{{ asset('admin_assets/js/showitemonclick.js') }}"></script>
+  <script src="{{ asset('admin_assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('admin_assets/vendor/datatables/jquery.dataTables.js') }}"></script>
 
-  <script src='https://code.jquery.com/jquery-3.7.1.js'></script>
-  <script src='https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js'></script>
-  <script src='https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js'></script>
-  <script src='https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js'></script>
-  <script src='https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap.min.js'></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
-        @if(isset($researchPerYear))
-            var years = @json($researchPerYear->pluck('year'));
-            var counts = @json($researchPerYear->pluck('total'));
-
-            var ctx = document.getElementById('researchPerYearChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: years,
-                    datasets: [{
-                        label: 'Research',
-                        data: counts,
-                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
-                }
-            });
-            @endif
-    </script>
 </body>
 </html>

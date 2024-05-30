@@ -21,13 +21,13 @@
         {{ Session::get('error') }}
     </div>
     @endif
-    <form action="{{ route('roles.update', $roles->roleID) }}" method="POST">
+    <form action="{{ route('roles.update', $roles->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="row">
             <div class="col mb-3">
                 <label class="form-label">ID</label>
-                <input type="text" name="roleID" class="form-control" placeholder="ID"  value="{{ $roles->roleID }}" readonly>
+                <input type="text" name="id" class="form-control" placeholder="ID"  value="{{ $roles->id }}" readonly>
             </div>
             <div class="col mb-3">
                 <label class="form-label">Roles Name</label>

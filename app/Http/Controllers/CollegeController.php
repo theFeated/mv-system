@@ -38,17 +38,19 @@ class CollegeController extends Controller
      */
     public function store(StoreCollegeRequest $request)
     {
-        return $request->storeCollege();
+        $validatedData = $request->validated();
 
-        return redirect()->route('success.page')->with('success', 'College added successfully');
+        $college = College::create($validatedData);
+
+        return redirect()->route('college')->with('success', 'College added successfully');
     }
     
     /**
      * Display the specified resource.
      */
-    public function show(string $collegeID)
+    public function show(string $id)
     {
-        $college = College::findOrFail($collegeID);
+        $college = College::findOrFail($id);
   
         return view('college.show', compact('college'));
     }
@@ -56,9 +58,9 @@ class CollegeController extends Controller
     /**
      * Show form for editing the specified resource.
      */
-    public function edit(string $collegeID)
+    public function edit(string $id)
     {
-        $college = College::findOrFail($collegeID);
+        $college = College::findOrFail($id);
   
         return view('college.edit', compact('college'));
     }
@@ -66,11 +68,11 @@ class CollegeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCollegeRequest $request, string $collegeID)
+    public function update(UpdateCollegeRequest $request, string $id)
     {
-        $college = College::findOrFail($collegeID);
+        $college = College::findOrFail($id);
     
-        $college->update($request->only(['collegeName', 'collegeDean']));
+        $college->update($request->validated());
     
         return redirect()->route('college')->with('success', 'College updated successfully');
     }
@@ -78,9 +80,9 @@ class CollegeController extends Controller
      /**
      * Archived the specified resource in storage.
      */
-    public function destroy(Request $request, string $collegeID)
+    public function destroy(Request $request, string $id)
     {
-        $college = College::findOrFail($collegeID);
+        $college = College::findOrFail($id);
     
         $college->delete();
     
@@ -100,9 +102,9 @@ class CollegeController extends Controller
     /**
      * Unarchived or restore an item.
      */
-    public function unarchive(Request $request, $collegeID)
+    public function unarchive(Request $request, $id)
     {
-        $college = College::withTrashed()->findOrFail($collegeID);
+        $college = College::withTrashed()->findOrFail($id);
         $college->restore();
     
         return redirect()->back()->with('success', 'College restored successfully');
@@ -134,15 +136,15 @@ class CollegeController extends Controller
             return redirect()->back()->withErrors('Please select at least one college to restore.');
         }
 
-        College::whereIn('collegeID', $selected)->restore();
+        College::whereIn('id', $selected)->restore();
 
         return redirect()->back()->with('success', 'Colleges restored successfully');
     }
 
-    public function destroyForever(Request $request, string $collegeID)
+    public function destroyForever(Request $request, string $id)
     {
         try {
-            $college = College::withTrashed()->findOrFail($collegeID);
+            $college = College::withTrashed()->findOrFail($id);
             
             // Perform force delete
             $college->forceDelete();

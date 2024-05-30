@@ -11,25 +11,13 @@ class Research extends Model
     use HasFactory, SoftDeletes;
     
     protected $table = 'research'; 
-    protected $primaryKey = 'researchID';
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'researchID', 'collegeID', 'researcherID', 'agencyID', 'status', 'researchTitle',
-        'researchType', 'year', 'startDate', 'endDate', 'link_1', 'link_2',
-        'link_3', 'extension', 'internalFund',
+        'id', 'collegeID', 'researcherID', 'agencyID', 'status', 'researchTitle',
+        'researchType', 'startDate', 'endDate', 'link_1', 'link_2',
+        'link_3', 'extension', 'isInternalFund',
     ];
 
-    public $incrementing = false;
-
-    // Define that the primary key 'id' should use the value of 'researchID'
-    public function getIdAttribute()
-    {
-        return $this->attributes['researchID'];
-    }
-
-    protected $casts = [
-        'internalFund' => 'boolean',
-    ];    
-    
     public function college()
     {
         return $this->belongsTo(College::class, 'collegeID');

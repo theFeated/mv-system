@@ -52,6 +52,7 @@
                 </th>
                 <th>#</th>
                 <th>ID</th>
+                <th>Acronym</th>
                 <th>College Name</th>
                 <th>College Dean</th>
                 <th>Action</th>
@@ -62,19 +63,20 @@
             @foreach($college as $rs)
             <tr>
                 <td class="align-middle">
-                    <input type="checkbox" name="selected[]" value="{{ $rs->collegeID }}">
+                    <input type="checkbox" name="selected[]" value="{{ $rs->id }}">
                 </td>
                 </form>
                 <td class="align-middle">{{ $loop->iteration }}</td>
-                <td class="align-middle">{{ $rs->collegeID }}</td>
+                <td class="align-middle">{{ $rs->id }}</td>
+                <td class="align-middle">{{ $rs->acronym }}</td>
                 <td class="align-middle">{{ $rs->collegeName }}</td>
                 <td class="align-middle">{{ $rs->collegeDean }}</td>
                 <td class="align-middle">
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="{{ route('college.show', $rs->collegeID) }}" type="button" class="btn btn-secondary">Detail</a>
+                        <a href="{{ route('college.show', $rs->id) }}" type="button" class="btn btn-secondary">Detail</a>
                         @if(Auth::user()->name == "Admin")
-                        <a href="{{ route('college.edit', $rs->collegeID) }}" type="button" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('college.destroy', $rs->collegeID) }}" method="POST" class="d-inline archive-form">
+                        <a href="{{ route('college.edit', $rs->id) }}" type="button" class="btn btn-warning">Edit</a>
+                        <form action="{{ route('college.destroy', $rs->id) }}" method="POST" class="d-inline archive-form">
                             @csrf
                             @method('DELETE')
                             <button type="button" class="btn btn-danger m-0 archive-button" data-message="You can undo this later on the restore page.">Archive</button>
@@ -86,7 +88,7 @@
             @endforeach
             @else
             <tr>
-                <td class="text-center" colspan="9">College not found</td>
+                <td class="text-center" colspan="7">College not found</td>
             </tr>
             @endif
         </tbody>

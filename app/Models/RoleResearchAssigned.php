@@ -11,16 +11,7 @@ class RoleResearchAssigned extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'role_researchassigned'; 
-    protected $fillable = ['assignedID', 'roleID', 'researcherID', 'researchID'];
-
-    protected $primaryKey = 'assignedID';
-    // Ensure Laravel knows the primary key is not auto-incrementing
-    public $incrementing = false;
-    // Define that the primary key 'id' should use the value of 'agencyID'
-    public function getIdAttribute()
-    {
-        return $this->attributes['assignedID'];
-    }
+    protected $fillable = ['id', 'roleID', 'researcherID', 'researchID'];
 
     public function researcher()
     {

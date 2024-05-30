@@ -112,12 +112,9 @@ Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function ()
     Route::controller(RoleResearchAssignedController::class)->prefix('roleresearchassigned')->group(function () {
         Route::get('', 'index')->name('roleresearchassigned.modal');
         Route::post('save', 'save')->name('roleresearchassigned.save');
-        Route::patch('roleresearchassigned/{assignedID}/{researchID}', [RoleResearchAssignedController::class, 'update'])->name('roleresearchassigned.update');
-        Route::delete('destroy/{assignedID}', 'destroy')->name('roleresearchassigned.destroy');
-        Route::delete('destroyMultiple', 'destroyMultiple')->name('roleresearchassigned.destroyMultiple');
-        Route::post('unarchive/{assignedID}', 'unarchive')->name('roleresearchassigned.unarchive');
-        Route::post('roleresearchassigned/unarchiveMultiple', 'unarchiveMultiple')->name('roleresearchassigned.unarchiveMultiple');
-        Route::delete('roleresearchassigned/{assignedID}', 'destroyForever')->name('roleresearchassigned.destroyForever');
+        Route::put('edit/{assignedID}', 'update')->name('roleresearchassigned.update');
+        Route::delete('destroyMultiple', 'destroyMultiple')->name('roleresearchassigned.removeMultiple');
+        Route::delete('roleresearchassigned/{assignedID}', 'destroyForever')->name('roleresearchassigned.remove');
 
     });
 
@@ -158,12 +155,9 @@ Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function ()
     Route::controller(MonitoringsController::class)->prefix('monitorings')->group(function () {
         Route::get('', 'index')->name('monitorings.modal');
         Route::post('save', 'save')->name('monitorings.save');
-        Route::patch('monitorings/{monitoringID}', 'update')->name('monitorings.update');
-        Route::delete('destroy/{monitoringID}', 'destroy')->name('monitorings.destroy');
-        Route::delete('destroyMultiple', 'destroyMultiple')->name('monitorings.destroyMultiple');
-        Route::post('unarchive/{monitoringID}', 'unarchive')->name('monitorings.unarchive');
-        Route::post('monitorings/unarchiveMultiple', 'unarchiveMultiple')->name('monitorings.unarchiveMultiple');
-        Route::delete('monitorings/{monitoringID}', 'destroyForever')->name('monitorings.destroyForever');
+        Route::put('monitorings/{monitoringID}', 'update')->name('monitorings.update');
+        Route::delete('destroyMultiple', 'destroyMultiple')->name('monitorings.removeMultiple');
+        Route::delete('monitorings/{monitoringID}', 'destroyForever')->name('monitorings.remove');
 
     });
 
@@ -171,11 +165,8 @@ Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function ()
         Route::get('', 'index')->name('externalfunds.modal');
         Route::post('save', 'save')->name('externalfunds.save');
         Route::patch('externalfunds/{exFundID}', 'update')->name('externalfunds.update');
-        Route::delete('destroy/{exFundID}', 'destroy')->name('externalfunds.destroy');
-        Route::delete('destroyMultiple', 'destroyMultiple')->name('externalfunds.destroyMultiple');
-        Route::post('unarchive/{exFundID}', 'unarchive')->name('externalfunds.unarchive');
-        Route::post('externalfunds/unarchiveMultiple', 'unarchiveMultiple')->name('externalfunds.unarchiveMultiple');
-        Route::delete('externalfunds/{exFundID}', 'destroyForever')->name('externalfunds.destroyForever');
+        Route::delete('destroyMultiple', 'destroyMultiple')->name('externalfunds.removeMultiple');
+        Route::delete('externalfunds/{exFundID}', 'destroyForever')->name('externalfunds.remove');
 
     });
 

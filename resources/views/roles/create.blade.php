@@ -25,10 +25,6 @@
         @csrf
         <div class="row mb-3">
             <div class="col">
-                <label for="roleID" class="form-label">ID<span class="text-danger">*</span></label>
-                <input type="text" name="roleID" class="form-control" value="{{ $roleID }}" placeholder="Role ID" required readonly>
-            </div>
-            <div class="col">
                 <label for="roleName" class="form-label">Roles Name<span class="text-danger">*</span></label>
                 <input type="text" name="roleName" class="form-control" placeholder="Name">
             </div>

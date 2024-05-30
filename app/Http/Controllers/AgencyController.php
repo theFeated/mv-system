@@ -27,13 +27,7 @@ class AgencyController extends Controller
      */
     public function create()
     {
-        // Get the highest ID
-        $highest = DB::table('agency')->select('agencyID')->orderBy('agencyID', 'desc')->first();
-        $nextID = $highest ? intval(substr($highest->agencyID, 2)) + 1 : 1;
-        $agencyID = str_pad($nextID, 3, '0', STR_PAD_LEFT);
-        $agencyID = "ag" . $agencyID;
-    
-        return view('agency.create', compact('agencyID'));
+        return view('agency.create');
     }
     
     

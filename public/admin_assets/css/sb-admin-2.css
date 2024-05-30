@@ -10883,7 +10883,12 @@ a:focus {
 .bg-login-image {
   background: url("/admin_assets/img/cic.jpg");
   background-position: center;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat; 
+  margin: 0 auto;
+  width: 100%;
+  max-width: 300px; 
+  height: auto; 
 }
 
 .bg-register-image {
@@ -11324,7 +11329,5 @@ body.sidebar-toggled footer.sticky-footer {
   background-color: #424242 !important; 
   color: #dae6f8 !important;
 }
-
-
 
 

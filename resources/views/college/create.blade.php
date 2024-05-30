@@ -14,8 +14,8 @@
     @csrf
     <div class="row mb-3">
         <div class="col">
-            <label for="codePrefix" class="form-label">Code Prefix<span class="text-danger">*</span></label>
-            <input type="text" name="codePrefix" class="form-control" placeholder="Code Prefix (e.g., CIC)" required>
+            <label for="acronym" class="form-label">Acronym<span class="text-danger">*</span></label>
+            <input type="text" name="acronym" class="form-control" placeholder="Acronym(e.g., CIC)" required>
         </div>
         <div class="col">
             <label for="collegeName" class="form-label">College Name<span class="text-danger">*</span></label>

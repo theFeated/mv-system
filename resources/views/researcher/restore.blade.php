@@ -47,22 +47,22 @@
                 @forelse($archived as $researcher)
                     <tr>
                         <td class="align-middle">
-                            <input type="checkbox" name="selected[]" value="{{ $researcher->researcherID }}">
+                            <input type="checkbox" name="selected[]" value="{{ $researcher->id }}">
                         </td>
                         </form>
                         <td class="align-middle">{{ $loop->iteration }}</td>
-                        <td class="align-middle">{{ $researcher->researcherID }}</td>
+                        <td class="align-middle">{{ $researcher->id }}</td>
                         <td class="align-middle">{{ $researcher->collegeID }}</td>
                         <td class="align-middle">{{ $researcher->researcherName }}</td>
                         <td class="align-middle">{{ $researcher->email }}</td>
                         <td class="align-middle">{{ $researcher->contactNum }}</td>
                         <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <form action="{{ route('researcher.unarchive', $researcher->researcherID) }}" method="POST">
+                            <form action="{{ route('researcher.unarchive', $researcher->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-success">Restore</button>
                             </form>
-                            <form action="{{ route('researcher.destroyForever', $researcher->researcherID) }}" method="POST" class="archive-form">
+                            <form action="{{ route('researcher.destroyForever', $researcher->id) }}" method="POST" class="archive-form">
                                 @csrf
                                 @method('DELETE') 
                                 <button type="button" class="btn btn-danger m-0 archive-button" data-message="This will be permanently deleted.">Delete</button>
@@ -72,7 +72,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="text-center">No archived researcher found</td>
+                        <td colspan="8" class="text-center">No archived researcher found</td>
                     </tr>
                 @endforelse
             </tbody>

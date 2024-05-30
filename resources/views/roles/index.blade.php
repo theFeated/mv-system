@@ -87,7 +87,7 @@
                 @endforeach
                 @else
                 <tr>
-                    <td class="text-center" colspan="5">Roles not found</td>
+                    <td class="text-center" colspan="6">Roles not found</td>
                 </tr>
                 @endif
             </tbody>

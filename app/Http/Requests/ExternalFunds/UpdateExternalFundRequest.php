@@ -25,7 +25,8 @@ class UpdateExternalFundRequest extends FormRequest
         return [
             'researchID' => 'required',
             'agencyID' => 'required',
-            'contribution' => 'required',
+            'total_budget' => 'required',
+            'budget_utilized' => 'required',            
             'purpose' => 'required',
         ];
     }

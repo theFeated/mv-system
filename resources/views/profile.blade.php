@@ -70,7 +70,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="labels">Email</label>
-                                <input type="text" name="email" disabled class="form-control" value="{{ auth()->user()->email }}" placeholder="Email">
+                                <input type="text" name="email" class="form-control" value="{{ auth()->user()->email }}" placeholder="Email">
                             </div>
                         </div>
                     </div>

@@ -11,19 +11,10 @@ class ExternalFunds extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'externalFunds'; 
-    protected $fillable = ['exFundID', 'researchID', 'agencyID', 'contribution', 'purpose'];
-
-    protected $primaryKey = 'exFundID';
-    // Ensure Laravel knows the primary key is not auto-incrementing
-    public $incrementing = false;
-    // Define that the primary key 'id' should use the value of 'agencyID'
-    public function getIdAttribute()
-    {
-        return $this->attributes['exFundID'];
-    }
+    protected $fillable = ['id', 'researchID', 'agencyID', 'total_budget', 'budget_utilized', 'purpose'];
 
     public function agency()
     {
-        return $this->belongsTo(Agency::class, 'agencyID', 'agencyID');
+        return $this->belongsTo(Agency::class, 'agencyID');
     }
 }

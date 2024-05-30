@@ -6,7 +6,7 @@
 
 @include('monitorings.modal', ['researchId' => $research->id])
 @include('externalfunds.modal', ['researchId' => $research->id])
-@include('roleresearchassigned.modal')
+@include('roleresearchassigned.modal', ['researchId' => $research->id])
 
 @include('roleresearchassigned.edit', ['researchID' => $research->id])
 @include('monitorings.edit', ['researchID' => $research->id])
@@ -144,13 +144,13 @@
     </div>
 
     <div id="roleResearchAssignedForm" style="display: none;" class="mt-3">
-        <form action="{{ route('roleresearchassigned.destroyMultiple') }}" method="POST" class="archive-form">
+        <form action="{{ route('roleresearchassigned.removeMultiple') }}" method="POST" class="archive-form">
             @csrf
             @method('DELETE')
             <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
                 <h3 class="mb-0">Researcher</h3>
                 @if(Auth::user()->name == "Admin")
-                <button type="button" class="btn btn-danger mt-3 mt-md-0 archive-button" data-message="You can undo this later on the restore page.">Archive Selected</button>
+                <button type="button" class="btn btn-danger mt-3 mt-md-0 archive-button" data-message="You can undo this later on the restore page.">Remove Selected</button>
                 @endif
             </div>
             <hr />
@@ -175,21 +175,21 @@
                             @foreach($roleresearchassigned as $rs)
                                 <tr>
                                     <td class="align-middle">
-                                        <input type="checkbox" name="selected[]" value="{{ $rs->assignedID }}">
+                                        <input type="checkbox" name="selected[]" value="{{ $rs->id }}">
                                     </td>
                                     </form>
                                     <td class="align-middle">{{ $loop->iteration }}</td>
-                                    <td class="align-middle">{{ $rs->assignedID }}</td>
+                                    <td class="align-middle">{{ $rs->id }}</td>
                                     <td class="align-middle">{{ $rs->researcher->researcherName }}</td>
                                     <td class="align-middle">{{ optional($rs->role)->roleName }}</td>
                                     @if(Auth::user()->name == "Admin")
                                     <td class="align-middle">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $rs->assignedID }}">Edit</a>
-                                            <form action="{{ route('roleresearchassigned.destroy', $rs->assignedID) }}" method="POST" class="d-inline archive-form">
+                                            <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $rs->id }}">Edit</a>
+                                            <form action="{{ route('roleresearchassigned.remove', $rs->id) }}" method="POST" class="d-inline archive-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" class="btn btn-danger m-0 archive-button">Archive</button>
+                                                <button type="button" class="btn btn-danger m-0 archive-button">Remove</button>
                                             </form>
                                         </div>
                                     </td>
@@ -209,13 +209,13 @@
     </div>
 
     <div id="monitoringsForm" style="display: none;">
-        <form action="{{ route('monitorings.destroyMultiple') }}" method="POST" class="archive-form">
+        <form action="{{ route('monitorings.removeMultiple') }}" method="POST" class="archive-form">
             @csrf
             @method('DELETE')
             <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
                 <h3 class="mb-0">Monitorings</h3>
                 @if(Auth::user()->name == "Admin")
-                <button type="button" class="btn btn-danger mt-3 mt-md-0 archive-button" data-message="You can undo this later on the restore page.">Archive Selected</button>
+                <button type="button" class="btn btn-danger mt-3 mt-md-0 archive-button" data-message="You will remove this monitoring.">Remove Selected</button>
                 @endif
             </div>
             <hr />
@@ -243,11 +243,11 @@
                             @foreach($monitorings as $monitoring)
                                 <tr>
                                     <td class="align-middle">
-                                        <input type="checkbox" name="selectedTwo[]" value="{{ $monitoring->monitoringID }}">
+                                        <input type="checkbox" name="selectedTwo[]" value="{{ $monitoring->id }}">
                                     </td>
                                     </form>
                                     <td class="align-middle">{{ $loop->iteration }}</td>
-                                    <td class="align-middle">{{ $monitoring->monitoringID }}</td>
+                                    <td class="align-middle">{{ $monitoring->id }}</td>
                                     <td class="align-middle">{{ $monitoring->date }}</td>
                                     <td class="align-middle">{{ $monitoring->status }}</td>
                                     <td class="align-middle">{{ $monitoring->progress }}</td>
@@ -256,11 +256,11 @@
                                     @if(Auth::user()->name == "Admin")
                                     <td class="align-middle">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $monitoring->monitoringID }}">Edit</a>
-                                            <form action="{{ route('monitorings.destroy', $monitoring->monitoringID) }}" method="POST" class="d-inline archive-form">
+                                            <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $monitoring->id }}">Edit</a>
+                                            <form action="{{ route('monitorings.remove', $monitoring->id) }}" method="POST" class="d-inline archive-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" class="btn btn-danger m-0 archive-button">Archive</button>
+                                                <button type="button" class="btn btn-danger m-0 archive-button">Remove</button>
                                             </form>
                                         </div>
                                     </td>
@@ -280,13 +280,13 @@
     </div>
 
     <div id="externalFundsForm" style="display: none;">
-        <form action="{{ route('externalfunds.destroyMultiple') }}" method="POST" class="archive-form">
+        <form action="{{ route('externalfunds.removeMultiple') }}" method="POST" class="archive-form">
             @csrf
             @method('DELETE')
             <div class="d-flex align-items-center justify-content-between">
                 <h3 class="mb-0">External Funds</h3>
                 @if(Auth::user()->name == "Admin")
-                <button type="button" class="btn btn-danger mt-3 mt-md-0 archive-button" data-message="You can undo this later on the restore page.">Archive Selected</button>
+                <button type="button" class="btn btn-danger mt-3 mt-md-0 archive-button" data-message="The selected will be removed.">Remove Selected</button>
                 @endif
             </div>
             <hr />
@@ -301,7 +301,8 @@
                             <th>External Fund ID</th>
                             <th>Research ID</th>
                             <th>Agency</th>
-                            <th>Contribution</th>
+                            <th>Total Budget</th>
+                            <th>Budget Utilized</th>
                             <th>Purpose</th>
                             @if(Auth::user()->name == "Admin")
                             <th>Action</th>
@@ -313,23 +314,24 @@
                             @foreach($externalfunds as $externalFund)
                                 <tr>
                                     <td class="align-middle">
-                                        <input type="checkbox" name="selectedThree[]" value="{{ $externalFund->exFundID }}">
+                                        <input type="checkbox" name="selectedThree[]" value="{{ $externalFund->id }}">
                                     </td>
                                     </form>
                                     <td class="align-middle">{{ $loop->iteration }}</td>
-                                    <td class="align-middle">{{ $externalFund->exFundID }}</td>
+                                    <td class="align-middle">{{ $externalFund->id }}</td>
                                     <td class="align-middle">{{ $externalFund->researchID }}</td>
-                                    <td class="align-middle">{{ $externalFund->agency->name }}</td>
-                                    <td class="align-middle">{{ $externalFund->contribution }}</td>
+                                    <td class="align-middle">{{ $externalFund->agency->agencyName }}</td>
+                                    <td class="align-middle">{{ $externalFund->total_budget }}</td>
+                                    <td class="align-middle">{{ $externalFund->budget_utilized }}</td>
                                     <td class="align-middle">{{ $externalFund->purpose }}</td>
                                     @if(Auth::user()->name == "Admin")
                                     <td class="align-middle">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $externalFund->exFundID }}">Edit</a>
-                                            <form action="{{ route('externalfunds.destroy', $externalFund->exFundID) }}" method="POST" class="d-inline archive-form">
+                                            <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#editFund{{ $externalFund->id }}">Edit</a>
+                                            <form action="{{ route('externalfunds.remove', $externalFund->id) }}" method="POST" class="d-inline archive-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" class="btn btn-danger m-0 archive-button">Archive</button>
+                                                <button type="button" class="btn btn-danger m-0 archive-button">Remove</button>
                                             </form>
                                         </div>
                                     </td>

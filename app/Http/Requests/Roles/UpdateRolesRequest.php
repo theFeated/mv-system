@@ -23,7 +23,6 @@ class UpdateRolesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'roleID' => 'required|unique:roles,roleID,' . $this->route('roleID') . ',roleID',
             'roleName' => 'required|string',
             'roleDescription' => 'required|string',
         ];

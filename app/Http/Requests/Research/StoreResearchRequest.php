@@ -23,10 +23,9 @@ class StoreResearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'researchID' => 'required|unique:research,researchID',
-            'collegeID' => 'required|exists:college,collegeID', 
-            'researcherID' => 'required|exists:researcher,researcherID',
-            'agencyID' => 'nullable|exists:agency,agencyID',
+            'collegeID' => 'required|exists:college,id', 
+            'researcherID' => 'required|exists:researcher,id',
+            'agencyID' => 'nullable|exists:agency,id',
             'status' => 'required|string', 
             'researchTitle' => 'required|string',
             'researchType' => 'required|string', 

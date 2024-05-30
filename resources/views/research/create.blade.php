@@ -26,10 +26,6 @@
     <form action="{{ route('research.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row mb-3">
-        <div class="col">
-            <label for="researchID" class="form-label">Research ID<span class="text-danger">*</span></label>
-            <input type="text" name="researchID" class="form-control" value="{{ $researchID }}" placeholder="Research ID" required readonly>
-        </div>
             <div class="col">
                 <label for="collegeID" class="form-label">College<span class="text-danger">*</span></label>
                 <select name="collegeID" class="form-control" required>
@@ -77,10 +73,6 @@
             </div>
         </div>  
         <div class="row mb-3">
-        <div class="col">
-                <label for="year" class="form-label">Year<span class="text-danger">*</span></label>
-                <input type="year" name="year" class="form-control" placeholder="Year" required>
-            </div>
             <div class="col">
                 <label for="startDate" class="form-label">Start Date<span class="text-danger">*</span></label>
                 <input type="date" name="startDate" class="form-control" placeholder="Start Date" required>

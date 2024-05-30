@@ -24,14 +24,9 @@ class UpdateCollegeRequest extends FormRequest
      */
     public function rules(): array
     {
-        $collegeID = $this->route('collegeID');
-    
         return [
-            'collegeName' => [
-                'required',
-                'string',
-                Rule::unique('college')->ignore($collegeID, 'collegeID'),
-            ],
+            'collegeName' => 'required|string',
+            'acronym' => 'required|string',
             'collegeDean' => 'required|string',
         ];
     }

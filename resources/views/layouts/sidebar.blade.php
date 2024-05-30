@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark border accordion position-fixed mt-6 pre-scrollable hoverable" id="accordionSidebar" style="z-index: 100;">
    
   <!-- Divider -->
-  <hr class="sidebar-divider my-0">
+  <!-- <hr class="sidebar-divider my-0"> -->
 
   <!-- Nav Item - Dashboard -->
   <li class="nav-item d-flex justify-content-center">
@@ -11,7 +11,7 @@
   </li>
 
   <!-- Divider -->
-  <hr class="sidebar-divider d-none d-md-block">
+  <!-- <hr class="sidebar-divider d-none d-md-block"> -->
 
   <li class="nav-item d-flex justify-content-center">
       <a class="nav-link" href="{{ route('research') }}">
@@ -35,7 +35,7 @@
   </li>
 
     <!-- Divider -->
-  <hr class="sidebar-divider d-none d-md-block">
+  <!-- <hr class="sidebar-divider d-none d-md-block"> -->
   
   <li class="nav-item d-flex justify-content-center">
       <a class="nav-link" href="{{ route('roles') }}">
@@ -52,7 +52,7 @@
   </li>
 
   <!-- Divider -->
-  <hr class="sidebar-divider d-none d-md-block">
+  <!-- <hr class="sidebar-divider d-none d-md-block"> -->
   
   <!-- Sidebar Toggler (Sidebar) -->
   <div class="d-flex justify-content-center mt-3">

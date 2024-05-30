@@ -46,20 +46,20 @@
                 @forelse($archivedColleges as $college)
                     <tr>
                         <td class="align-middle">
-                            <input type="checkbox" name="selected[]" value="{{ $college->collegeID }}">
+                            <input type="checkbox" name="selected[]" value="{{ $college->id }}">
                         </td>
                         </form>
                         <td class="align-middle">{{ $loop->iteration }}</td>
-                        <td class="align-middle">{{ $college->collegeID }}</td>
+                        <td class="align-middle">{{ $college->id }}</td>
                         <td class="align-middle">{{ $college->collegeName }}</td>
                         <td class="align-middle">{{ $college->collegeDean }}</td>
                         <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <form action="{{ route('college.unarchive', $college->collegeID) }}" method="POST">
+                            <form action="{{ route('college.unarchive', $college->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-success">Restore</button>
                             </form>
-                            <form action="{{ route('college.destroyForever', $college->collegeID) }}" method="POST" class="archive-form">
+                            <form action="{{ route('college.destroyForever', $college->id) }}" method="POST" class="archive-form">
                                 @csrf
                                 @method('DELETE') 
                                 <button type="button" class="btn btn-danger m-0 archive-button" data-message="This will be permanently deleted.">Delete</button>

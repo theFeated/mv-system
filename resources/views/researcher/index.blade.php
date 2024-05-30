@@ -64,21 +64,21 @@
                     @foreach($researcher as $rs)
                     <tr>
                         <td class="align-middle">
-                            <input type="checkbox" name="selected[]" value="{{ $rs->researcherID }}">
+                            <input type="checkbox" name="selected[]" value="{{ $rs->id }}">
                         </td>
                         </form>
                         <td class="align-middle">{{ $loop->iteration }}</td>
-                        <td class="align-middle">{{ $rs->researcherID }}</td>
+                        <td class="align-middle">{{ $rs->id }}</td>
                         <td class="align-middle">{{ $rs->collegeID }}</td>
                         <td class="align-middle">{{ $rs->researcherName }}</td>
                         <td class="align-middle">{{ $rs->email }}</td>
                         <td class="align-middle">{{ $rs->contactNum }}</td>
                         <td class="align-middle">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="{{ route('researcher.show', $rs->researcherID) }}" type="button" class="btn btn-secondary">Detail</a>
+                                <a href="{{ route('researcher.show', $rs->id) }}" type="button" class="btn btn-secondary">Detail</a>
                                 @if(Auth::user()->name == "Admin")
-                                <a href="{{ route('researcher.edit', $rs->researcherID) }}" type="button" class="btn btn-warning">Edit</a>
-                                <form action="{{ route('researcher.destroy', $rs->researcherID) }}" method="POST" class="d-inline archive-form">
+                                <a href="{{ route('researcher.edit', $rs->id) }}" type="button" class="btn btn-warning">Edit</a>
+                                <form action="{{ route('researcher.destroy', $rs->id) }}" method="POST" class="d-inline archive-form">
                                     @csrf
                                     @method('DELETE')
                                     <button type="button" class="btn btn-danger m-0 archive-button" data-message="You can undo this later on the restore page.">Archive</button>
@@ -90,7 +90,7 @@
                     @endforeach
                     @else
                     <tr>
-                        <td class="text-center" colspan="5">Researcher not found</td>
+                        <td class="text-center" colspan="9">Researcher not found</td>
                     </tr>
                     @endif
                 </tbody>

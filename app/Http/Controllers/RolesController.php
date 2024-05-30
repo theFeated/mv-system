@@ -28,14 +28,7 @@ class RolesController extends Controller
     
     public function create()
     {
-        // Retrieve the highest roleID from the database
-        $highest = DB::table('roles')->select('roleID')->orderBy('roleID', 'desc')->first();
-        // Determine the next roleID value
-        $nextID = $highest ? intval(substr($highest->roleID, 4)) + 1 : 1;
-        // Pad the nextID with zeros to ensure consistent formatting
-        $roleID = "role" . str_pad($nextID, 3, '0', STR_PAD_LEFT);
-        // Pass the roleID to the create view
-        return view('roles.create', compact('roleID'));
+        return view('roles.create');
     }
     
 
@@ -52,9 +45,9 @@ class RolesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $roleID)
+    public function show(string $id)
     {
-        $roles = Roles::findOrFail($roleID);
+        $roles = Roles::findOrFail($id);
   
         return view('roles.show', compact('roles'));
     }
@@ -62,9 +55,9 @@ class RolesController extends Controller
     /**
      * Show form for editing the specified resource.
      */
-    public function edit(string $roleID)
+    public function edit(string $id)
     {
-        $roles = Roles::findOrFail($roleID);
+        $roles = Roles::findOrFail($id);
   
         return view('roles.edit', compact('roles'));
     }
@@ -72,9 +65,9 @@ class RolesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRolesRequest $request, string $roleID)
+    public function update(UpdateRolesRequest $request, string $id)
     {
-        $roles = Roles::findOrFail($roleID);
+        $roles = Roles::findOrFail($id);
 
         $roles->update($request->validated());
   
@@ -84,9 +77,9 @@ class RolesController extends Controller
      /**
      * Archived the specified resource in storage.
      */
-    public function destroy(Request $request, string $roleID)
+    public function destroy(Request $request, string $id)
     {
-        $roles = Roles::findOrFail($roleID);
+        $roles = Roles::findOrFail($id);
     
         $roles->delete();
     
@@ -106,9 +99,9 @@ class RolesController extends Controller
     /**
      * Unarchived or restore an item.
      */
-    public function unarchive(Request $request, $roleID)
+    public function unarchive(Request $request, $id)
     {
-        $roles = Roles::withTrashed()->findOrFail($roleID);
+        $roles = Roles::withTrashed()->findOrFail($id);
         $roles->restore();
     
         return redirect()->back()->with('success', 'Roles restored successfully');
@@ -140,15 +133,15 @@ class RolesController extends Controller
             return redirect()->back()->withErrors('Please select at least one roles to restore.');
         }
 
-        Roles::whereIn('roleID', $selected)->restore();
+        Roles::whereIn('id', $selected)->restore();
 
         return redirect()->back()->with('success', 'Roles restored successfully');
     }
 
-    public function destroyForever(Request $request, string $roleID)
+    public function destroyForever(Request $request, string $id)
     {
         try {
-            $roles = Roles::withTrashed()->findOrFail($roleID);
+            $roles = Roles::withTrashed()->findOrFail($id);
             
             // Perform force delete
             $roles->forceDelete();

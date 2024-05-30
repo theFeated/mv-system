@@ -24,19 +24,17 @@ class UpdateResearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'researchID' => 'required|unique:research,researchID,' . $this->route('researchID') . ',researchID',
-            'collegeID' => 'required|exists:college,collegeID', 
-            'researcherID' => 'required|exists:researcher,researcherID',
-            'agencyID' => 'nullable|exists:agency,agencyID',
+            'collegeID' => 'required|exists:college,id', 
+            'researcherID' => 'required|exists:researcher,id',
+            'agencyID' => 'nullable|exists:agency,id',
             'status' => 'required|string', 
             'researchTitle' => 'required|string',
             'researchType' => 'required|string', 
-            'year' => 'required|date_format:Y',
             'startDate' => 'required|date', 
             'endDate' => 'nullable|date|after_or_equal:startDate',
-            'link_1' => 'nullable|url',
-            'link_2' => 'nullable|url', 
-            'link_3' => 'nullable|url', 
+            'link_1' => 'nullable|string',
+            'link_2' => 'nullable|string', 
+            'link_3' => 'nullable|string', 
             'extension' => 'nullable|string', 
             'internalFund' => 'nullable|boolean', 
         ];
