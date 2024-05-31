@@ -47,7 +47,7 @@
                             {{ $agency->agencyName }}<br>
                             @endforeach
                         @else
-                            No agencies associated with this research
+                        
                         @endif
                     </td>
                     <td>{{ $research->researchType }}</td>

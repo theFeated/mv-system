@@ -178,7 +178,8 @@ Route::middleware(['auth', 'auto-logout'])->group(function () {
     Route::post('/profile/save', [ProfileController::class, 'save'])->name('profile.save');
     Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF'])->name('generate-pdf');
     Route::post('generate-monitorings-report/{id}', [PDFController::class, 'exportExcel'])->name('generate-excel');
-    Route::post('generate-all-monitorings-report/{id}', [PDFController::class, 'exportAllResearchMoniorings'])->name('generate-all-monitorings');
+    Route::post('generate-all-monitorings-report', [PDFController::class, 'generateAllMonitorings'])->name('generate-all-monitorings');
+    Route::get('filter', [PDFController::class, 'filter'])->name('filter');
 
     Route::controller(CollegeController::class)->prefix('college')->group(function () {
         Route::get('', 'index')->name('college');

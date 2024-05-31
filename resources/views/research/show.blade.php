@@ -32,10 +32,7 @@
                         @csrf
                         <button type="submit" class="dropdown-item">Generate Single Research Monitorings</button>
                     </form>
-                    <form action="{{ route('generate-all-monitorings', ['id' => $research->id]) }}" method="POST" target="_blank" class="post">
-                        @csrf
-                        <button type="submit" class="dropdown-item">Generate All Research Monitorings</button>
-                    </form>
+                    <a href="{{ route('filter') }}" rel="noopener noreferrer" class="dropdown-item">Generate All Research Monitorings</a>
                 </div>
             </div>
                 @if(Auth::user()->name == "Admin")

@@ -10,6 +10,7 @@ use App\Models\Research;
 use App\Models\ResearchTeam;
 use App\Models\Monitorings;
 use App\Models\ExternalFunds;
+use App\Models\Agency;
 
 use App\Exports\MonitoringsDataExport;
 use App\Exports\AllResearchMonitoringsExport;
@@ -47,10 +48,29 @@ class PDFController extends Controller
     }
     
 
-    public function exportAllResearchMoniorings($id)
+
+    public function generateAllMonitorings(Request $request)
     {
-        return Excel::download(new AllResearchMonitoringsExport, 'all-monitorings-report.xlsx');
+        $reportType = $request->input('reportType');
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+        $limit = $request->input('limit', 10);
+
+        return Excel::download(new AllResearchMonitoringsExport($reportType, $startDate, $endDate, $limit), 'all-monitorings-report.xlsx');
     }
-    
+
+    public function filter()
+    {
+        $researches = Research::all();
+        $researchIds = $researches->pluck('id');
+        $assignedRoles = ResearchTeam::whereIn('researchID', $researchIds)->get();
+        $monitorings = Monitorings::whereIn('researchID', $researchIds)->get();
+        $exFunds = ExternalFunds::whereIn('researchID', $researchIds)->get();
+        $agencyIds = $exFunds->pluck('agencyID');
+        $agency = Agency::whereIn('id', $agencyIds)->get();
+
+        return view('research.generatereports.filter', compact('researches', 'assignedRoles', 'monitorings', 'exFunds', 'agency'));
+    }
+
     
 }

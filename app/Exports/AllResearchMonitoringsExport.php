@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use App\Models\Research;
@@ -13,9 +12,38 @@ use App\Models\Agency;
 
 class AllResearchMonitoringsExport implements FromView
 {
+    protected $reportType;
+    protected $startDate;
+    protected $endDate;
+    protected $limit;
+
+    public function __construct($reportType, $startDate, $endDate, $limit)
+    {
+        $this->reportType = $reportType;
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
+        $this->limit = $limit;
+    }
+
     public function view() : View
     {
-        $researches = Research::all();
+        $query = Research::query();
+
+        if ($this->reportType == 'completed') {
+            $query->where('status', 'Completed');
+        } elseif ($this->reportType == 'ongoing') {
+            $query->where('status', 'Ongoing');
+        }
+
+        if ($this->startDate) {
+            $query->whereDate('startDate', '>=', $this->startDate);
+        }
+
+        if ($this->endDate) {
+            $query->whereDate('endDate', '<=', $this->endDate);
+        }
+
+        $researches = $query->limit($this->limit)->get();
         $researchIds = $researches->pluck('id');
         $assignedRoles = ResearchTeam::whereIn('researchID', $researchIds)->get();
         $monitorings = Monitorings::whereIn('researchID', $researchIds)->get();
