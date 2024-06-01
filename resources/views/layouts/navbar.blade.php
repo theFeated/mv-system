@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top position-fixed shadow w-100 border" style="z-index:1000;">
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top position-fixed shadow w-100 border bg-white" style="z-index:1000;">
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
         <div class="sidebar-brand-icon rotate-n-15">

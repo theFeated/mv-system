@@ -16,13 +16,15 @@ class AllResearchMonitoringsExport implements FromView
     protected $startDate;
     protected $endDate;
     protected $limit;
+    protected $columns;
 
-    public function __construct($reportType, $startDate, $endDate, $limit)
+    public function __construct($reportType, $startDate, $endDate, $limit, $columns)
     {
         $this->reportType = $reportType;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->limit = $limit;
+        $this->columns = $columns;
     }
 
     public function view() : View
@@ -49,14 +51,15 @@ class AllResearchMonitoringsExport implements FromView
         $monitorings = Monitorings::whereIn('researchID', $researchIds)->get();
         $exFunds = ExternalFunds::whereIn('researchID', $researchIds)->get();
         $agencyIds = $exFunds->pluck('agencyID');
-        $agency = Agency::whereIn('id', $agencyIds)->get();
+        $agencies = Agency::whereIn('id', $agencyIds)->get();
 
         return view('research.generatereports.allresearchmonitorings', [
             'researches' => $researches,
             'assignedRoles' => $assignedRoles,
             'monitorings' => $monitorings,
             'exFunds' => $exFunds,
-            'agency' => $agency,
+            'agencies' => $agencies,
+            'columns' => $this->columns,
         ]);
     }
 }

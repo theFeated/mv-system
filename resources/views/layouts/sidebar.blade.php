@@ -1,4 +1,4 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark border accordion position-fixed mt-6 pre-scrollable hoverable" id="accordionSidebar" style="z-index: 100;">
+<ul class="navbar-nav bg-primary sidebar sidebar-dark border accordion position-fixed mt-6 pre-scrollable hoverable" id="accordionSidebar" style="z-index: 100;">
    
   <!-- Divider -->
   <!-- <hr class="sidebar-divider my-0"> -->
