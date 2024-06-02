@@ -70,12 +70,15 @@ class PDFController extends Controller
     
     public function filter()
     {
-        $researches = Research::with(['agency', 'college'])->get();
-        $assignedRoles = ResearchTeam::whereIn('researchID', $researches->pluck('id'))->get();
-        $monitorings = Monitorings::whereIn('researchID', $researches->pluck('id'))->get();
-        $exFunds = ExternalFunds::whereIn('researchID', $researches->pluck('id'))->get();
+        $researches = Research::get();
+        $researchIds = $researches->pluck('id');
+        $assignedRoles = ResearchTeam::whereIn('researchID', $researchIds)->get();
+        $monitorings = Monitorings::whereIn('researchID', $researchIds)->get();
+        $exFunds = ExternalFunds::whereIn('researchID', $researchIds)->get();
+        $agencyIds = $exFunds->pluck('agencyID');
+        $agencies = Agency::whereIn('id', $agencyIds)->get();
 
-        return view('research.generatereports.filter', compact('researches', 'assignedRoles', 'monitorings', 'exFunds'));
+        return view('research.generatereports.filter', compact('researches', 'assignedRoles', 'monitorings', 'exFunds', 'agencies'));
     }
 
     

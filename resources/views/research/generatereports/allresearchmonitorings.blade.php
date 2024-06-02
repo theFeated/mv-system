@@ -112,10 +112,8 @@
                     @endif
                     @if(in_array('percentageOfCompletion', $columns))
                         <td>
-                            @if ($research->monitorings)
-                                @foreach ($research->monitorings as $monitoring)
-                                    {{ $monitoring->research->progress }}
-                                @endforeach                            
+                            @if ($research->latestMonitoring)
+                                {{ $research->latestMonitoring->progress }}
                             @endif
                         </td>
                     @endif
@@ -148,11 +146,11 @@
                         </td>
                     @endif
                     @if(in_array('remarks', $columns))
-                        @if ($research->monitorings)
-                            @foreach ($research->monitorings as $monitoring)
-                                {{ $monitoring->research->remarks }}
-                            @endforeach                            
-                        @endif                
+                        <td>
+                            @if ($research->latestMonitoring)
+                                {{ $research->latestMonitoring->remarks }}
+                            @endif
+                        </td>
                     @endif
                 </tr>
             @endforeach

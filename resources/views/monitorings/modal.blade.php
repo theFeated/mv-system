@@ -33,7 +33,7 @@ use App\Models\Research;
                         
                         <div class="col">
                             <label for="progress" class="form-label">Progress<span class="text-danger">*</span></label>
-                            <input type="text" name="progress" class="form-control" placeholder="Enter Progress" required>
+                            <input type="number" name="progress" class="form-control" placeholder="Enter Progress" required>
                         </div>
                     </div>
 

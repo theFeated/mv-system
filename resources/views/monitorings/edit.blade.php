@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group">
                         <label>Progress</label>
-                        <input type="text" class="form-control" name="progress" value="{{ $item->progress }}" required>
+                        <input type="number" class="form-control" name="progress" value="{{ $item->progress }}" required>
                     </div>
                     <div class="form-group">
                         <label>Remarks</label>

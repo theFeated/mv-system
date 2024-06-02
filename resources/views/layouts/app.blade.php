@@ -14,7 +14,10 @@
   <!-- Custom styles for this template-->
   <link href="{{ asset('admin_assets/css/sb-admin-2.css') }}" rel="stylesheet">
   <link href="{{ asset('admin_assets/css/sweetalert2.css') }}" rel="stylesheet">
-  <link href="{{ asset('admin_assets/vendor/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
+  <!-- <link href="{{ asset('admin_assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"> -->
+  <link href="{{ asset('admin_assets/css/preloader.css') }}" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/datatables.net-bs4@2.0.8/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
   <style>
     @media (max-width: 768px) {
@@ -22,9 +25,21 @@
         margin-left: 0 !important;
       }
     }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
   </style>
 </head>
+
 <body id="page-top">
+
+  <div id="preloader">
+    <div id="my-background"></div>
+    <div id="loader"></div>
+  </div>
+
   <!-- Page Wrapper -->
   <div id="wrapper">
   
@@ -95,9 +110,40 @@
   <script src="{{ asset('admin_assets/js/selectedcheckbox.js') }}"></script>
   <script src="{{ asset('admin_assets/js/closemodal.js') }}"></script>
   <script src="{{ asset('admin_assets/js/showitemonclick.js') }}"></script>
-  <script src="{{ asset('admin_assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
-  <script src="{{ asset('admin_assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+  <!-- <script src="{{ asset('admin_assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('admin_assets/vendor/datatables/jquery.dataTables.min.js') }}"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/datatables.net-bs4@2.0.8/js/dataTables.bootstrap4.min.js"></script>
 
+  <script>
+    window.addEventListener("load", function(){
+      document.getElementById("preloader").style.display = "none";
+    });
+  </script>
+  
+    <!-- <script>
+    window.addEventListener("load", function() {
+      setTimeout(function() {
+        document.getElementById("preloader").style.display = "none";
+      }, 1000);
+    });
+  </script> -->
 
+  <script src="{{ asset('vanta-master/vendor/three.r134.min.js') }}"></script>
+  <script src="{{ asset('vanta-master/dist/vanta.halo.min.js') }}"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      VANTA.HALO({
+        el: "#my-background",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00
+      });
+    });
+  </script>
 </body>
 </html>

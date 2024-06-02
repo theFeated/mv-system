@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('monitorings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('researchID');
-            $table->string('progress')->nullable();
+            $table->integer('progress')->nullable();
             $table->string('status')->nullable();
             $table->text('remarks')->nullable();
             $table->string('monitoringPersonnel')->nullable();
