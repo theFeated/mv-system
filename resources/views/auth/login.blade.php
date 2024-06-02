@@ -1,5 +1,3 @@
-@include('cookies.cookie')
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,60 +8,118 @@
   <meta name="author" content="">
   <title>Login</title>
   <!-- Custom fonts for this template-->
-  <link href="{{ asset('admin_assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  
-  <!-- Custom styles for this template-->
-  <link href="{{ asset('admin_assets/css/sb-admin-2.css') }}" rel="stylesheet">
+  @include('cookies.cookie')
+
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+
+    *, *:before, *:after {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Raleway', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+
+   .container {
+      position: relative;
+      width: 400px;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+   .container h1 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #ff3f81;
+    }
+
+   .container input {
+      width: calc(100% - 30px);
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      font-family: inherit;
+    }
+
+   .container button {
+      width: 90%;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #ff3f81;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+   .container button:hover {
+      background: #3b5cb8;
+    }
+
+   .alert {
+      color: #e74a3b;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    #my-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+    }
+  </style>
 </head>
-<body class="bg-gradient-primary">
+<body>
+  <div id="my-background"></div>
   <div class="container">
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
-      <div class="col-xl-10 col-lg-12 col-md-9">
-        <div class="card o-hidden border-0 shadow-lg my-5">
-          <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-              <div class="col-lg-6">
-                <div class="p-5">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
-                  </div>
-                  <form action="{{ route('login.action') }}" method="POST" class="user">
-                    @csrf
-                    @if ($errors->any())
-                      <div class="alert alert-danger">
-                          <ul>
-                            @foreach ($errors->all() as $error)
-                              <li>{{ $error }}</li>
-                            @endforeach
-                          </ul>
-                      </div>
-                    @endif
-                    <div class="form-group">
-                      <input name="email" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
-                    </div>
-                    <div class="form-group">
-                      <input name="password" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block btn-user">Login</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
+    <h1>Welcome Back!</h1>
+    <form action="{{ route('login.action') }}" method="POST">
+      @csrf
+      @if ($errors->any())
+        <div class="alert">
+          <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
         </div>
-      </div>
-    </div>
+      @endif
+      <input name="email" type="email" placeholder="Enter Email Address...">
+      <input name="password" type="password" placeholder="Password">
+      <button type="submit">Login</button>
+    </form>
   </div>
-  <!-- Bootstrap core JavaScript-->
-  <script src="{{ asset('admin_assets/vendor/jquery/jquery.min.js') }}"></script>
-  <script src="{{ asset('admin_assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="{{ asset('admin_assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-  <!-- Custom scripts for all pages-->
-  <script src="{{ asset('admin_assets/js/sb-admin-2.min.js') }}"></script>
+
+  <!-- Local Scripts -->
+  <script src="{{ asset('admin_assets/js/three.min.js') }}"></script>
+  <script src="{{ asset('admin_assets/js/vanta.net.min.js') }}"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      VANTA.NET({
+        el: "#my-background",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00
+      });
+    });
+  </script>
 </body>
-</html>

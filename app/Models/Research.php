@@ -33,4 +33,19 @@ class Research extends Model
         return $this->belongsTo(Agency::class, 'agencyID');
     }
 
+    public function assignedRoles()
+    {
+        return $this->hasMany(ResearchTeam::class, 'researchID', 'id');
+    }
+
+    public function exFunds()
+    {
+        return $this->hasMany(ExternalFunds::class, 'researchID', 'id');
+    }
+
+    public function monitorings()
+    {
+        return $this->hasMany(Monitorings::class, 'researchID', 'id');
+    }
+
 }

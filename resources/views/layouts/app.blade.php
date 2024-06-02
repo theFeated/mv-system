@@ -14,7 +14,7 @@
   <!-- Custom styles for this template-->
   <link href="{{ asset('admin_assets/css/sb-admin-2.css') }}" rel="stylesheet">
   <link href="{{ asset('admin_assets/css/sweetalert2.css') }}" rel="stylesheet">
-  <link href="{{ asset('admin_assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('admin_assets/vendor/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
 
   <style>
     @media (max-width: 768px) {
@@ -50,7 +50,7 @@
             <h1 class="h3 mb-0 text-gray-800">@yield('title')</h1>
           </div>
   
-          <div class="mx-2">
+          <div class="mx-2 text-dark">
             @yield('contents')
           </div>
           

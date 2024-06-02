@@ -17,4 +17,9 @@ class ExternalFunds extends Model
     {
         return $this->belongsTo(Agency::class, 'agencyID');
     }
+
+    public function research()
+    {
+        return $this->belongsTo(Research::class, 'researchID');
+    }
 }

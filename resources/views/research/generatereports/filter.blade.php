@@ -54,11 +54,17 @@
             <label><input type="checkbox" name="columns[]" value="projectDuration" checked> Project Duration based on Special Order</label><br>
             <label><input type="checkbox" name="columns[]" value="reference" checked> Reference</label><br>
             <label><input type="checkbox" name="columns[]" value="projectTeam" checked> Project Team</label><br>
+            <label><input type="checkbox" name="columns[]" value="designation" checked> Designation</label><br>
             <label><input type="checkbox" name="columns[]" value="funding" checked> Source of Funding</label><br>
+            <label><input type="checkbox" name="columns[]" value="totalBudget" checked> Total Budget</label><br>
+            <label><input type="checkbox" name="columns[]" value="budgetUtilized" checked> Budget Utilized</label><br>
+            <label><input type="checkbox" name="columns[]" value="percentageOfCompletion" checked> Percentage of Completion</label><br>
+            <label><input type="checkbox" name="columns[]" value="specialOrder" checked> Special Order</label><br>
             <label><input type="checkbox" name="columns[]" value="collaboratingAgency" checked> Collaborating College/Agency</label><br>
             <label><input type="checkbox" name="columns[]" value="fieldOfStudy" checked> Field of Study</label><br>
             <label><input type="checkbox" name="columns[]" value="status" checked> Status</label><br>
             <label><input type="checkbox" name="columns[]" value="yearCompleted" checked> Year Completed</label><br>
+            <label><input type="checkbox" name="columns[]" value="remarks" checked> Remarks</label><br>
         </div>
 
         <button type="submit" class="btn btn-primary">Generate Report</button>

@@ -24,8 +24,23 @@
                 @if(in_array('projectTeam', $columns))
                     <th>Project Team</th>
                 @endif
+                @if(in_array('designation', $columns))
+                    <th>Designation</th>
+                @endif
                 @if(in_array('funding', $columns))
                     <th>Source of Funding</th>
+                @endif
+                @if(in_array('totalBudget', $columns))
+                    <th>Total Budget</th>
+                @endif
+                @if(in_array('budgetUtilized', $columns))
+                    <th>Budget Utilized</th>
+                @endif
+                @if(in_array('percentageOfCompletion', $columns))
+                    <th>Percentage of Completion</th>
+                @endif
+                @if(in_array('specialOrder', $columns))
+                    <th>Special Order</th>
                 @endif
                 @if(in_array('collaboratingAgency', $columns))
                     <th>Collaborating College/Agency</th>
@@ -38,6 +53,9 @@
                 @endif
                 @if(in_array('yearCompleted', $columns))
                     <th>Year Completed</th>
+                @endif
+                @if(in_array('remarks', $columns))
+                    <th>Remarks</th>
                 @endif
             </tr>
             @foreach ($researches as $research)
@@ -55,7 +73,16 @@
                         <td>
                             @if ($research->assignedRoles)
                                 @foreach ($research->assignedRoles as $role)
-                                    {{ $role->researcher->researcherName }}<br>
+                                    {{ $role->researcher->researcherName }} 
+                                @endforeach
+                            @endif
+                        </td>
+                    @endif
+                    @if(in_array('designation', $columns))
+                        <td>
+                            @if ($research->assignedRoles)
+                                @foreach ($research->assignedRoles as $role)
+                                    {{ $role->role->roleName }}
                                 @endforeach
                             @endif
                         </td>
@@ -68,6 +95,32 @@
                                 Externally-Funded
                             @endif
                         </td>
+                    @endif
+                    @if(in_array('totalBudget', $columns))
+                        <td>
+                            @if ($research->exFunds)
+                                {{ $research->exFunds->sum('total_budget') }}
+                            @endif
+                        </td>
+                    @endif
+                    @if(in_array('budgetUtilized', $columns))
+                        <td>
+                            @if ($research->exFunds)
+                                {{ $research->exFunds->sum('budget_utilized') }}
+                            @endif
+                        </td>
+                    @endif
+                    @if(in_array('percentageOfCompletion', $columns))
+                        <td>
+                            @if ($research->monitorings)
+                                @foreach ($research->monitorings as $monitoring)
+                                    {{ $monitoring->research->progress }}
+                                @endforeach                            
+                            @endif
+                        </td>
+                    @endif
+                    @if(in_array('specialOrder', $columns))
+                        <td>{{ $research->link_1 }}</td>
                     @endif
                     @if(in_array('collaboratingAgency', $columns))
                         <td>
@@ -93,6 +146,13 @@
                                 {{ date('Y', strtotime($research->endDate)) }}
                             @endif
                         </td>
+                    @endif
+                    @if(in_array('remarks', $columns))
+                        @if ($research->monitorings)
+                            @foreach ($research->monitorings as $monitoring)
+                                {{ $monitoring->research->remarks }}
+                            @endforeach                            
+                        @endif                
                     @endif
                 </tr>
             @endforeach
