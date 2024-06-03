@@ -58,16 +58,22 @@
                         @elseif($column == 'projectTeam')
                             <td>
                                 @if ($research->assignedRoles)
+                                    @php $first = true; @endphp
                                     @foreach ($research->assignedRoles as $role)
-                                        {{ $role->researcher->researcherName }} 
+                                        {{ $first ? '' : ', ' }}
+                                        {{ $role->researcher->researcherName }}
+                                        @php $first = false; @endphp
                                     @endforeach
                                 @endif
                             </td>
                         @elseif($column == 'designation')
                             <td>
                                 @if ($research->assignedRoles)
+                                    @php $first = true; @endphp
                                     @foreach ($research->assignedRoles as $role)
+                                        {{ $first ? '' : ', ' }}
                                         {{ $role->role->roleName }}
+                                        @php $first = false; @endphp
                                     @endforeach
                                 @endif
                             </td>
@@ -94,7 +100,7 @@
                         @elseif($column == 'percentageOfCompletion')
                             <td>
                                 @if ($research->latestMonitoring)
-                                    {{ $research->latestMonitoring->progress }}
+                                    {{ $research->latestMonitoring->progress }}%
                                 @endif
                             </td>
                         @elseif($column == 'specialOrder')

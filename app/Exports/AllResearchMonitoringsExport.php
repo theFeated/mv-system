@@ -12,15 +12,15 @@ use App\Models\Agency;
 
 class AllResearchMonitoringsExport implements FromView
 {
-    protected $reportType;
+    protected $reportTypes;
     protected $startDate;
     protected $endDate;
     protected $limit;
     protected $columns;
 
-    public function __construct($reportType, $startDate, $endDate, $limit, $columns)
+    public function __construct($reportTypes, $startDate, $endDate, $limit, $columns)
     {
-        $this->reportType = $reportType;
+        $this->reportTypes = $reportTypes;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->limit = $limit;
@@ -31,8 +31,8 @@ class AllResearchMonitoringsExport implements FromView
     {
         $query = Research::query();
     
-        if ($this->reportType !== 'all') {
-            $query->where('status', $this->reportType);
+        if (!in_array('all', $this->reportTypes)) {
+            $query->whereIn('status', $this->reportTypes);
         }
     
         if ($this->startDate) {
@@ -66,5 +66,4 @@ class AllResearchMonitoringsExport implements FromView
             'columns' => $this->columns,
         ]);
     }
-    
 }

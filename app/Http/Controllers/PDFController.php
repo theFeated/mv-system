@@ -50,23 +50,23 @@ class PDFController extends Controller
     
     public function generateAllMonitorings(Request $request)
     {
-        $reportType = $request->input('reportType');
+        $reportTypes = $request->input('reportTypes', []);
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
         $limit = $request->input('limit', 10);
         $columns = $request->input('columns', []);
-    
+        
         $startDateFormatted = Carbon::parse($startDate)->format('M-d-Y');
         $endDateFormatted = Carbon::parse($endDate)->format('M-d-Y');
-    
+        
         if (!$startDate && !$endDate) {
             $filename = "monitorings-report-all-time.xlsx";
         } else {
             $filename = "monitorings-report-{$startDateFormatted}-{$endDateFormatted}.xlsx";
         }
-    
-        return Excel::download(new AllResearchMonitoringsExport($reportType, $startDate, $endDate, $limit, $columns), $filename);
-    }
+        
+        return Excel::download(new AllResearchMonitoringsExport($reportTypes, $startDate, $endDate, $limit, $columns), $filename);
+    }    
     
     public function filter()
     {

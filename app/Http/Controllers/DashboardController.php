@@ -21,10 +21,24 @@ class DashboardController extends Controller
     {
         $year = $request->input('year');
     
+        // Using cursor() for lazy loading
         $researches = Research::when($year, function ($query) use ($year) {
             $query->whereYear('startDate', $year);
-        })->get();
-
+        })->cursor();
+    
+        $totalResearches = 0;
+        $totalInternalFundedResearches = 0;
+        $totalExternalFundedResearches = 0;
+    
+        foreach ($researches as $research) {
+            $totalResearches++;
+            if ($research->isInternalFund) {
+                $totalInternalFundedResearches++;
+            } else {
+                $totalExternalFundedResearches++;
+            }
+        }
+    
         $totalAgencies = Agency::count();
         $totalColleges = College::count();
         $totalExternalFunds = ExternalFunds::count();
@@ -32,57 +46,57 @@ class DashboardController extends Controller
         $totalBudgetUtilized = ExternalFunds::sum('budget_utilized');
         $monitorings = Monitorings::all();
         $statusCountsbyMonitoring = $monitorings->groupBy('status')->map->count();
-        $totalResearchers = Researcher::count();    
+        $totalResearchers = Researcher::count();
         $researchers = Researcher::all();
         $collegeCounts = $researchers->groupBy('collegeID')->map->count();
         $totalRoles = Roles::count();
-
+    
         $statusCountsByResearch = Research::groupBy('status')
-        ->select('status', DB::raw('count(*) as total'))
-        ->pluck('total', 'status'); 
-
+            ->select('status', DB::raw('count(*) as total'))
+            ->pluck('total', 'status');
+    
         $data = [
             [
                 'title' => 'Total Researches',
-                'value' => $researches->count(),
+                'value' => $totalResearches,
                 'icon_class' => 'fas fa-project-diagram',
                 'border_color' => 'border-left-primary',
             ],
             [
                 'title' => 'Total Internal Funded Researches',
-                'value' => $researches->where('isInternalFund', 1)->count(),
+                'value' => $totalInternalFundedResearches,
                 'icon_class' => 'fas fa-money-bill',
-                'border_color' => 'border-left-success',
+                'border_color' => 'border-left-primary',
             ],
             [
                 'title' => 'Total External Funded Researches',
-                'value' => $researches->where('isInternalFund', 0)->count(),
+                'value' => $totalExternalFundedResearches,
                 'icon_class' => 'fas fa-money-bill',
-                'border_color' => 'border-left-info',
+                'border_color' => 'border-left-primary',
             ],
             [
                 'title' => 'Total Agencies',
                 'value' => $totalAgencies,
                 'icon_class' => 'fas fa-building',
-                'border_color' => 'border-left-primary',
+                'border_color' => 'border-left-success',
             ],
             [
                 'title' => 'Total Colleges',
                 'value' => $totalColleges,
                 'icon_class' => 'fas fa-university',
-                'border_color' => 'border-left-primary',
+                'border_color' => 'border-left-success',
             ],
             [
                 'title' => 'Total External Funds',
                 'value' => $totalExternalFunds,
                 'icon_class' => 'fas fa-hand-holding-usd',
-                'border_color' => 'border-left-primary',
+                'border_color' => 'border-left-success',
             ],
             [
                 'title' => 'Total Budget',
                 'value' => $totalBudget,
                 'icon_class' => 'fas fa-coins',
-                'border_color' => 'border-left-success',
+                'border_color' => 'border-left-info',
             ],
             [
                 'title' => 'Total Budget Utilized',
@@ -94,34 +108,26 @@ class DashboardController extends Controller
                 'title' => 'Total Researchers',
                 'value' => $totalResearchers,
                 'icon_class' => 'fas fa-user-graduate',
-                'border_color' => 'border-left-primary',
-            ],            [
+                'border_color' => 'border-left-warning',
+            ],
+            [
                 'title' => 'Total Roles',
                 'value' => $totalRoles,
                 'icon_class' => 'fas fa-user-tag',
-                'border_color' => 'border-left-primary',
+                'border_color' => 'border-left-warning',
             ],
-            
         ];
-        // foreach ($statusCountsbyMonitoring as $status => $count) {
-        //     $data[] = [
-        //         'title' => "Research with $status status via the monitorings",
-        //         'value' => $count,
-        //         'icon_class' => 'fas fa-chart-line', // You can change the icon based on status if needed
-        //         'border_color' => 'border-left-primary',
-        //     ];
-        // }
-
+    
         foreach ($collegeCounts as $collegeID => $count) {
             $college = College::find($collegeID);
             $data[] = [
                 'title' => "Total Researchers in {$college->acronym}",
                 'value' => $count,
-                'icon_class' => 'fas fa-user-graduate', // You can change the icon if needed
-                'border_color' => 'border-left-primary',
+                'icon_class' => 'fas fa-user-graduate',
+                'border_color' => 'border-left-warning',
             ];
         }
-
+    
         foreach ($statusCountsByResearch as $status => $count) {
             $data[] = [
                 'title' => "Research with $status status",
