@@ -78,7 +78,14 @@ class PDFController extends Controller
         $agencyIds = $exFunds->pluck('agencyID');
         $agencies = Agency::whereIn('id', $agencyIds)->get();
 
-        return view('research.generatereports.filter', compact('researches', 'assignedRoles', 'monitorings', 'exFunds', 'agencies'));
+        // Get unique status values from the researches and convert them to lowercase
+        $statuses = $researches->pluck('status')->unique()->map(function ($status) {
+            return strtolower($status);
+        });
+        $uniqueStatuses = $statuses->unique();
+
+        return view('research.generatereports.filter', 
+        compact('researches', 'assignedRoles', 'monitorings', 'exFunds', 'agencies' , 'uniqueStatuses'));
     }
 
     

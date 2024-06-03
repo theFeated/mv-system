@@ -31,10 +31,8 @@ class AllResearchMonitoringsExport implements FromView
     {
         $query = Research::query();
     
-        if ($this->reportType == 'completed') {
-            $query->where('status', 'Completed');
-        } elseif ($this->reportType == 'ongoing') {
-            $query->where('status', 'Ongoing');
+        if ($this->reportType !== 'all') {
+            $query->where('status', $this->reportType);
         }
     
         if ($this->startDate) {

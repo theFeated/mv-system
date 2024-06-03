@@ -12,146 +12,122 @@
     <div>
         <table border="1">
             <tr>
-                @if(in_array('researchTitle', $columns))
-                    <th>Program/Project/Study Title</th>
-                @endif
-                @if(in_array('projectDuration', $columns))
-                    <th>Project Duration based on Special Order</th>
-                @endif
-                @if(in_array('reference', $columns))
-                    <th>Reference</th>
-                @endif
-                @if(in_array('projectTeam', $columns))
-                    <th>Project Team</th>
-                @endif
-                @if(in_array('designation', $columns))
-                    <th>Designation</th>
-                @endif
-                @if(in_array('funding', $columns))
-                    <th>Source of Funding</th>
-                @endif
-                @if(in_array('totalBudget', $columns))
-                    <th>Total Budget</th>
-                @endif
-                @if(in_array('budgetUtilized', $columns))
-                    <th>Budget Utilized</th>
-                @endif
-                @if(in_array('percentageOfCompletion', $columns))
-                    <th>Percentage of Completion</th>
-                @endif
-                @if(in_array('specialOrder', $columns))
-                    <th>Special Order</th>
-                @endif
-                @if(in_array('collaboratingAgency', $columns))
-                    <th>Collaborating College/Agency</th>
-                @endif
-                @if(in_array('fieldOfStudy', $columns))
-                    <th>Field of Study</th>
-                @endif
-                @if(in_array('status', $columns))
-                    <th>Status</th>
-                @endif
-                @if(in_array('yearCompleted', $columns))
-                    <th>Year Completed</th>
-                @endif
-                @if(in_array('remarks', $columns))
-                    <th>Remarks</th>
-                @endif
+                @foreach ($columns as $column)
+                    @if($column == 'researchTitle')
+                        <th>Program/Project/Study Title</th>
+                    @elseif($column == 'projectDuration')
+                        <th>Project Duration based on Special Order</th>
+                    @elseif($column == 'reference')
+                        <th>Reference</th>
+                    @elseif($column == 'projectTeam')
+                        <th>Project Team</th>
+                    @elseif($column == 'designation')
+                        <th>Designation</th>
+                    @elseif($column == 'funding')
+                        <th>Source of Funding</th>
+                    @elseif($column == 'totalBudget')
+                        <th>Total Budget</th>
+                    @elseif($column == 'budgetUtilized')
+                        <th>Budget Utilized</th>
+                    @elseif($column == 'percentageOfCompletion')
+                        <th>Percentage of Completion</th>
+                    @elseif($column == 'specialOrder')
+                        <th>Special Order</th>
+                    @elseif($column == 'collaboratingAgency')
+                        <th>Collaborating College/Agency</th>
+                    @elseif($column == 'fieldOfStudy')
+                        <th>Field of Study</th>
+                    @elseif($column == 'status')
+                        <th>Status</th>
+                    @elseif($column == 'yearCompleted')
+                        <th>Year Completed</th>
+                    @elseif($column == 'remarks')
+                        <th>Remarks</th>
+                    @endif
+                @endforeach
             </tr>
             @foreach ($researches as $research)
                 <tr>
-                    @if(in_array('researchTitle', $columns))
-                        <td>{{ $research->researchTitle }}</td>
-                    @endif
-                    @if(in_array('projectDuration', $columns))
-                        <td>{{ $research->startDate }} - {{ $research->endDate }} {{ $research->extension }}</td>
-                    @endif
-                    @if(in_array('reference', $columns))
-                        <td>{{ $research->link_1 }}</td>
-                    @endif
-                    @if(in_array('projectTeam', $columns))
-                        <td>
-                            @if ($research->assignedRoles)
-                                @foreach ($research->assignedRoles as $role)
-                                    {{ $role->researcher->researcherName }} 
-                                @endforeach
-                            @endif
-                        </td>
-                    @endif
-                    @if(in_array('designation', $columns))
-                        <td>
-                            @if ($research->assignedRoles)
-                                @foreach ($research->assignedRoles as $role)
-                                    {{ $role->role->roleName }}
-                                @endforeach
-                            @endif
-                        </td>
-                    @endif
-                    @if(in_array('funding', $columns))
-                        <td>
-                            @if ($research->internalFund == 1)
-                                Internally-Funded
-                            @else
-                                Externally-Funded
-                            @endif
-                        </td>
-                    @endif
-                    @if(in_array('totalBudget', $columns))
-                        <td>
-                            @if ($research->exFunds)
-                                {{ $research->exFunds->sum('total_budget') }}
-                            @endif
-                        </td>
-                    @endif
-                    @if(in_array('budgetUtilized', $columns))
-                        <td>
-                            @if ($research->exFunds)
-                                {{ $research->exFunds->sum('budget_utilized') }}
-                            @endif
-                        </td>
-                    @endif
-                    @if(in_array('percentageOfCompletion', $columns))
-                        <td>
-                            @if ($research->latestMonitoring)
-                                {{ $research->latestMonitoring->progress }}
-                            @endif
-                        </td>
-                    @endif
-                    @if(in_array('specialOrder', $columns))
-                        <td>{{ $research->link_1 }}</td>
-                    @endif
-                    @if(in_array('collaboratingAgency', $columns))
-                        <td>
-                            @if($research->agency)
-                                {{ $research->agency->agencyName }}
-                                @if($research->college)
-                                , {{ $research->college->acronym }}
+                    @foreach ($columns as $column)
+                        @if($column == 'researchTitle')
+                            <td>{{ $research->researchTitle }}</td>
+                        @elseif($column == 'projectDuration')
+                            <td>{{ $research->startDate }} - {{ $research->endDate }} {{ $research->extension }}</td>
+                        @elseif($column == 'reference')
+                            <td>{{ $research->link_1 }}</td>
+                        @elseif($column == 'projectTeam')
+                            <td>
+                                @if ($research->assignedRoles)
+                                    @foreach ($research->assignedRoles as $role)
+                                        {{ $role->researcher->researcherName }} 
+                                    @endforeach
                                 @endif
-                            @elseif($research->college)
-                                {{ $research->college->acronym }}
-                            @endif
-                        </td>
-                    @endif
-                    @if(in_array('fieldOfStudy', $columns))
-                        <td>{{ $research->researchType }}</td>
-                    @endif
-                    @if(in_array('status', $columns))
-                        <td>{{ $research->status }}</td>
-                    @endif
-                    @if(in_array('yearCompleted', $columns))
-                        <td>
-                            @if (!empty($research->endDate))
-                                {{ date('Y', strtotime($research->endDate)) }}
-                            @endif
-                        </td>
-                    @endif
-                    @if(in_array('remarks', $columns))
-                        <td>
-                            @if ($research->latestMonitoring)
-                                {{ $research->latestMonitoring->remarks }}
-                            @endif
-                        </td>
-                    @endif
+                            </td>
+                        @elseif($column == 'designation')
+                            <td>
+                                @if ($research->assignedRoles)
+                                    @foreach ($research->assignedRoles as $role)
+                                        {{ $role->role->roleName }}
+                                    @endforeach
+                                @endif
+                            </td>
+                        @elseif($column == 'funding')
+                            <td>
+                                @if ($research->internalFund == 1)
+                                    Internally-Funded
+                                @else
+                                    Externally-Funded
+                                @endif
+                            </td>
+                        @elseif($column == 'totalBudget')
+                            <td>
+                                @if ($research->exFunds)
+                                    {{ $research->exFunds->sum('total_budget') }}
+                                @endif
+                            </td>
+                        @elseif($column == 'budgetUtilized')
+                            <td>
+                                @if ($research->exFunds)
+                                    {{ $research->exFunds->sum('budget_utilized') }}
+                                @endif
+                            </td>
+                        @elseif($column == 'percentageOfCompletion')
+                            <td>
+                                @if ($research->latestMonitoring)
+                                    {{ $research->latestMonitoring->progress }}
+                                @endif
+                            </td>
+                        @elseif($column == 'specialOrder')
+                            <td>{{ $research->link_1 }}</td>
+                        @elseif($column == 'collaboratingAgency')
+                            <td>
+                                @if($research->agency)
+                                    {{ $research->agency->agencyName }}
+                                    @if($research->college)
+                                    , {{ $research->college->acronym }}
+                                    @endif
+                                @elseif($research->college)
+                                    {{ $research->college->acronym }}
+                                @endif
+                            </td>
+                        @elseif($column == 'fieldOfStudy')
+                            <td>{{ $research->researchType }}</td>
+                        @elseif($column == 'status')
+                            <td>{{ $research->status }}</td>
+                        @elseif($column == 'yearCompleted')
+                            <td>
+                                @if (!empty($research->endDate))
+                                    {{ date('Y', strtotime($research->endDate)) }}
+                                @endif
+                            </td>
+                        @elseif($column == 'remarks')
+                            <td>
+                                @if ($research->latestMonitoring)
+                                    {{ $research->latestMonitoring->remarks }}
+                                @endif
+                            </td>
+                        @endif
+                    @endforeach
                 </tr>
             @endforeach
         </table>

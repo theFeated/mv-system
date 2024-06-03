@@ -31,11 +31,15 @@ class DashboardController extends Controller
         $totalBudget = ExternalFunds::sum('total_budget');
         $totalBudgetUtilized = ExternalFunds::sum('budget_utilized');
         $monitorings = Monitorings::all();
-        $statusCounts = $monitorings->groupBy('status')->map->count();
-        $totalResearchers = Researcher::count();
+        $statusCountsbyMonitoring = $monitorings->groupBy('status')->map->count();
+        $totalResearchers = Researcher::count();    
         $researchers = Researcher::all();
         $collegeCounts = $researchers->groupBy('collegeID')->map->count();
         $totalRoles = Roles::count();
+
+        $statusCountsByResearch = Research::groupBy('status')
+        ->select('status', DB::raw('count(*) as total'))
+        ->pluck('total', 'status'); 
 
         $data = [
             [
@@ -99,21 +103,30 @@ class DashboardController extends Controller
             ],
             
         ];
-        foreach ($statusCounts as $status => $count) {
-            $data[] = [
-                'title' => "REsearch with $status status",
-                'value' => $count,
-                'icon_class' => 'fas fa-chart-line', // You can change the icon based on status if needed
-                'border_color' => 'border-left-primary',
-            ];
-        }
+        // foreach ($statusCountsbyMonitoring as $status => $count) {
+        //     $data[] = [
+        //         'title' => "Research with $status status via the monitorings",
+        //         'value' => $count,
+        //         'icon_class' => 'fas fa-chart-line', // You can change the icon based on status if needed
+        //         'border_color' => 'border-left-primary',
+        //     ];
+        // }
 
         foreach ($collegeCounts as $collegeID => $count) {
             $college = College::find($collegeID);
             $data[] = [
-                'title' => "Total Researchers in {$college->collegeName}",
+                'title' => "Total Researchers in {$college->acronym}",
                 'value' => $count,
                 'icon_class' => 'fas fa-user-graduate', // You can change the icon if needed
+                'border_color' => 'border-left-primary',
+            ];
+        }
+
+        foreach ($statusCountsByResearch as $status => $count) {
+            $data[] = [
+                'title' => "Research with $status status",
+                'value' => $count,
+                'icon_class' => 'fas fa-chart-line',
                 'border_color' => 'border-left-primary',
             ];
         }
