@@ -17,7 +17,7 @@ class RedirectIfAuthenticated
         $isBlocked = Cache::get('login_blocked_' . $request->ip(), false);
     
         if ($isBlocked) {
-            return response()->view('errors.blocked', ['message' => $blockMessage], 403)->header('z-index', '9999')->header('position', 'fixed');
+            return response()->view('messages.blocked', ['message' => $blockMessage], 403)->header('z-index', '9999')->header('position', 'fixed');
         }
     
         if (Auth::guard($guard)->check()) {
@@ -33,7 +33,7 @@ class RedirectIfAuthenticated
                 Session::invalidate();
                 $blockDuration = 10; // Seconds
                 Cache::put('login_blocked_' . $request->ip(), true, now()->addSeconds($blockDuration));
-                return response()->view('errors.blocked', ['message' => $errorMessage, 'blockDuration' => $blockDuration], 403)->header('z-index', '9999')->header('position', 'fixed');
+                return response()->view('messages.blocked', ['message' => $errorMessage, 'blockDuration' => $blockDuration], 403)->header('z-index', '9999')->header('position', 'fixed');
             }
     
             return redirect('/dashboard');

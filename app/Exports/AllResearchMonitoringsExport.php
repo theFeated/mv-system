@@ -83,7 +83,7 @@ class AllResearchMonitoringsExport implements FromView
         $agencyIds = $exFunds->pluck('agencyID');
         $agencies = Agency::whereIn('id', $agencyIds)->get();
     
-        return view('research.generatereports.allresearchmonitorings', [
+        return view('editor.views.generatereports.allresearchmonitorings', [
             'researches' => $researches,
             'assignedRoles' => $assignedRoles,
             'exFunds' => $exFunds,

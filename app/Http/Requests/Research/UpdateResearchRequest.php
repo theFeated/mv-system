@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Research;
 
 use Illuminate\Foundation\Http\FormRequest;
-
 use Illuminate\Support\Facades\Auth;
 
 class UpdateResearchRequest extends FormRequest
@@ -36,7 +35,7 @@ class UpdateResearchRequest extends FormRequest
             'link_2' => 'nullable|string', 
             'link_3' => 'nullable|string', 
             'extension' => 'nullable|string', 
-            'internalFund' => 'nullable|boolean', 
+            'isInternalFund' => 'nullable|boolean', 
         ];
     }
 }

@@ -25,7 +25,7 @@ class ResearchController extends Controller
     public function index()
     {
         $research = Research::orderBy('created_at', 'DESC')->get();
-        return view('staff.views.research.index', compact('research'));
+        return view('editor.views.research.index', compact('research'));
     }    
     
     /**
@@ -37,7 +37,7 @@ class ResearchController extends Controller
         $researchers = Researcher::all();
         $agencies = Agency::all();
 
-        return view('staff.views.research.create', compact('colleges', 'researchers', 'agencies'));
+        return view('editor.views.research.create', compact('colleges', 'researchers', 'agencies'));
     }
 
     /**
@@ -51,7 +51,7 @@ class ResearchController extends Controller
         }
     
         // Convert 'true' or 'false' string to boolean value
-        $request->merge(['internalFund' => $request->has('internalFund')]);
+        $request->merge(['isInternalFund' => $request->has('isInternalFund')]);
     
         $research = Research::create($request->validated());
     
@@ -74,7 +74,7 @@ class ResearchController extends Controller
         ->where('researchID', $id)
         ->get();
 
-        return view('staff.views.research.show', compact('research', 'college', 'researcher', 'agency', 'roles',
+        return view('editor.views.research.show', compact('research', 'college', 'researcher', 'agency', 'roles',
          'researchteam', 'monitorings','externalfunds'));
     }
 
@@ -88,7 +88,7 @@ class ResearchController extends Controller
         $researchers = Researcher::all(); 
         $agencies = Agency::all(); 
 
-        return view('staff.views.research.edit', compact('research', 'colleges', 'researchers', 'agencies'));
+        return view('editor.views.research.edit', compact('research', 'colleges', 'researchers', 'agencies'));
     }
 
 
@@ -104,7 +104,7 @@ class ResearchController extends Controller
             return response()->json(['error' => $request->errors()], 422);
         }
     
-        $request->merge(['internalFund' => (bool)$request->input('internalFund')]);
+        $request->merge(['isInternalFund' => (bool)$request->input('isInternalFund')]);
         $research->update($request->validated());
     
         return redirect()->route('research')->with('success', 'Research updated successfully');
@@ -131,7 +131,7 @@ class ResearchController extends Controller
         $archivedAssigned = ResearchTeam::onlyTrashed()->get();
         $monitorings = Monitorings::onlyTrashed()->get();
         $externalFunds = ExternalFunds::onlyTrashed()->get();
-        return view('staff.views.research.restore', compact('archived', 'archivedAssigned', 'monitorings', 'externalFunds'));
+        return view('editor.views.research.restore', compact('archived', 'archivedAssigned', 'monitorings', 'externalFunds'));
     }
 
     /**

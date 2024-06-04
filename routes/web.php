@@ -15,14 +15,15 @@ use App\Http\Controllers\CookieController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect()->route('dashboard');
-    } else {
-        return redirect()->route('login');
-    }
-});
+// Route::get('/', function () {
+//     if (Auth::check()) {
+//         return redirect()->route('dashboard');
+//     } else {
+//         return redirect()->route('login');
+//     }
+// });
  
 Route::get('welcome', function () {
     return redirect()->route('login'); 
@@ -51,17 +52,15 @@ Route::group(['prefix' => 'auth'], function () {
 */
 
 
-Route::fallback(function () {
-    return redirect()->route('dashboard');
-});
+// Route::fallback(function () {
+//     return redirect()->route('dashboard');
+// });
 
 // Admin Routes
 Route::middleware(['auth', 'user-role:editor', 'auto-logout'])->group(function () {
-    Route::get('admin/dashboard', function () {
-        return view('dashboard');
-    })->name('admin.dashboard');
- 
-    Route::get("/admin/home", [HomeController::class, 'adminHome'])->name('home.admin');
+
+    Route::get("/editor/dashboard", [DashboardController::class, 'dashboardeditor'])->name('editor.dashboard');
+    Route::get('editor/profile', [AuthController::class, 'profileeditor'])->name('editor.profile');
 
     Route::controller(CollegeController::class)->prefix('college')->group(function () {
         Route::get('', 'index')->name('college');
@@ -135,7 +134,6 @@ Route::middleware(['auth', 'user-role:editor', 'auto-logout'])->group(function (
 
     });
 
-
     Route::controller(AgencyController::class)->prefix('agency')->group(function () {
         Route::get('', 'index')->name('agency');
         Route::get('create', 'create')->name('agency.create');
@@ -173,8 +171,6 @@ Route::middleware(['auth', 'user-role:editor', 'auto-logout'])->group(function (
 });
 
 Route::middleware(['auth', 'auto-logout'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('/profile/save', [ProfileController::class, 'save'])->name('profile.save');
     Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF'])->name('generate-pdf');
     Route::post('generate-monitorings-report/{id}', [PDFController::class, 'exportExcel'])->name('generate-excel');
@@ -218,5 +214,28 @@ Route::middleware(['auth', 'auto-logout'])->group(function () {
 
     });
 
+
+});
+
+Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function () {
+
+    Route::get("/admin/dashboard", [DashboardController::class, 'dashboardadmin'])->name('admin.dashboard');
+    Route::get('admin/profile', [AuthController::class, 'profileadmin'])->name('admin.profile');
+
+    Route::controller(UserController::class)->prefix('users')->group(function () {
+        Route::get('', 'index')->name('users');
+        Route::get('create', 'create')->name('users.create');
+        Route::post('store', 'store')->name('users.store');
+        Route::get('show/{users}', 'show')->name('users.show');
+        Route::get('edit/{users}', 'edit')->name('users.edit');
+        Route::put('edit/{users}', 'update')->name('users.update');
+        Route::delete('destroy/{users}', 'destroy')->name('users.destroy');
+        Route::get('restore', 'restore')->name('users.restore');
+        Route::post('unarchive/{users}', 'unarchive')->name('users.unarchive');
+        Route::delete('destroyMultiple', 'destroyMultiple')->name('users.destroyMultiple');
+        Route::post('users/unarchiveMultiple', 'unarchiveMultiple')->name('users.unarchiveMultiple');
+        Route::delete('users/{users}', 'destroyForever')->name('users.destroyForever');
+
+    });
 
 });

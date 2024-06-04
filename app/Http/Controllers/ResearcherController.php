@@ -19,7 +19,7 @@ class ResearcherController extends Controller
     {
   
         $researcher = Researcher::orderBy('created_at', 'DESC')->get();
-        return view('staff.views.researcher.index', compact('researcher'));
+        return view('editor.views.researcher.index', compact('researcher'));
     }
     
      /**
@@ -29,7 +29,7 @@ class ResearcherController extends Controller
     {
   
         $colleges = College::all(); 
-        return view('staff.views.researcher.create', compact('colleges'));
+        return view('editor.views.researcher.create', compact('colleges'));
     }
 
     /**
@@ -57,7 +57,7 @@ class ResearcherController extends Controller
         $researcher = Researcher::findOrFail($id);
         $college = College::find($researcher->collegeID);
 
-        return view('staff.views.researcher.show', compact('researcher', 'college'));
+        return view('editor.views.researcher.show', compact('researcher', 'college'));
     }
 
     /**
@@ -69,7 +69,7 @@ class ResearcherController extends Controller
     
         $colleges = College::all(); 
 
-        return view('staff.views.researcher.edit', compact('researcher','colleges'));
+        return view('editor.views.researcher.edit', compact('researcher','colleges'));
     }
 
     /**
@@ -81,7 +81,7 @@ class ResearcherController extends Controller
     
         $researcher->update($request->validated());
     
-        return redirect()->route('staff.views.researcher.index')->with('success', 'Researcher updated successfully');
+        return redirect()->route('researcher')->with('success', 'Researcher updated successfully');
     }
 
      /**
@@ -103,7 +103,7 @@ class ResearcherController extends Controller
     {
         $archivedColleges = Researcher::onlyTrashed()->get();
     
-        return view('staff.views.researcher.restore', ['archived' => $archivedColleges]);
+        return view('editor.views.researcher.restore', ['archived' => $archivedColleges]);
     }
 
     /**

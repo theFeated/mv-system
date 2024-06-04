@@ -21,7 +21,7 @@ class CollegeController extends Controller
     {
   
         $college = College::orderBy('created_at', 'DESC')->get();
-        return view('staff.views.college.index', compact('college'));
+        return view('editor.views.college.index', compact('college'));
     }
     
      /**
@@ -30,7 +30,7 @@ class CollegeController extends Controller
     public function create()
     {
   
-        return view('staff.views.college.create');
+        return view('editor.views.college.create');
     }
 
     /**
@@ -56,7 +56,7 @@ class CollegeController extends Controller
     {
         $college = College::findOrFail($id);
   
-        return view('staff.views.college.show', compact('college'));
+        return view('editor.views.college.show', compact('college'));
     }
 
     /**
@@ -66,7 +66,7 @@ class CollegeController extends Controller
     {
         $college = College::findOrFail($id);
   
-        return view('staff.views.college.edit', compact('college'));
+        return view('editor.views.college.edit', compact('college'));
     }
 
     /**
@@ -104,7 +104,7 @@ class CollegeController extends Controller
     {
         $archivedColleges = College::onlyTrashed()->get();
     
-        return view('staff.views.college.restore', ['archivedColleges' => $archivedColleges]);
+        return view('editor.views.college.restore', ['archivedColleges' => $archivedColleges]);
     }
 
     /**
