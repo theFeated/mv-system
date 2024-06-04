@@ -17,14 +17,18 @@ class AllResearchMonitoringsExport implements FromView
     protected $endDate;
     protected $limit;
     protected $columns;
+    protected $minPercentage;
+    protected $maxPercentage;
 
-    public function __construct($reportTypes, $startDate, $endDate, $limit, $columns)
+    public function __construct($reportTypes, $startDate, $endDate, $limit, $columns, $minPercentage, $maxPercentage)
     {
         $this->reportTypes = $reportTypes;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->limit = $limit;
         $this->columns = $columns;
+        $this->minPercentage = $minPercentage;
+        $this->maxPercentage = $maxPercentage;
     }
 
     public function view() : View
@@ -42,6 +46,27 @@ class AllResearchMonitoringsExport implements FromView
         if ($this->endDate) {
             $query->whereDate('endDate', '<=', $this->endDate);
         }
+    
+        if ($this->minPercentage !== null && $this->maxPercentage !== null) {
+            $researchIdsWithMonitorings = Monitorings::whereBetween('progress', [$this->minPercentage, $this->maxPercentage])
+                ->pluck('researchID')
+                ->toArray();
+        
+            $researchIdsWithoutMonitorings = Research::whereNotIn('id', $researchIdsWithMonitorings)
+                ->pluck('id')
+                ->toArray();
+        
+            $researchIds = array_merge($researchIdsWithMonitorings, $researchIdsWithoutMonitorings);
+        
+            $query->whereIn('id', $researchIds);
+        }       
+        
+        // if ($this->minPercentage !== null && $this->maxPercentage !== null) {
+        //     $researchIds = Monitorings::whereBetween('progress', [$this->minPercentage, $this->maxPercentage])
+        //         ->pluck('researchID');
+            
+        //     $query->whereIn('id', $researchIds);
+        // }
     
         $researches = $query->limit($this->limit)->get();
     

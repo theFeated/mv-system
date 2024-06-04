@@ -44,6 +44,16 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
+                <label for="minPercentage">Minimum Percentage of Completion:</label>
+                <input type="number" name="minPercentage" id="minPercentage" class="form-control" min="0" max="100">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="maxPercentage">Maximum Percentage of Completion:</label>
+                <input type="number" name="maxPercentage" id="maxPercentage" class="form-control" min="0" max="100">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
                 <label for="startDate">Start Date:</label>
                 <input type="date" name="startDate" id="startDate" class="form-control">
             </div>

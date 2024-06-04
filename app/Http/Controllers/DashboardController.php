@@ -54,7 +54,9 @@ class DashboardController extends Controller
         $statusCountsByResearch = Research::groupBy('status')
             ->select('status', DB::raw('count(*) as total'))
             ->pluck('total', 'status');
-    
+            
+        $monitoringCount = $monitorings->count();
+
         $data = [
             [
                 'title' => 'Total Researches',
@@ -115,6 +117,12 @@ class DashboardController extends Controller
                 'value' => $totalRoles,
                 'icon_class' => 'fas fa-user-tag',
                 'border_color' => 'border-left-warning',
+            ],
+            [
+                'title' => 'Total Monitorings',
+                'value' => $monitoringCount,
+                'icon_class' => 'fas fa-chart-bar',
+                'border_color' => 'border-left-info',
             ],
         ];
     
