@@ -25,7 +25,7 @@ class ResearchController extends Controller
     public function index()
     {
         $research = Research::orderBy('created_at', 'DESC')->get();
-        return view('research.index', compact('research'));
+        return view('staff.views.research.index', compact('research'));
     }    
     
     /**
@@ -37,7 +37,7 @@ class ResearchController extends Controller
         $researchers = Researcher::all();
         $agencies = Agency::all();
 
-        return view('research.create', compact('colleges', 'researchers', 'agencies'));
+        return view('staff.views.research.create', compact('colleges', 'researchers', 'agencies'));
     }
 
     /**
@@ -74,7 +74,7 @@ class ResearchController extends Controller
         ->where('researchID', $id)
         ->get();
 
-        return view('research.show', compact('research', 'college', 'researcher', 'agency', 'roles',
+        return view('staff.views.research.show', compact('research', 'college', 'researcher', 'agency', 'roles',
          'researchteam', 'monitorings','externalfunds'));
     }
 
@@ -88,7 +88,7 @@ class ResearchController extends Controller
         $researchers = Researcher::all(); 
         $agencies = Agency::all(); 
 
-        return view('research.edit', compact('research', 'colleges', 'researchers', 'agencies'));
+        return view('staff.views.research.edit', compact('research', 'colleges', 'researchers', 'agencies'));
     }
 
 
@@ -131,7 +131,7 @@ class ResearchController extends Controller
         $archivedAssigned = ResearchTeam::onlyTrashed()->get();
         $monitorings = Monitorings::onlyTrashed()->get();
         $externalFunds = ExternalFunds::onlyTrashed()->get();
-        return view('research.restore', compact('archived', 'archivedAssigned', 'monitorings', 'externalFunds'));
+        return view('staff.views.research.restore', compact('archived', 'archivedAssigned', 'monitorings', 'externalFunds'));
     }
 
     /**

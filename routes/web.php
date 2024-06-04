@@ -56,7 +56,7 @@ Route::fallback(function () {
 });
 
 // Admin Routes
-Route::middleware(['auth', 'user-role:admin', 'auto-logout'])->group(function () {
+Route::middleware(['auth', 'user-role:editor', 'auto-logout'])->group(function () {
     Route::get('admin/dashboard', function () {
         return view('dashboard');
     })->name('admin.dashboard');

@@ -19,7 +19,7 @@ class RolesController extends Controller
     {
   
         $roles = Roles::orderBy('created_at', 'DESC')->get();
-        return view('roles.index', compact('roles'));
+        return view('staff.views.roles.index', compact('roles'));
     }
     
      /**
@@ -28,7 +28,7 @@ class RolesController extends Controller
     
     public function create()
     {
-        return view('roles.create');
+        return view('staff.views.roles.create');
     }
     
 
@@ -54,7 +54,7 @@ class RolesController extends Controller
     {
         $roles = Roles::findOrFail($id);
   
-        return view('roles.show', compact('roles'));
+        return view('staff.views.roles.show', compact('roles'));
     }
 
     /**
@@ -64,7 +64,7 @@ class RolesController extends Controller
     {
         $roles = Roles::findOrFail($id);
   
-        return view('roles.edit', compact('roles'));
+        return view('staff.views.roles.edit', compact('roles'));
     }
 
     /**
@@ -102,7 +102,7 @@ class RolesController extends Controller
     {
         $archived = Roles::onlyTrashed()->get();
     
-        return view('roles.restore', ['archived' => $archived]);
+        return view('staff.views.roles.restore', ['archived' => $archived]);
     }
 
     /**

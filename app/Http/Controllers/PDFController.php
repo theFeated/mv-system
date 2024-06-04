@@ -39,7 +39,7 @@ class PDFController extends Controller
             'exFunds' => $exFunds,
         ];
     
-        $pdf = PDF::loadView('research.generatereports.report', $data);
+        $pdf = PDF::loadView('staff.views.research.generatereports.report', $data);
         return $pdf->stream('report.pdf');
     }
 
@@ -99,7 +99,7 @@ class PDFController extends Controller
         });
         $uniqueStatuses = $statuses->unique();
 
-        return view('research.generatereports.filter', 
+        return view('staff.views.research.generatereports.filter', 
         compact('researches', 'assignedRoles', 'monitorings', 'exFunds', 'agencies' , 'uniqueStatuses'));
     }
 

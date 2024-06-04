@@ -19,7 +19,7 @@ class AgencyController extends Controller
     {
   
         $agency = Agency::orderBy('created_at', 'DESC')->get();
-        return view('agency.index', compact('agency'));
+        return view('staff.views.agency.index', compact('agency'));
     }
     
      /**
@@ -27,7 +27,7 @@ class AgencyController extends Controller
      */
     public function create()
     {
-        return view('agency.create');
+        return view('staff.views.agency.create');
     }
     
     
@@ -51,7 +51,7 @@ class AgencyController extends Controller
     {
         $agency = Agency::findOrFail($id);
   
-        return view('agency.show', compact('agency'));
+        return view('staff.views.agency.show', compact('agency'));
     }
 
     /**
@@ -61,7 +61,7 @@ class AgencyController extends Controller
     {
         $agency = Agency::findOrFail($id);
     
-        return view('agency.edit', compact('agency'));
+        return view('staff.views.agency.edit', compact('agency'));
     }
     
 
@@ -100,7 +100,7 @@ class AgencyController extends Controller
     {
         $archivedAgency = Agency::onlyTrashed()->get();
     
-        return view('agency.restore', ['archived' => $archivedAgency]);
+        return view('staff.views.agency.restore', ['archived' => $archivedAgency]);
     }
 
     /**

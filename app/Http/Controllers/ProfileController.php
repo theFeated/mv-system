@@ -14,7 +14,6 @@ class ProfileController extends Controller
         // Update profile fields
         $user->name = $request->input('name');
         $user->phone = $request->input('phone');
-        $user->address = $request->input('address');
     
         // Check if a new password is provided and validate old password if so
         if ($request->filled('password')) {

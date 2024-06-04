@@ -19,7 +19,7 @@ class ResearcherController extends Controller
     {
   
         $researcher = Researcher::orderBy('created_at', 'DESC')->get();
-        return view('researcher.index', compact('researcher'));
+        return view('staff.views.researcher.index', compact('researcher'));
     }
     
      /**
@@ -29,7 +29,7 @@ class ResearcherController extends Controller
     {
   
         $colleges = College::all(); 
-        return view('researcher.create', compact('colleges'));
+        return view('staff.views.researcher.create', compact('colleges'));
     }
 
     /**
@@ -57,7 +57,7 @@ class ResearcherController extends Controller
         $researcher = Researcher::findOrFail($id);
         $college = College::find($researcher->collegeID);
 
-        return view('researcher.show', compact('researcher', 'college'));
+        return view('staff.views.researcher.show', compact('researcher', 'college'));
     }
 
     /**
@@ -66,14 +66,10 @@ class ResearcherController extends Controller
     public function edit(string $id)
     {
         $researcher = Researcher::findOrFail($id);
-
-        if (!$request->validated()) {
-            return response()->json(['error' => $request->errors()], 422);
-        }
     
         $colleges = College::all(); 
 
-        return view('researcher.edit', compact('researcher','colleges'));
+        return view('staff.views.researcher.edit', compact('researcher','colleges'));
     }
 
     /**
@@ -85,7 +81,7 @@ class ResearcherController extends Controller
     
         $researcher->update($request->validated());
     
-        return redirect()->route('researcher.index')->with('success', 'Researcher updated successfully');
+        return redirect()->route('staff.views.researcher.index')->with('success', 'Researcher updated successfully');
     }
 
      /**
@@ -107,7 +103,7 @@ class ResearcherController extends Controller
     {
         $archivedColleges = Researcher::onlyTrashed()->get();
     
-        return view('researcher.restore', ['archived' => $archivedColleges]);
+        return view('staff.views.researcher.restore', ['archived' => $archivedColleges]);
     }
 
     /**

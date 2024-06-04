@@ -16,7 +16,7 @@ class UserRoleMiddleware
         }
     
         $errorMessage = "You don't have permission to access this page";
-        return response()->view('errors.403', ['message' => $errorMessage], 403)
+        return response()->view('messages.403', ['message' => $errorMessage], 403)
                          ->header('Refresh', '5;url=' . url()->previous());
     }
     

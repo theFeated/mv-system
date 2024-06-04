@@ -145,7 +145,7 @@ class DashboardController extends Controller
             ];
         }
     
-        return view('dashboard', compact('data'));
+        return view('dashboard.dashboard', compact('data'));
     }
     
 }

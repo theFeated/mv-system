@@ -16,7 +16,6 @@ class CreateUserSeeder extends Seeder
             [
                 'name' => 'User',
                 'email' => 'user@user.com',
-                'address' => 'address',
                 'phone' => '1234',
                 'password' => bcrypt('user123'),
                 'role' => 0
@@ -24,7 +23,6 @@ class CreateUserSeeder extends Seeder
             [
                 'name' => 'Editor',
                 'email' => 'editor@editor.com',
-                'address' => 'address',
                 'phone' => '1234',
                 'password' => bcrypt('editor123'),
                 'role' => 1
@@ -32,7 +30,6 @@ class CreateUserSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'email' => 'admin@admin.com',
-                'address' => 'address',
                 'phone' => '1234',
                 'password' => bcrypt('admin123'),
                 'role' => 2
