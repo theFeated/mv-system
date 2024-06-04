@@ -173,7 +173,7 @@ Route::middleware(['auth', 'user-role:editor', 'auto-logout'])->group(function (
 Route::middleware(['auth', 'auto-logout'])->group(function () {
     Route::post('/profile/save', [ProfileController::class, 'save'])->name('profile.save');
     Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF'])->name('generate-pdf');
-    Route::post('generate-monitorings-report/{id}', [PDFController::class, 'exportExcel'])->name('generate-excel');
+    Route::post('generate-single-monitorings-report/{id}', [PDFController::class, 'generateSingleResearchMonitoring'])->name('generate-single-research-monitoring');
     Route::post('generate-all-monitorings-report', [PDFController::class, 'generateAllMonitorings'])->name('generate-all-monitorings');
     Route::get('filter', [PDFController::class, 'filter'])->name('filter');
 

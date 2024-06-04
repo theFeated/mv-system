@@ -13,7 +13,7 @@ use App\Models\Monitorings;
 use App\Models\ExternalFunds;
 use App\Models\Agency;
 
-use App\Exports\MonitoringsDataExport;
+use App\Exports\SingleResearchMonitoringsExport;
 use App\Exports\AllResearchMonitoringsExport;
 
 class PDFController extends Controller
@@ -43,9 +43,9 @@ class PDFController extends Controller
         return $pdf->stream('report.pdf');
     }
 
-    public function exportExcel($id)
+    public function generateSingleResearchMonitoring ($id)
     {
-        return Excel::download(new MonitoringsDataExport($id), 'monitorings-report.xlsx');
+        return Excel::download(new SingleResearchMonitoringsExport($id), 'monitorings-report.xlsx');
     }
     
     public function generateAllMonitorings(Request $request)

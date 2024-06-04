@@ -28,11 +28,10 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a href="{{ route('generate-pdf', ['id' => $research->id]) }}" target="_blank" rel="noopener noreferrer" class="dropdown-item">Generate PDF</a>
-                    <!-- <form action="{{ route('generate-excel', ['id' => $research->id]) }}" method="POST" target="_blank" class="post">
+                    <form action="{{ route('generate-single-research-monitoring', ['id' => $research->id]) }}" method="POST" target="_blank" class="post">
                         @csrf
-                        <button type="submit" class="dropdown-item">Generate Single Research Monitorings</button>
+                        <button type="submit" class="dropdown-item">Single Research Monitorings</button>
                     </form>
-                    <a href="{{ route('filter') }}" rel="noopener noreferrer" class="dropdown-item">Generate All Research Monitorings</a> -->
                 </div>
             </div>
                 <div class="dropdown ml-2">
