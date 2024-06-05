@@ -5,7 +5,7 @@
 @endphp
 
 @foreach ($monitorings as $item)
-<div class="modal fade my-modal" id="edit{{ $item->id }}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade my-modal" id="editMonitoring{{ $item->id }}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="{{ route('monitorings.update', $item->id) }}" method="POST">                

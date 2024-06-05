@@ -253,7 +253,7 @@
                                     <td class="align-middle">{{ $monitoring->remarks }}</td>
                                     <td class="align-middle">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#edit{{ $monitoring->id }}">Edit</a>
+                                            <a class="btn btn-warning" href="#" data-toggle="modal" data-target="#editMonitoring{{ $monitoring->id }}">Edit</a>
                                             <form action="{{ route('monitorings.remove', $monitoring->id) }}" method="POST" class="d-inline archive-form">
                                                 @csrf
                                                 @method('DELETE')

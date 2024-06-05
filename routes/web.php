@@ -17,13 +17,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\UserController;
 
-// Route::get('/', function () {
+Route::get('/', function () {
 //     if (Auth::check()) {
 //         return redirect()->route('dashboard');
 //     } else {
-//         return redirect()->route('login');
+        return redirect()->route('login');
 //     }
-// });
+});
  
 Route::get('welcome', function () {
     return redirect()->route('login'); 
@@ -58,9 +58,6 @@ Route::group(['prefix' => 'auth'], function () {
 
 // Admin Routes
 Route::middleware(['auth', 'user-role:editor', 'auto-logout'])->group(function () {
-
-    Route::get("/editor/dashboard", [DashboardController::class, 'dashboardeditor'])->name('editor.dashboard');
-    Route::get('editor/profile', [AuthController::class, 'profileeditor'])->name('editor.profile');
 
     Route::controller(CollegeController::class)->prefix('college')->group(function () {
         Route::get('', 'index')->name('college');
@@ -171,6 +168,9 @@ Route::middleware(['auth', 'user-role:editor', 'auto-logout'])->group(function (
 });
 
 Route::middleware(['auth', 'auto-logout'])->group(function () {
+    Route::get("/editor/dashboard", [DashboardController::class, 'dashboardeditor'])->name('editor.dashboard');
+    Route::get('editor/profile', [AuthController::class, 'profileeditor'])->name('editor.profile');
+
     Route::post('/profile/save', [ProfileController::class, 'save'])->name('profile.save');
     Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF'])->name('generate-pdf');
     Route::post('generate-single-monitorings-report/{id}', [PDFController::class, 'generateSingleResearchMonitoring'])->name('generate-single-research-monitoring');

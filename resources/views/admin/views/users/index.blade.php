@@ -8,7 +8,7 @@
         @method('DELETE')
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-2">
             <h2 class="mt-3 mb-3 mt-sm-3 mt-5">User List</h2>
-            <div class="mb-3 mt-sm-3 mt-3 row mr-0">
+            <!-- <div class="mb-3 mt-sm-3 mt-3 row mr-0">
                 <div class="mr-1">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Add
@@ -26,7 +26,7 @@
                         <button type="button" class="dropdown-item archive-button" data-message="You can undo this later on the restore page.">Archive Selected</button>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <hr/>
         @if(Session::has('success'))
